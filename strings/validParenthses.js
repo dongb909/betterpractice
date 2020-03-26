@@ -27,44 +27,44 @@ Example 5:
 Input: "{[]}"
 Output: true */
 
-let isMatch = (lastOpenChar, currentChar) => {
-  if (lastOpenChar === "{" && currentChar==="}") {
-    return true;
+// let isMatch = (lastOpenChar, currentChar) => {
+//   if (lastOpenChar === "{" && currentChar==="}") {
+//     return true;
     
-  } else if (lastOpenChar === "[" && currentChar==="]") {
-    return true;
+//   } else if (lastOpenChar === "[" && currentChar==="]") {
+//     return true;
     
-  } else if (lastOpenChar === "(" && currentChar===")") {
-    return true;
+//   } else if (lastOpenChar === "(" && currentChar===")") {
+//     return true;
     
-  } else {
-    return false;
-  }
-}
+//   } else {
+//     return false;
+//   }
+// }
 
-let isValidParenthese = (str) => {
-  if (str==="") {
-    return true;
-  }
-  if (str.length % 2 === 1) {
-    return false;
-  }
-  let openChars = [];
-  let match = true;
-  let i = 0
-  while (match && i < str.length) {
-    console.log(i)
-    if (str[i]==="{" || str[i]==="(" || str[i]=== "[") {
-      openChars.push(str[i]);
-    } else {
-      match = isMatch(openChars.pop(), str[i]);
-    }
-    i++;
-  }
-  return openChars.length===0 && match;
-}
+// let isValidParenthese = (str) => {
+//   if (str==="") {
+//     return true;
+//   }
+//   if (str.length % 2 === 1) {
+//     return false;
+//   }
+//   let openChars = [];
+//   let match = true;
+//   let i = 0
+//   while (match && i < str.length) {
+//     console.log(i)
+//     if (str[i]==="{" || str[i]==="(" || str[i]=== "[") {
+//       openChars.push(str[i]);
+//     } else {
+//       match = isMatch(openChars.pop(), str[i]);
+//     }
+//     i++;
+//   }
+//   return openChars.length===0 && match;
+// }
 
-console.log(isValidParenthese("(("))
+// console.log(isValidParenthese("(("))
 
 //BigO=n
 
@@ -108,28 +108,86 @@ console.log(isValidParenthese("(("))
 };
 */
 
-/*var isValid = function(s) {
-    if(s.length % 2 > 0)  return false;
+// var isValid = function(s) {
+//     if(s.length % 2 > 0)  return false;
     
-    let map = new Map();
-    map.set("(",")");
-    map.set("[","]");
-    map.set("{","}");
+//     let map = new Map();
+//     map.set("(",")");
+//     map.set("[","]");
+//     map.set("{","}");
     
-    let arr = []; 
+//     let arr = []; 
     
-    for(let char of s ){
-        if(map.has(char)){
-            arr.push(char);
-        }else{
-            if (arr.length === 0) return false;
+//     for(let char of s ){
+//         if(map.has(char)){
+//             arr.push(char);
+//         }else{
+//             if (arr.length === 0) return false;
                 
-            if(map.get(arr[arr.length - 1]) === char){
-                arr.pop();
-            }
-        }
-    }
+//             if(map.get(arr[arr.length - 1]) === char){
+//                 arr.pop();
+//             }
+//         }
+//     }
     
-    return arr.length === 0
-};
-*/
+//     return arr.length === 0
+// };
+
+
+let isValid = (s) => {
+  if(s.length%2===1) {
+    return false;
+  }
+  let parens = new Map();
+  parens.set("(",")");
+  parens.set("[","]");
+  parens.set("{", "}");
+
+  let open = [];
+  console.log(parens["{"])
+
+  for(let i = 0; i < s.length; i++){
+    //if item = key, add to arr
+    //when using Map, CANNOT use [] to retrieve. need to use set, get, has
+    if (parens.has(s[i])) {
+      open.push(s[i]);
+    } else if (open.length === 0) {
+      return false;
+    } else {
+      if (parens.get(open[open.length-1]) === s[i]) {
+        open.pop();
+      }
+    }
+  }
+  return open.length === 0
+}
+
+console.log(isValid('()'))
+
+// let isValid = (s) => {
+//   if(s.length%2===1) {
+//     return false;
+//   }
+//   let parens = {"(":")","[":"]", "{":"}"};
+
+//   let open = [];
+
+//   for(let i = 0; i < s.length; i++){
+//     //if item = key, add to arr
+//     //when using Map, CANNOT use [] to retrieve. need to use set, get, has
+//     if (parens[s[i]]) {
+//       // console.log(parens[s[i]])
+//       open.push(s[i]);
+//       // console.log(open)
+//     } else if (open.length === 0) {
+//       return false;
+//     } else {
+//       if (parens[open[open.length-1]] === s[i]) {
+//         open.pop();
+//       }
+//     }
+//   }
+//   return open.length === 0
+// }
+
+// console.log(isValid('()'))

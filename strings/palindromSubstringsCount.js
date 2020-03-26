@@ -60,50 +60,41 @@ Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa". */
 
 
 
-/*
-var countSubstrings = function(s) {
-  var total = 0;
-  for(var i = 0; i < s.length; i++) {
-    total += palindromicStrCounter(s, i, i);
-    total += palindromicStrCounter(s, i, i + 1);
-  }
-  return total
-};
 
-var palindromicStrCounter = function(s, l, r) {
-  var counter = 0;
-  while(l >= 0 && r < s.length && s[l] === s[r]) {
-    l--;
-    r++;
-    counter++;
-  }
-  return counter;
-}
-*/
+//SECOND ATTEMPT
 
-/*
-var countSubstrings = function(s) {
-    let result = s.length;
-    
-    let j;
-    for (let i = 1; i < s.length; i++) {
-        if (s[i] === s[i-1]) { // emtpy space is the center of palindrome
-            result++; // palindrome with length 2
-            j = 1;
-            while ((i-1-j >= 0) && (i+j < s.length) && (s[i-j-1] === s[i+j++])) {
-                result++;
-            }
-        }
-        if (s[i-1] === s[i+1]) { // a letter is the center of palindrome
-            result++; // palindrome with length 3
-            j = 2;
-            while ((i-j >= 0) && (i+j < s.length) && (s[i-j] === s[i+j++])) {
-                result++;
-            }
-        }
+let countPalindrome = (s) => {
+  let count = s.length;
+  //skip the first index so we work backwards to ensure we stop at 0
+  //if center is empty aka 2 letters
+  let j;
+  for (let i = 1; i<s.length; i++){
+    // incrementing main index
+    //check middle type
+    if (s[i]===s[i-1]){
+      count++;
+      //
+      j = 1;
+      //check the ends if equal so to the Left of index aka -2 and to the right of index aka +1 becuase
+      //must account for when past index 0 and when past length
+      while (s[i-1-j]===s[i+j] && (i-1-j) >=0 && i+j<s.length) {
+        count++;
+        j++;
+      }
     }
-    
-    return result;
-}; */
 
-let countPalindrom
+    //if center is 1 letter, 1 letter is already accounted for, now check the sides
+    //don't have to worry about passing 0 because i starts at 1 and always just checking i-1, nothing less
+    if (s[i-1]===s[i+1]){
+      count++;
+      j=2;  //bc now at 3 letters palindrome and centering around i
+      while (s[i-j]===s[i+j] && (i-j) >=0 && (i+j) < s.length) {
+        count++;
+        j++;
+      }
+    }
+  }
+  return count;
+}
+
+console.log(countPalindrome('abcba'))
