@@ -19,3 +19,33 @@ Input: nums = [1, 5, 1, 5], target = 6
 Output: 1
 Explanation:
 [1, 5] and [5, 1] are considered the same. */
+
+let twoSumUnique = (nums, target) => {
+
+  let dict = new Map();
+  let pushed = new Set()
+  let pairs = [];
+  let diff;
+  for (let i = 0; i < nums.length; i++){
+    // console.log(nums.length)
+    // if (!dict.has(nums[i]) ){
+      diff = target-nums[i]
+
+      if (!pushed.has(diff) && dict.has(diff)){
+          pairs.push([nums[i], diff])
+          pushed.add(nums[i])
+          pushed.add(diff)
+          console.log(pushed)
+        } 
+      dict.set(nums[i], i);
+    }
+  // }
+  return pairs
+}
+
+
+
+
+console.log(twoSumUnique([1, 1, 2, 45, 46, 46], 47))
+
+// O(n)
