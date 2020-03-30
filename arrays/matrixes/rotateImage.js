@@ -39,6 +39,42 @@ rotate the input matrix in-place such that it becomes:
   [16, 7,10,11]
 ] */
 
+/*I=matrix
+0= rotated matrix
+C= in place, clockwise
+E = empty matrix*/
+//this is a perfect square 
+
 var rotate = function(matrix) {
-    
+    //transpose
+    let len= matrix.length
+    let temp
+  for (let i=0; i<len; i++){
+    for(let j=i; j<len;j++){  //J must = I NOT 0
+      //store current value in temp
+      temp=matrix[i][j];
+      //replace current index with the value in the tranpose position
+      //aka swap row with col
+      matrix[i][j] = matrix[j][i]
+      matrix[j][j] = temp
+    }
+  }
+    //swap colomns from ends accounting for even and ood by iterating each row
+    //must do one at a time
+  for(let i = 0; i<len; i++) {
+    //j will only go up to half the cols
+    for(let j = 0; j < Math.floor(len/2); j++){  //J =O ok
+      temp = matrix[i][j];
+      //swapping colums l to r r to l so rows should stay the same
+      matrix[i][j] = matrix[i][len-1-j];// because it's a perfect square so can use len
+      matrix[i][len-1-j] = temp
+    }
+  }
+  return matrix
 };
+
+console.log(rotate([
+  [1,2,3],
+  [4,5,6],
+  [7,8,9]
+]))
