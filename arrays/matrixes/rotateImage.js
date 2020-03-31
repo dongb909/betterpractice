@@ -56,7 +56,7 @@ var rotate = function(matrix) {
       //replace current index with the value in the tranpose position
       //aka swap row with col
       matrix[i][j] = matrix[j][i]
-      matrix[j][j] = temp
+      matrix[j][i] = temp
     }
   }
     //swap colomns from ends accounting for even and ood by iterating each row
@@ -73,8 +73,15 @@ var rotate = function(matrix) {
   return matrix
 };
 
+
+
 console.log(rotate([
   [1,2,3],
   [4,5,6],
   [7,8,9]
 ]))
+
+
+// [7,4,1],
+//   [8,5,2],
+//   [9,6,3]
