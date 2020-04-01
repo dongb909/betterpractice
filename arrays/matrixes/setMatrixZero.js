@@ -162,6 +162,32 @@ Could you devise a constant space solution? */
 }; */
 
 
+function setZeroes(arr){
+  let rows= new Set();
+  let cols= new Set();
+
+  for(let i = 0; i< arr.length;i++) {
+    for (let j = 0; j< arr[0].length; j++){
+      if(arr[i][j] === 0){
+        rows.add(i)
+        cols.add(j)
+        // console.log(rows,cols)
+      }
+    }
+  }
+  for(let row of rows){                 ///IS FOR (LET .... OF .... ) NOT (NAME ... IN .....) WHEN IT COMES TO SETS
+    for(let i=0; i<arr[0].length;i++){
+      arr[row][i] = 0
+    }
+  }
+  for(let col of cols){
+    for(let i=0; i<arr.length;i++){
+      arr[i][col]=0
+    }
+  }
+  return arr
+}
+
 
 console.log(setZeroes([
   [0,1,2,0],
