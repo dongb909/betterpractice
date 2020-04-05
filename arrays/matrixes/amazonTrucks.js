@@ -31,8 +31,8 @@ function numberTreasureTrucks(rows, columns, grid) {
     for (let col = 0; col<columns; col++){
       if (grid[row][col]===1){
         count+=1;
-        checkAndCancelSurroundings(row, col, grid);
-        console.log(count)
+        checkAndCancelSurroundings(row, col, grid)//, count); and then do count= because the 2 counts are different, because it's not a pointer based one. 
+        console.log(count)                    //grid is a ppointers to Array, but integers or strings? / native datatypes are copletely a different one. 
       }
     }
   }

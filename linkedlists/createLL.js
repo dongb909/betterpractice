@@ -37,9 +37,10 @@ class LinkedList {
 
   insertAtIndex(data, index){
     //account for negative numbers which shouldn't be allowed
-    if (index>0 && this.size < index){
+    if (this.size < index){
       return;
     } 
+    
     if(index===0) {
       this.insertToFront(data);
       return;
