@@ -60,3 +60,4 @@ var reverseList = function(head) {
     return prev
     
 }; */
+        // hundreds     ones  hundreds   ones
