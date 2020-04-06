@@ -44,6 +44,62 @@ Can you solve it using O(1) (i.e. constant) memory? */
  * @param {ListNode} head
  * @return {boolean}
  */
-var hasCycle = function(head) {
+
+ //mine
+// var hasCycle = function(head) {
+//     if(!head ||!head.next) return false;
+
+//     let slow = head;
+//     let fast = head.next;
+//     while (slow !== fast) {
+//       if (fast === null || fast.next ===null) {
+//         return false; //don't have to check slow because fast is further down the list anyways
+//       }
+//       slow = slow.next;
+//       fast = fast.next.next;
+//     }
+//     return true;
+// };
+
+/*var hasCycle = function(head) {
+    var slow=head;
+    var fast=head;
     
-};
+    while(fast!=null && fast.next!=null){
+        slow=slow.next;
+        fast=fast.next.next;
+        if(slow===fast){return true;}
+    }
+    
+    return false;
+}; */
+
+/*var hasCycle = function(head) {
+//    console.log("");
+    var buffer;
+    while(head) {
+        head.val = "v";
+//        console.log(head);
+        buffer = head.next;
+        if(buffer != null && buffer.val == "v") return true;
+        head = buffer;
+    }
+    return false
+}; */
+
+
+
+
+
+/*
+var hasCycle = function(head) {
+  if (!head || !head.next) return false;
+  let slow = head,
+      fast = head.next;
+  while (fast && fast.next) {
+    if (slow === fast) return true;
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  return false;
+}; */
