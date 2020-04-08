@@ -159,3 +159,71 @@ class BST {       // not putting a val here because want it to be made with a no
 
 }
 
+
+
+
+
+
+
+
+
+
+
+/*
+  // breadth first search - level by level
+
+  // use a queue!
+  // 15, 3, 36, 2, 12, 28, 39
+  bfs() {
+    let result = []
+    let queue = []
+
+    queue.push(this.root)
+
+    while(queue.length) {
+      let currentNode = queue.shift()
+
+      result.push(currentNode.value)
+
+      if (currentNode.left) {
+        queue.push(currentNode.left)
+      }
+      if (currentNode.right) {
+        queue.push(currentNode.right)
+      }
+    }
+
+    return result
+  }
+}
+
+const bst = new BST(15)
+
+bst.insert(3)
+bst.insert(36)
+bst.insert(2)
+bst.insert(12)
+bst.insert(28)
+bst.insert(39)
+
+bst.size()
+
+bst.min()
+bst.max()
+
+bst.contains(2)
+bst.contains(9)
+
+// DFS!!!
+// in-order: 2, 3, 12, 15, 28, 36, 39
+bst.dfsInOrder()
+
+// pre-order: 15, 3, 2, 12, 36, 28, 39
+bst.dfsPreOrder()
+
+// post-order: 2, 12, 3, 28, 39, 36, 15
+bst.dfsPostOrder()
+
+// BFS!!!
+// 15, 3, 36, 2, 12, 28, 39
+bst.bfs() */
