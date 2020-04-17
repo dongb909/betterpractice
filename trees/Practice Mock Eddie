@@ -1,0 +1,147 @@
+class Adopt {
+  constructor () {
+    this.dogQueue=[];
+    this.catQueue=[];
+  }
+  
+  enqueue(animal){
+    this.queue.push(animal);
+    this.count+=1
+  }
+  
+  dequeue(){
+    this.queue.shift();
+  }
+  
+}
+
+class Animal {
+  constructor(type, timestamp) {
+    this.type = type;
+    this.timestamp = timestamp;
+  }
+}
+
+const doggy = new Animal('dog', 2);
+const adoptionClinic = new Adopt();
+
+adoptionClinic.enqueue(doggy);
+
+
+
+
+
+
+
+
+
+
+
+
+
+function reverseString(str) {
+  return str.split('').reverse().join('');
+}
+
+function isPalindrome(str){
+  return str === reverseString(str)
+}
+
+// input: ababababa
+//output: array of every unique palindrome
+//ex: a, b, aba, ababa, bab etc
+
+function uniquePalindromes(str){
+  let unique = new Set();
+  
+  for (let i = 0; i< str.length; i++){
+    for(let j = 0; j< str.length; j++){
+      let forward = str.slice(i,j);
+      if (forward === reverseString(forward) /*&& !unique.has(forward)*/){   //redundant, don't need to check for set
+        unique.add(forward)
+      }
+    }
+  }
+  
+  return new Array.from(unique);   copies over from set
+  return [...unique]
+  
+  
+  
+}
+
+
+
+
+
+
+
+function reverseString(str) {
+  return str.split('').reverse().join('');
+}
+
+function isPalindrome(str){
+  return str === reverseString(str)
+}
+
+// input: ababababa
+//output: array of every unique palindrome
+//ex: a, b, aba, ababa, bab etc
+
+function uniquePalindromes(str){
+  // let result = [];
+  let unique = new Set();
+  
+  for (let i = 0; i< str.length; i++){
+    for(let j = 0; j< str.length; j++){
+      let forward = str.slice(i,j);
+      if (forward === reverseString(forward) && !unique.has(forward)){
+        unique.add(forward)
+      }
+    }
+  }
+  
+  return [...unique]
+}
+
+
+// ababa
+// abba
+
+function uniquePalin(str) {
+  let unique = new Set();
+  
+  for(let mid=0; mid < str.length; mid++) {
+    unique.add(str[mid])
+  	unique.add(...isPalindrome(i-1,i+1,str))
+    
+    if (str[i] === str[i + 1]) {
+      const doubleMid = str[i] + str[i+1];
+      //left = i - 1; //still bc while loop probably already edited it.
+     // right = i + 2;  //don't need to think about left because you're moving left to right anyways
+			unique.add(...isPalindrome(i - 1,i + 2,str))
+      }	
+    }
+  }
+  return new Array.from(unique)
+}
+
+
+function isPalindrome(left, right, str){
+  let unique = new Set();
+	while (str[left] && str[right] && str[left]===str[right]){
+		unique.add(str.slice(left,right+1));
+  	left--;
+  	right++;
+  }
+  return unique
+}
+
+
+
+
+
+
+
+
+

@@ -81,7 +81,7 @@ const twoSum = (nums, target) => {
 let twoSum = (nums, target) => {
   let map = {};
   //go through all indices and add to map if over, then compare to see if the diff in is map
-  for(let i in nums) { //keys of arrays are indices
+  for(let i in nums) { //keys of arrays are indices so setting indices to i aka keys to i
     // if (target-nums[i] === map[nums[i]] ){
     if (target-nums[i] in map){
       return [map[target-nums[i]], i]

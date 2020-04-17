@@ -40,6 +40,54 @@ Return false. */
  * @param {TreeNode} t
  * @return {boolean}
  */
-var isSubtree = function(s, t) {
-    
-};
+
+class Node {
+   constructor(val) {
+     this.val = val
+     this.right = this.left = null
+   }
+ }
+ 
+ // let result = null;
+ 
+ const isSubtree = (s, t) => { // boolean (true or false)
+   if (!s || !t) return false;
+   let nodeFound = findPair(s,t);
+   return !nodeFound ? false: compareNodes(nodeFound,t)  // false
+ }
+ 
+ const findPair = (snode, tnode) => {
+   if (!snode || !tnode) return false;
+   if (snode.val === tnode.val) return snode;
+   return findPair(snode.left, tnode) || findPair(snode.right, tnode);
+ }
+ 
+ const compareNodes = (snode, tnode) => { // boolean (true or false)
+   if (!snode && !tnode) return true;
+   if (!snode || !tnode) return false;
+   if (snode.val !== tnode.val) return false;
+   //if equal then check children
+   let left = compareNodes(snode.left, tnode.left)
+   let right = compareNodes(snode.right, tnode.right)
+   return left && right; 
+   
+ }
+ 
+ 
+ 
+ let s = new Node(3)
+ s.right = new Node(5)
+ s.left = new Node(4)
+ s.left.left = new Node (1)
+ s.left.right = new Node (2)
+ 
+ 
+ let t = new Node(4)
+ t.left = new Node(1)
+ t.right = new Node(2)
+ 
+ isSubtree(s,t)
+ console.log(result);
+ 
+ 
+ // IFFE (immediate invoked function expression)

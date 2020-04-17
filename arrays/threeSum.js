@@ -122,3 +122,75 @@ let threeSum = (arr) => {
 
 
 console.log(threeSum([-1, 0, 1, 2, -1, -4]))
+
+
+
+
+
+//Input = array , there are negative numbers, 
+      //ask are there floats
+      //do I have to handle empty arrays or assume there's at least 3 nums
+      //are they ordered or not ordered
+      //you see duplicates but should ask to make sure if there are duplicates
+//output = nested array
+//constraints = no duplicate triplets, 
+//as for space and time complexity if don't know then ask if can begin with brute force and optimize from there
+//
+
+// -4, -1, -1, 0, 0, 1, 2
+//   ^               ^ => 1
+//.        ^                  
+//                
+//-4 + 2 = -2
+//-2 - -1 = -1
+//
+//-1 + 2 = 1        // used this to move 
+//-1 + 1 = 0
+//push results [-1,-1, 2] , [-1,0,1]
+
+
+//-1+1 = 0
+// return
+//terminal condition if 2sum =0
+
+function threeSum (arr) {
+  arr.sort((a,b) => {return a-b})
+  let result = [];
+  let left = 0
+  let right = arr.length-1;
+  while (left < right) {
+    
+    if (arr[left] <0 && arr[right]<0 || arr[left] > 0 && arr[right] > 0) return result;
+    let twoSum = arr[right] + arr[left]
+    for (let thirdPtr = left+1; thirdPtr < right; thirdPtr++) {
+      // console.log(arr[thirdPtr])
+      // console.log('lefttttt', left)
+      if (twoSum - arr[thirdPtr] === 0) {
+      // console.log('lefttttt', left)
+      // console.log('right', right)
+        result.push([arr[left], arr[thirdPtr], arr[right]])
+        
+      }
+      
+    }
+    if(twoSum <=0){ 
+      left++
+      
+    } else {
+    right--;
+    }
+  }
+  return result
+  
+}
+
+
+
+
+console.log(threeSum([-1,  0, 1, 2, -1, -4]))
+
+//know time complex/space for sorts
+//non consistent style, better to use if else than ternary
+//spaces
+//give them examples while explaining so they can see it
+//consistent variable names, better with first, second, third, or a, b, c

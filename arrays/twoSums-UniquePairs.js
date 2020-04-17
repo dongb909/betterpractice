@@ -35,17 +35,30 @@ let twoSumUnique = (nums, target) => {
           pairs.push([nums[i], diff])
           pushed.add(nums[i])
           pushed.add(diff)
-          console.log(pushed)
         } 
-      dict.set(nums[i], i);
+      dict.set(nums[i], i); //key value pairs with key being the element and value being the index
     }
   // }
   return pairs
 }
 
 
+/*
+{el 1: index 0}
+//el 1 get over written
+{el 1: index 1}
+{el 1: index 1, el 2: index 2}
+47-45 = 2
+Set does not have 2 but dictionary does
+so pairs = [45, 2 as difference not 2 as the element]
+add difference 2 to set and 45 because must be unique and we won't ever take anything of the same pair again
+    {2,45}
+if next round is also 45, then it won't add because !pushed.has(45) will return false
+47-46 = 1 and 1 is in dictionary
+so push 46 and diff to pairs and add both to set
+and so on
+ */
 
-
-console.log(twoSumUnique([1, 1, 2, 45, 46, 46], 47))
+console.log(twoSumUnique([ 1, 1, 2, 45, 46, 46], 47))
 
 // O(n)
