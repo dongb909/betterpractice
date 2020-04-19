@@ -254,9 +254,10 @@ Given word = "ABCB", return false.
 
 var exist = function(board, word) {
   //create reflective boolean matrix all set to false
+  
   let rows = board.length;
   let cols = board[0].length;
-  let visited = Array(rows).fill(Array(cols).fill(false));
+  // let visited = Array(rows).fill(Array(cols).fill(false));
 
   //will always need a nested forloop because need to go through whole matrix worst case
   for(let i = 0; i < rows; i++) {
@@ -266,39 +267,40 @@ var exist = function(board, word) {
       //   return search(board, word, i, j, index, visited);
       // }
       //OR
-      if (board[i][j] === word[0] && search(board, word, i, j, 0, visited)){
+      if (board[i][j] === word[0] && search(board, word, i, j, 0)){
         return true;
       }
-      
     }
   }
   return false;
-
 }
 
-
-
-function search (board, word, row, col, index, visited) {
+function search (board, word, row, col, index) {
   //if current index is the length of word then we already found out word
+  console.log(word[index])
   if(index === word.length) return true;
+  //better to check chars right away and stop instead of going to the length next
 
   //check if is out of bounds, if already visited, if word char at index doesn't even equal to current char of board
-  if (row < 0 || row >= board.length || col < 0 || col >= board[0].length || word[index] !== board[row][col] || visited[row][col]) return false;
-  console.log(word[index])
+  if (row < 0 || row >= board.length || col < 0 || col >= board[0].length ) return false;
+  // if (board[row][col] === ) return false;
+  if (word[index] !== board[row][col]) return false;
+  // console.log(word[index])
   //set current location to true on boolean board since we're on it
-  // console.log(visited[row][col], '1')
-  visited[row][col] = true;
-  // console.log(visited[row][col], '2')
+  // console.log(visited, '1')
+  board[row][col] = true;
+  // console.log(visited, '2')
   //check all sides
-  if (search(board, word, row + 1, col, index + 1, visited) || 
-      search(board, word, row - 1 , col, index + 1, visited) ||
-      search(board, word, row, col + 1, index + 1, visited) ||
-      search(board, word, row, col - 1, index + 1, visited) ) {
+  if (search(board, word, row + 1, col, index + 1) || 
+      search(board, word, row - 1 , col, index + 1) ||
+      search(board, word, row, col + 1, index + 1) ||
+      search(board, word, row, col - 1, index + 1) ) {
     return true;
   }
   //reset the current location to false for the next round since the condition above returned false for all
-  visited[row][col] = false; 
-  // console.log(visited[row][col], '3')
+  board[row][col] = word[index]; 
+  
+  // console.log(visited, '3')
   return false;
 
 }
@@ -309,11 +311,11 @@ S
 S
 false */
 
-// console.log(exist([
-//   ['A','B','C','E'],
-//   ['S','F','C','S'],
-//   ['A','D','E','E']
-// ], "SEE"))
+console.log(exist([
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+], "ABCCED"),  'wordsearchhhhhhh')
 
 
 //================================================================================================
@@ -369,10 +371,107 @@ var searchMatrix = function(matrix, target) {
   return false
 }
 
-console.log(searchMatrix(null, 23))
+// console.log(searchMatrix(null, 23))
 
 
 //================================================================================================
 //================================================================================================
 //================================================================================================
-//isSubTree
+//isSubTree, both trees ARE NOT BST, are just binary trees therefore are not ordered
+//also there MIGHT BE DUPLICATES IN TREE!!
+
+class Node {
+  constructor(val) {
+    this.val = val
+    this.right = this.left = null
+  }
+}
+
+let s = new Node(3)
+s.right = new Node(5)
+s.left = new Node(4)
+s.left.left = new Node (1)
+s.left.right = new Node (2)
+
+
+let t = new Node(4) 
+t.left = new Node(1)
+t.right = new Node(2)
+
+
+
+// let result = null;
+
+const isSubtree = (s, t) => { // boolean (true or false)
+  if (!s||!t) return false;
+  
+  // //traverse s tree until see a node that has t root
+  // let sNodeMatched = findMatchedNode(s, t); //returns a NODE, NOT A BOOLEAN
+  // return !sNodeMatched ? false : compareTrees(sNodeMatched, t) //if node returned then compare the trees, if null returned the final return will be false else return if subtrees are equal
+  if (compareNodes(s,t)) return true;
+  return isSubtree(s.left,t) || isSubtree(s.right, t)
+
+}
+
+//this function only runs if the t root was found in s
+//purpose is to compare two nodes, if equal then return true, if not then return false
+//even when both trees hit the end, null === null is TRUE! it's only false for NaN
+// function compareTrees (sNode, tNode) {
+//   if (!sNode || !Node) return null; //will be returned to the parent node and compared to the parent node's other child on the LAST line
+//   //base case is if nodes don't equal then return false and stop everything
+//   if (sNode !== tNode) return false;
+//   //recusive case is if nodes equal then you want to check both their children, don't have to write the condition because it's already passed all conditions to get to this line
+//   return compareTrees(sNode.left, tNode.left) && compareTrees(sNode.right, tNode.right)   
+//     
+
+//********** NOOOOOOO can't do this. need to set the nulls as base cases! there can be more than 1 base case!
+
+// }
+
+
+//expecting true or false for EVERY RETURN so never return null , make null a separate base case
+function compareTrees (sNode, tNode) {
+  //you can have SEVERAL base cases but each one shold be written separately so it's more clean and understandable, less prone to bugs
+  //both nodes are null so they equal, check this first
+  if (!sNode && !tNode) return true;
+  //if one is null, it wouldn't be both because that's already checked by the condition above, then they're not equal
+  if (!sNode || !tNode) return false; //will be returned to the parent node and compared to the parent node's other child on the LAST line
+  //or if both exists but values don't equal
+  if (sNode.val !== tNode.val) return false;
+  //recusive case is if nodes equal then you want to check both their children, don't have to write the condition because it's already passed all conditions to get to this line
+  //this line will return true if both sides are equal, and false if even one of them return false
+  return compareTrees(sNode.left, tNode.left) && compareTrees(sNode.right, tNode.right)   
+ 
+
+}
+
+// console.log(isSubtree(s,t))
+//NOTE: THERE ARE NO WHILE LOOPS NOR FORLOOPS IN RECURSIONS!!
+
+
+
+
+// ?????????????[1,1]
+// [1] is false
+
+
+//================================================================================================
+//================================================================================================
+//================================================================================================
+//isBALANCED
+
+
+
+
+
+
+
+
+
+
+
+
+//================================================================================================
+//================================================================================================
+//================================================================================================
+//MAX DEPTH OF TREE

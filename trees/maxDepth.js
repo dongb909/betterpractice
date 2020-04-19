@@ -146,3 +146,26 @@ function traverse (node) {
  return Math.max(left, right) + 1 // the 1 represents your 8 node
 }
 
+
+
+
+function maxDepth(node) {   //THEY WANT ROOT TO BE 1 or else if there's no tree then return 0 levels
+  if (!node) return 0; //no node is considered balanced
+  //else there IS a node so check it's return, root node is always considered at height 0
+  //check node's left and right to see if their sum is < 2
+  return Math.max(maxDepth(node.left), maxDepth(node.right)) + 1; //checking depth NOT if is balanced
+
+}
+//LITERALLY IS THE SAME EXCEPT FOR 1 LINE so combine!
+//don't even need a helper functon
+//returning a number
+// function check (node){
+//   //if current node is null, it should return -1 to parent
+//   if (!node) return 0; //return -1 if they want root to equal 0 and no root to equal -1
+//   //don't care about val , just if node is present and we've passed that node is present
+//   //since node is present, then check left and right children and return the max value of both returned and add 1 to count for that level
+//   return Math.max(check(node.left), check(node.right)) + 1; //node left if present will return 0 if it's a leaf node, bc its left -1 right -1 max of that is -1 + 1 = 0 which belongs to leaf node level
+//   //if node right will return 0  as well then that means that current nodes two children returns max of 0 which of 0 so current level is 1 etc
+//   //thus, current node would return 1 to it's parent to count itself
+
+// }

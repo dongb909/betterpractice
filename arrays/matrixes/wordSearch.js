@@ -62,7 +62,7 @@ let checkSurrounding=(board, word, row, col, index) =>{
   //   checkSurrounding(board, word, row, col-1, index+1);
   //if any of these are true
 
-
+  
   if(checkSurrounding(board, word, row+1, col, index+1)||
     checkSurrounding(board, word, row-1, col, index+1)||
     checkSurrounding(board, word, row, col+1, index+1)||
