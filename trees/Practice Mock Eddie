@@ -144,4 +144,146 @@ function isPalindrome(left, right, str){
 
 
 
+class Node {
+  constructor(name) {
+    this.name = name;
+    this.children = [];
+  }
 
+  addChild(name) {
+    this.children.push(new Node(name));
+    return this;
+  }
+  
+  breadthFirstSearch() {
+      let result = [];
+      let queue = [this];
+      while (queue.length !== 0){
+          let currentNode = queue.shift();
+          result.push(currentNode.name)
+          //if (currentNode.chidren.length !== 0) {
+          //IFS ARE for when you expect something to break if req doens't match, forloop wouldn't even execute if there's an empty array so don't need it. 
+             for (const childNode of currentNode.children) {
+                 queue.push(childNode)
+             }
+         // } 
+          
+       }
+       return result;
+  }
+}
+
+input = A
+     /  |  \
+    B   C   D
+   / \     / \
+  E   F   G   H
+     / \   \
+    I   J   K
+    
+Output = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"]
+
+
+
+for (const child of currentNode.children) {} arrrr, child == element NOT index number
+
+
+
+
+for (const key in obj)   obbbbbj
+
+
+
+
+
+
+//[positive int coins], n target sum of money
+// return number of ways to make change for that target using the g
+
+
+//input: [1, 5, 10, 25] , 6
+//output: 2 // 1x1 + 1x5 && 6x1
+//
+//sorted? yes. 
+
+
+
+
+
+
+class Tree {
+    constructor(name) {
+        this.name = name;
+        this.ancestor = null;
+    }
+}
+
+//3 instances of the class, you don't know the children
+//1 = root
+//2 = 
+//3 = 
+
+//return youngest ancestor to the 2 descendants
+
+
+function yca (root, des1, des2) {
+    if (root.name === des1.name && root.name === des2.name) return root;
+    
+    let desA = new Set(); // A, I, D, B
+    desA.add(root.name);
+    
+    while (des1.name !== root.name) {
+        desA.add(des1.name);
+        des1 = des1.ancestor;
+    }
+    
+    while (!desA.has(des2.name)) {
+        des2 = des2.ancestor;
+    }
+    
+    return des2;
+}
+
+
+topAncestor = Node A
+descendantOne = Node I
+descendantTwo = Node E
+
+          A
+       /     \
+      B       C
+    /   \   /   \
+   D     E F     G
+ /   \
+H     I
+
+Output: Node B
+
+function getYoungestCommonAncestor(topAncestor, descendantOne, descendantTwo) {
+    const detectedAncestorsOne = new Set();
+    const detectedAncestorsTwo = new Set();
+    let nodeOne = descendantOne;
+    let nodeTwo = descendantTwo;
+    
+    while (nodeOne.ancestor || nodeTwo.ancestor) {
+        detectedAncestorsOne.add(nodeOne.name);
+        detectedAncestorsTwo.add(nodeTwo.name);
+        
+        if (detectedAncestorsTwo.has(nodeOne.name)) {
+            return nodeOne;
+        }
+        
+        if (detectedAncestorsOne.has(nodeTwo.name)) {
+            return nodeTwo;
+        }
+        
+        if (nodeOne.ancestor) {
+            nodeOne = nodeOne.ancestor;
+        }
+        
+        if (nodeTwo.ancestor) {
+            nodeTwo = nodeTwo.ancestor;
+        }
+    }
+    
+    return topAncestor;
