@@ -49,11 +49,11 @@ var lowestCommonAncestor = function(root, p, q) {
 
 const lowestCommonAncestor = (root, p, q) => {
   if (!root || root === p || root === q) return root
-  const left = lowestCommonAncestor(root.left, p, q)
-  const right = lowestCommonAncestor(root.right, p, q)
-  if (!left) return right  // p and q are in the right subtree
+  const left = lowestCommonAncestor(root.left, p, q)  //==> will return a node
+  const right = lowestCommonAncestor(root.right, p, q)  //==> will return a node
+  if (!left) return right  // p and q are in the right subtree because left node is null and if it had found something then a node would have returned for it
   if (!right) return left  // p and q are in the left subtree
-  return root              // p is in one side and q is in the other
+  return root              // p is in one side and q is in the other  //both left and right have valid nodes returned 
 };
 
 
@@ -63,3 +63,82 @@ function lowestCommonAncestor(root, p, q) {
   var resR = lowestCommonAncestor(root.right, p, q);
   return (resL && resR) ? root : (resL || resR);
 }
+
+
+/*class Tree {
+    constructor(name) {
+        this.name = name;
+        this.ancestor = null;
+    }
+}
+
+//3 instances of the class, you don't know the children
+//1 = root
+//2 = 
+//3 = 
+
+//return youngest ancestor to the 2 descendants
+
+
+function yca (root, des1, des2) {
+    if (root.name === des1.name && root.name === des2.name) return root;
+    
+    let desA = new Set(); // A, I, D, B
+    desA.add(root.name);
+    
+    while (des1.name !== root.name) {
+        desA.add(des1.name);
+        des1 = des1.ancestor;
+    }
+    
+    while (!desA.has(des2.name)) {
+        des2 = des2.ancestor;
+    }
+    
+    return des2;
+}
+
+
+topAncestor = Node A
+descendantOne = Node I
+descendantTwo = Node E
+
+          A
+       /     \
+      B       C
+    /   \   /   \
+   D     E F     G
+ /   \
+H     I
+
+Output: Node B
+ */
+
+/*unction getYoungestCommonAncestor(topAncestor, descendantOne, descendantTwo) {
+    const detectedAncestorsOne = new Set();
+    const detectedAncestorsTwo = new Set();
+    let nodeOne = descendantOne;
+    let nodeTwo = descendantTwo;
+    
+    while (nodeOne.ancestor || nodeTwo.ancestor) {
+        detectedAncestorsOne.add(nodeOne.name);
+        detectedAncestorsTwo.add(nodeTwo.name);
+        
+        if (detectedAncestorsTwo.has(nodeOne.name)) {
+            return nodeOne;
+        }
+        
+        if (detectedAncestorsOne.has(nodeTwo.name)) {
+            return nodeTwo;
+        }
+        
+        if (nodeOne.ancestor) {
+            nodeOne = nodeOne.ancestor;
+        }
+        
+        if (nodeTwo.ancestor) {
+            nodeTwo = nodeTwo.ancestor;
+        }
+    }
+    
+    return topAncestor; */

@@ -139,7 +139,45 @@ function isPalindrome(left, right, str){
 
 
 
+AAAAAMMMMAAAAZZZOONNNN
+ //stream of qs, identify top 10 questions asked
 
+
+q1,10
+q2,50
+q3,4
+...
+q1000, 100
+q3, 50
+
+
+return top3 questions {q1000, q2, q1}
+
+[{Ques: "", count:#},{}, {}]
+
+//min heap k = 10
+//assuming have access to heap, pop, min, push
+//yes assume stream length > k
+function findTopQs (stream, k) {
+    //go through entire stream make heap
+    let minHeap = new Heap();
+    for (let i = 0, i< stream.length; i++) {
+        if (minHeap.size < k) {
+            minHeap.push(stream[i]);
+        } else if (minHeap.min[count] < stream[i][count]) {
+            minHeap.pop();
+            minHeap.push(stream[i]);
+        } 
+    }
+    //heap complete, print out top k q
+    let result = [];
+    while (minHeap.size > 0) {
+        result.push(minHeap.pop()[Ques]);
+    }
+    return result;
+}
+
+time: O(n logk) space: heap k , result, k
 
 
 
@@ -287,3 +325,58 @@ function getYoungestCommonAncestor(topAncestor, descendantOne, descendantTwo) {
     }
     
     return topAncestor;
+
+
+
+
+
+
+
+
+
+
+
+function closestVal(bstnode, target){
+    return compare(bstnode, target, bstnode.val);
+}
+
+
+function compare (node, target, closestVal){
+    //if null then return prev node
+    if (!node) return closestVal;
+    //compare nodes to see if equal 
+    if (Math.abs(target - closestVal) > Math.abs(target - node.value)) {
+        closestVal = node.value;
+    }
+    if (target < node.val) {
+        return compare(node.left, target, closestVal);
+    }
+    if (target > node.val) {
+        return compare(node.right, target, closestVal);
+    }
+    return closestVal;
+    
+}
+
+
+//return closest val to the target val
+//O: return val
+//e: can equal, ordered tree, neg, no empty, duplicate values, would target be in tree, no.
+
+class Node = {
+    constructor() {
+        this.left;
+        this.right;
+        this.value;
+    }
+}
+
+         10
+       /     \
+      5      15
+    /   \   /   \
+   2     5 13   22
+ /           \
+1            14
+
+target = 12

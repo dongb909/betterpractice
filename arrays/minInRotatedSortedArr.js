@@ -66,6 +66,7 @@ var findMin = function(nums) {
 
   while (l < r) { //l will always be less than r index untill r=l, r will never > l
     let m = Math.floor(r-l/2) - 1 //for indexing
+    console.log(r,l, m)
     //want to divide our search by half so instead of comparing with l and right
     //compare with midpoint
     //and since the arr is mostly sorted, l will most likely be > right value if pivoted. 
@@ -79,4 +80,4 @@ var findMin = function(nums) {
 
 }
 
-console.log(findMin([4,5,6,7,0,1,2]))
+console.log(findMin([4,5,6,7,0,1,2,3]))
