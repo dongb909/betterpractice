@@ -139,46 +139,6 @@ function isPalindrome(left, right, str){
 
 
 
-AAAAAMMMMAAAAZZZOONNNN
- //stream of qs, identify top 10 questions asked
-
-
-q1,10
-q2,50
-q3,4
-...
-q1000, 100
-q3, 50
-
-
-return top3 questions {q1000, q2, q1}
-
-[{Ques: "", count:#},{}, {}]
-
-//min heap k = 10
-//assuming have access to heap, pop, min, push
-//yes assume stream length > k
-function findTopQs (stream, k) {
-    //go through entire stream make heap
-    let minHeap = new Heap();
-    for (let i = 0, i< stream.length; i++) {
-        if (minHeap.size < k) {
-            minHeap.push(stream[i]);
-        } else if (minHeap.min[count] < stream[i][count]) {
-            minHeap.pop();
-            minHeap.push(stream[i]);
-        } 
-    }
-    //heap complete, print out top k q
-    let result = [];
-    while (minHeap.size > 0) {
-        result.push(minHeap.pop()[Ques]);
-    }
-    return result;
-}
-
-time: O(n logk) space: heap k , result, k
-
 
 
 
