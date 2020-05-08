@@ -29,26 +29,26 @@ let cases = [
 
 //EACH LEVEL ON THE TREE IS AN ITEM IN THE HOUSE WHICH IS EACH RECURSIVE CALL OF TAKE IT OR DON'T
 //DON'T TAKE SLICES OF ITEMS OR IT'S EXPENSIVE
-function knapsack (items, itemIndex, sackWt, value) {
-  //recursion so first think of base case
-  if (items.length === itemIndex) return value;
-  if (sackWt === 0) return value;
-  //DO NOT ITERATE THROUGH THE ITEMS LIST SINCE YOUR BRANCHES ARE TO TAKE OR LEAVE
-  //no forloops bc only 2 decisions not unlimited coins like in coin change
-  if (items[itemIndex].weight > sackWt) return knapsack(items, itemIndex + 1, sackWt , value); //prev
+// function knapsack (items, itemIndex, sackWt, value) {
+//   //recursion so first think of base case
+//   if (items.length === itemIndex) return value;
+//   if (sackWt === 0) return value;
+//   //DO NOT ITERATE THROUGH THE ITEMS LIST SINCE YOUR BRANCHES ARE TO TAKE OR LEAVE
+//   //no forloops bc only 2 decisions not unlimited coins like in coin change
+//   if (items[itemIndex].weight > sackWt) return knapsack(items, itemIndex + 1, sackWt , value); //prev
 
-  return Math.max(                          //cannot subtract undefined from sackwt  vs sackwt is given to you as the main param so it'll always be there just like n
-  //i absolutely need to have the wt exist inorder to move on like in fib, (n-1) must exist and (n-2) must exist, n is given and always avail but not the 1 and 2
-                                            //the wt subtracting must be there
-                                            //loop items first before wt
-    knapsack(items, itemIndex + 1, sackWt - items[itemIndex]["weight"], value + items[itemIndex].value), //current value added
-    knapsack(items, itemIndex + 1, sackWt, value) //previous value added cached
-    ); //you're taking the max value from wether you take current item or not take current item
+//   return Math.max(                          //cannot subtract undefined from sackwt  vs sackwt is given to you as the main param so it'll always be there just like n
+//   //i absolutely need to have the wt exist inorder to move on like in fib, (n-1) must exist and (n-2) must exist, n is given and always avail but not the 1 and 2
+//                                             //the wt subtracting must be there
+//                                             //loop items first before wt
+//     knapsack(items, itemIndex + 1, sackWt - items[itemIndex]["weight"], value + items[itemIndex].value), //current value added
+//     knapsack(items, itemIndex + 1, sackWt, value) //previous value added cached
+    // ); //you're taking the max value from wether you take current item or not take current item
     //recurance relation = f(items,sackwt) = f(items, sackwt - )
 // let take = 
 // let notake = 
 // Math.max(take, notake)
-}
+// }
 //remember how many demensions for memo table is the parameter that changes, so here it's 3
 //x, y = sackwt, itemindex  cell value aka accumulated value = value, dp/memo table. the way you fill it is with recursion formula, 
 
@@ -58,24 +58,61 @@ function knapsack (items, itemIndex, sackWt, value) {
 //EX: f(n) = f(n-1) +f(n-2)  botoms up adding the 2 subroutine, the only param that's changing is 1 so just a 1D arr
 //here, 2 changing params well technically 3 but store the value in the cell
 
-cases.forEach(([items, wt, expected]) => {
-  let result = knapsack(items, 0, wt, 0)
-  if (result !== expected) {
-    console.log(result, items, wt, expected)
-  }
-})
+// cases.forEach(([items, wt, expected]) => {
+//   let result = knapsack(items, 0, wt, 0)
+//   if (result !== expected) {
+//     console.log(result, items, wt, expected)
+//   }
+// })
 
-function knapsackdp (items, sackWt) {
-  let sack = Array(items.length).fill (Array(sackWt + 1).fill(0));
+function knapsackdp (items, maxSackWt) {
+  let rows = maxSackWt + 1; //+ 1 to add additional row
+  let cols = items.length;
+  // let sack = Array(rows).fill (Array(cols).fill(0));//DON'T EVER DO THIS EVERRRR
+  //https://stackoverflow.com/questions/8301400/how-do-you-easily-create-empty-matrices-javascript
+  let sack = Array(rows).fill().map(()=>Array(cols).fill(0))
+  //[ undefined, undefined, undefined, undefined ]
+  //> Array(4) NOOOOOO
+// [ <4 empty items> ] NOOOOO
+  // let sack = []
+  // for (let i = 0; i <= maxSackWt; i++) {
+  //   let row = []
+  //   for (let j = 0; j < items.length; j++) {
+  //     row.push(0);
+  //   }
+  //   sack.push(row)
+  // }
   //be careful what you're looping first
-  for (item of items) {
-    for (let wtSum = 0; wtSum <= sackWt; sackWt++ ) {
-
-
+  // console.log(sack)
+  for (let sackWt = 1; sackWt <= maxSackWt; sackWt++ )  { //already defaulted entire matrix as 0 so can start at sackwt 1
+    // console.log(sack[sackWt])
+    // if (sackWt ===2) break;
+    for (let item = 0; item < items.length; item++) {
+      let currItem = items[item]
+      if (item === 0){
+        if (currItem.weight <= sackWt) {
+          sack[sackWt][item] = currItem.value 
+        }
+      } else if (currItem.weight > sackWt){
+        sack[sackWt][item] = sack[sackWt][item-1] //same sack wt but with 1 less item aka 1 col over
+      } else { //no need else if , and don't do two inner ifs bc just let Math.max do the conditional work for you
+        sack[sackWt][item] = Math.max(currItem.value + sack[sackWt - currItem.weight][item - 1], sack[sackWt][item-1])
+                                  //curr item val when = sack wt OR also when less than sack weight       //NOT considering item at all
+                                  // REMEMBER THE ROW WHERE SACK WT = 0 SO ^ EQ STILL WORRRRRKS!!!!        
+      }
     }
   }
   //what do you wish you had so you don't have to repeat
 
+  return sack[maxSackWt][items.length - 1]
 }
 
 
+
+
+cases.forEach(([items, wt, expected]) => {
+  let result = knapsackdp(items, wt)
+  // if (result !== expected) {
+  //   // console.log(result, items, wt, expected)
+  // }
+})

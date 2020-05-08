@@ -112,3 +112,126 @@ let ex1= [[2,1,1],
           [0,1,1]] //4
 
 console.log(orangesRotting(ex1))
+
+
+
+
+
+// ORRRRRRRRRRRRr
+/**
+ * @param {number[][]} grid
+ * @return {number}
+ */
+
+//account for multiple rotten originally
+//account for out of bounds
+//output = minute if no more fresh oranges
+
+var orangesRotting = function(grid) {
+  //go through entire matrix and get locations of all rotten and fresh oranges
+  let fresh = new Set();
+  let rotten = new Set();
+  
+  for(let i = 0; i < grid.length; i++) {
+      for (let j = 0; j < grid[0].length; j++) {
+          if (grid[i][j] === 1) {
+              fresh.add("" + i + j);
+          }
+          if (grid[i][j] === 2) {
+              rotten.add("" + i + j);
+          }
+      }
+  }   
+  //if there's no fresh oranges in the first place
+  if (fresh.length === 0) return 0;
+  //if there's no rotten oranges but fresh are present in the first place
+  if (fresh.length > 0 && rotten.length === 0) return -1;    
+  //breadth first search through rotten, creating new infected queue at each run
+  
+  let coords = [[0, 1], [0,-1], [1,0], [-1,0]];
+  //vs? {{0, 1}, {0, -1}, {1, 0}, {-1, 0}}??????????
+  let secs = 0;
+  // let infected = rotten;//NO NEED BECAUSE ONLY CARE ABOUT FRESH 
+  // while (infected.size > 0 && fresh.size > 0) {  NOOOO JUST CARE ABOUT FRESH!
+  while(fresh.size > 0) {
+      let infected = new Set();
+      
+      
+      //take the original rotten out of infected queue, it's only going to circle out ONCE before going to next rotten
+      //you got confused with this part thinking it's recursively going to keep going with the first rotten but it won't! it'll only expand out one since it's not recursive and the infected will be stored in a separate set
+      
+      // let currInfected = infected.shift();
+      // let iRow = currInfected[0]
+      // let iCol = currInfected[1]
+      //not shifting anything, just looping
+      for (rot of rotten) { //each rot is a string    let 2 strings minus each other OR parseInt
+          let row = parseInt(rot[0])
+          let col = parseInt(rot[1])
+          //we already know this one is rotten so now we expand out and check those
+          for ([i, j] of coords) {
+          //if there's a fresh orange, make it rotten and add to infected queue in 4 directions
+          //account for out of bounds
+              // if (row + i < 0 || row + i > grid.length || col + j < 0 || col + j > grid[0].length) continue; NOOOOOOO, don't need to do this bc already stored all possible values, so now just have to see if our current coords is in the fesh set, if it is THEN DO SOMETHING
+              // let currOrange = grid[row + i][col + j]; 
+              let nextRow = row + i
+              let nextCol = col + j
+              let nextOrange = "" + nextRow + nextCol
+              if (fresh.has(nextOrange)) {
+                  // currOrange = 2; //NO DON'T HAVE TO ACTUALLY CHANGE THE MATRIX, WE JUST CARE ABOUT WHAT'S IN OUR SETS
+                  infected.add(nextOrange);
+                  fresh.delete(nextOrange)//must decrement fresh somehow
+              }
+          }
+      }
+      //*****IMPORTANT you got confused here too, you can not just change rotten to infected to continue the loop!
+      rotten = infected;
+      secs++;
+      //just finished adding the first outter ring to infected. if there were any infected then keep going else, stop
+      if (infected.size === 0 && fresh.size > 0) return -1
+
+  }
+ return secs
+}
+
+
+
+
+
+
+
+
+
+
+
+///FASTEST
+var orangesRotting = function(grid) {
+  const queue = [];       //index of rotten oranges
+  const directions = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+  let freshCount = 0;
+  for (let i=0; i<grid.length; ++i) {
+      for(let j=0; j<grid[0].length; ++j) {
+          if (grid[i][j] === 1) {
+              freshCount++;
+          } else if (grid[i][j] === 2) {
+              queue.push([i, j]);
+          }
+      }
+  }
+  let minutes = 0;
+  while(queue.length && freshCount) {
+      let len = queue.length;
+      while(len) {
+          const rotten = queue.shift();
+          directions.forEach(dirc => {
+              if ((rotten[0]+dirc[0]) >= 0 && (rotten[0]+dirc[0]) < grid.length && (rotten[1]+dirc[1]) >= 0 && (rotten[1]+dirc[1]) < grid[0].length && grid[rotten[0]+dirc[0]][rotten[1]+dirc[1]] === 1) {
+                  grid[rotten[0]+dirc[0]][rotten[1]+dirc[1]] = 2;
+                  queue.push([rotten[0]+dirc[0], rotten[1]+dirc[1]]);
+                  freshCount--;
+              }
+          });
+          len--;
+      }
+      minutes++;
+  }
+  return freshCount ? -1 : minutes;
+};
