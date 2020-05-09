@@ -149,7 +149,7 @@ var orangesRotting = function(grid) {
   //breadth first search through rotten, creating new infected queue at each run
   
   let coords = [[0, 1], [0,-1], [1,0], [-1,0]];
-  //vs? {{0, 1}, {0, -1}, {1, 0}, {-1, 0}}??????????
+  // vs? {{0, 1}, {0, -1}, {1, 0}, {-1, 0}}  ??????????
   let secs = 0;
   // let infected = rotten;//NO NEED BECAUSE ONLY CARE ABOUT FRESH 
   // while (infected.size > 0 && fresh.size > 0) {  NOOOO JUST CARE ABOUT FRESH!

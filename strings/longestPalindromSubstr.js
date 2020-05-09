@@ -128,7 +128,6 @@
 
 //USING POINTERS
 const longestPalindrome = (s) => {
-  const str = s.replace(/^0-9a-z/gi, "");
   if (str === "" || !s) {
     return "";
   }

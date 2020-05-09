@@ -6,11 +6,11 @@
 //I: int
 //O: int
 //E: no neg, no floats
-// var fib = function(N) {
-//     if (N === 0) return 0
-//     if (N < 3) return 1;
-//     return fib(N-1) + fib(N-2);
-// };
+var fib = function(N) {
+    if (N === 0) return 0
+    if (N < 3) return 1;
+    return fib(N-1) + fib(N-2);
+};
 
 // run time = branch factor^ max depth 2^N = exponential
                 //ex binary tree branch factor is 2
