@@ -132,28 +132,90 @@ var findAnagrams = function(s, p) {
     return result; */
 
 
-    /*
-    class Solution:
-    def findAnagrams(self, s: str, p: str) -> List[int]:
-        from collections import Counter
-        p_chars = Counter(p)
-        distinct_chars = len(p_chars) # distinct chars we need to find
-        start, end = 0, 0
-        locations = []
-        while end < len(s):
-            end_char = s[end]
-            if end_char in p_chars:
-                p_chars[end_char] -= 1
-                if p_chars[end_char] == 0:
-                    distinct_chars -= 1
-            end += 1
-            while distinct_chars == 0:
-                if end-start == len(p):
-                    locations.append(start)
-                start_char = s[start]
-                if start_char in p_chars:
-                    p_chars[start_char] += 1
-                    if p_chars[start_char] > 0:
-                        distinct_chars += 1
-                start += 1 # moving forward removes non-p chars
-        return locations */
+    
+    // class Solution:
+    // def findAnagrams(self, s: str, p: str) -> List[int]:
+    //     from collections import Counter
+    //     p_chars = Counter(p)
+    //     distinct_chars = len(p_chars) # distinct chars we need to find
+    //     start, end = 0, 0
+    //     locations = []
+    //     while end < len(s):
+    //         end_char = s[end]
+    //         if end_char in p_chars:
+    //             p_chars[end_char] -= 1
+    //             if p_chars[end_char] == 0:
+    //                 distinct_chars -= 1
+    //         end += 1
+    //         while distinct_chars == 0:
+    //             if end-start == len(p):
+    //                 locations.append(start)
+    //             start_char = s[start]
+    //             if start_char in p_chars:
+    //                 p_chars[start_char] += 1
+    //                 if p_chars[start_char] > 0:
+    //                     distinct_chars += 1
+    //             start += 1 # moving forward removes non-p chars
+    //     return locations 
+
+
+
+
+
+
+
+var findAnagrams = function(s, p) {
+  const locations = [];
+  if(s < p) return locations;
+  let pMap = {};
+  let pLen = p.length;
+  for (let pIdx = 0; pIdx < p.length; pIdx++) {
+      let char = p[pIdx];
+      if (pMap[char]) {
+          pMap[char]++;
+      } else {
+          pMap[char] = 1;
+      }
+  }
+
+  //START POINTER ASSIGNMENT
+  //set START pointer and END pointer at SAME LOCATION, LEAVE START POINTER FOR ADDING TO RESULT BUT WORK OFF THE END POINTER ONLY! EVEN WHEN EVALUATING AT THE STARTING POSITION AKA END POINTER START
+  //instead of keeping another counter to check length match of p, check by if there's still any char left in map
+  //instead of ending p at p.length, just have the window keep going until all map is empty 
+  let mapLen = Object.keys(pMap).length
+  let start = 0, end = 0
+  while (end < s.length) { //USING END POINTER AS ITERATOR, NOT EVEN START POINTER FOR ANY ITERATION
+      let endChar = s[end]
+      if (pMap[endChar]) {
+          pMap[endChar]-- //THIS MAY GO INTO THE NEG BUT WILL FIX LATER
+          if(pMap[endChar] === 0){ //check right away if it was the last char
+              mapLen--
+              // delete pMap[endChar] DON'T DELETE IT!
+          }
+      }
+      // console.log(mapLen)
+      end++ //increment end here, though it won't actually increment until next loop, but just so you don't forget
+      //now check if pMap is empty to know that we have all char, but we only care our current string is same length as p
+      //if same length as p and pMap is empty then push the start, and inc start by 1
+      //if not then add char at start back to map and update mapLen and keep incrementing start while doing that until start is at where end is (in the case where s = bbbb, p = b, so don't subtract p length from s length as end of s, won't work)
+      while (mapLen === 0) {//our current str has all the char we need
+          if (p.length === end-start) {
+              locations.push(start)
+          } else { //ONLY ADD CHARS BACK IF IN P
+              if(pMap[s[start]]) {
+                  pMap[s[start]]++
+                  if(pMap[s[start]] > 0){
+                      mapLen++
+                  }
+              }//MAY HAVE DUPLICATE SAME LETTERS THAT MAKES YOUR PMAP CHAR COUNT NEG SO ADJUST FOR IT HERE!!
+               //will get you out of this while loop
+              //otherwise, any other char will just increment your start still
+          }
+          start++
+      }
+      
+      //normally increment end here but you already did that above
+  }
+  return locations
+};
+  

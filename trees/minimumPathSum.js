@@ -28,14 +28,14 @@ var minPathSum = function(grid) {
 let findSmallest = function (grid, sum, row, col) {
   let rows = grid.length
   let cols = grid[0].length
-  if (row === rows || col === cols) return Infinity
+  if (row === rows || col === cols) return Infinity //boundary check
   const currSum = grid[row][col] + sum
-  if (row === rows-1 && col === cols-1) return currSum
+  if (row === rows-1 && col === cols-1) return currSum //return when reach last cell
   
-  return Math.min(
+  return Math.min(  //if not at last cell, take this currSum and recurse right or down, adding the next cell and returning what's the smallest up the chain until hit line 25
       findSmallest(grid, currSum, row + 1, col), 
       findSmallest(grid, currSum, row, col + 1)
-  )
+  ) 
 
 }
 //NOTTTTTT:
