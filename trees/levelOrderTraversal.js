@@ -24,6 +24,34 @@ return its level order traversal as:
  * @param {TreeNode} root
  * @return {number[][]}
  */
+/*
+BFS - single q
+BFS - double q
+DFS - tracking depth, must pass depth down with param as(node, depth) with each pass doing depth +1 then when on the node just push it to the order array at the index of the depth
+
+*/
+
+
+//NOTE: USE 2 QUEUES AND SWAP THEM AND ALL VALUES ARE IN OUTTER PORTION
 var levelOrder = function(root) {
-    
+  const finalOrder = []
+  //pretend is a q
+  let queue = [root]
+  if(!root) return finalOrder
+  let nextQueue = []
+  let values = []
+  while (queue.length > 0) {
+      let currentNode = queue.shift()
+      values.push(currentNode.val)
+      if(currentNode.left) nextQueue.push(currentNode.left)
+      if(currentNode.right) nextQueue.push(currentNode.right)
+      if(queue.length === 0) {
+          let temp = queue
+          queue = nextQueue
+          nextQueue = temp
+          finalOrder.push(values)
+          values = []
+      }
+  }
+  return finalOrder
 };
