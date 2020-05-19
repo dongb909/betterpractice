@@ -201,7 +201,7 @@ var findAnagrams = function(s, p) {
       while (mapLen === 0) {//our current str has all the char we need
           if (p.length === end-start) {
               locations.push(start)
-          } else { //ONLY ADD CHARS BACK IF IN P
+        //   } else { //ONLY ADD CHARS BACK IF IN P// } else { //NOT ELSE! YOU HAVE TO TAKE INTO ACCOUNT THE START CHAR TO BE PUT BACK REGUARDLESS FOR WHEN YOU INCREMENT START
               if(pMap[s[start]]) {
                   pMap[s[start]]++
                   if(pMap[s[start]] > 0){
