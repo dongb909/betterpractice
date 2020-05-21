@@ -219,3 +219,49 @@ var findAnagrams = function(s, p) {
   return locations
 };
   
+
+
+
+
+// FINALLLLLLLLLLLLLLLLLLLL
+var findAnagrams = function(s, p) {
+    const locations = [];
+    if(s.length < p.length) return locations;
+    let pMap = {};
+    let pLen = p.length;
+    for (let pIdx = 0; pIdx < p.length; pIdx++) {
+        let char = p[pIdx];
+        if (pMap[char]) {
+            pMap[char]++;
+        } else {
+            pMap[char] = 1;
+        }
+    }
+    let mapLen = Object.keys(pMap).length
+    let start = 0, end = 0
+    while (end < s.length) {
+        let endChar = s[end]
+        //if(pMap[s[start]] || pMap[s[start]] === 0) NOOOOOOOOOOOOOO
+        if (endChar in pMap) {  //BE CAREFULE!!!!! IF CHAR VALUE IS 0 THEN PMAP[ENDCHAR NOT ENOUGH]
+            pMap[endChar]-- 
+            if(pMap[endChar] === 0){ 
+                mapLen--
+            }
+        }
+        end++ 
+        while (mapLen === 0) {
+            if (p.length === end-start) {
+                locations.push(start)
+            }
+            if(s[start] in pMap) {
+                pMap[s[start]]++
+                if(pMap[s[start]] > 0){
+                    mapLen++
+              }
+            }
+            start++
+        }
+        
+    }
+    return locations
+  };
