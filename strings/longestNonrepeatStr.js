@@ -67,3 +67,54 @@ function longestNonrepeat (str) {
 console.log(longestNonrepeat ("eeedddde"))  //{ p:1, w:2, y:1, u:1,  }
                                 //  ^
                                     //  ^
+
+// function findLongestSubstring(str){
+//   // add whatever parameters you deem necessary - good luck!
+//   if(str.length === 0) return 0
+//   let start = 0
+//   let seen = {}
+//   let maxLength = 0
+  
+//   for (let end = 0; end < str.length; end++){
+//       let char = str[end]
+//       if (char in seen){
+//           while(start <= seen[char]) {
+//               delete seen[str[start]]
+//               start++
+//           } //now start = char after repeat
+//           //readd char
+//       } 
+//       seen[char] = end
+//       maxLength = Math.max(maxLength, end - start + 1)
+//       //+1 to be inclusive of where end is pointing to
+//   }
+//   return maxLength
+    
+// }
+  
+  
+function findLongestSubstring(str){
+  // add whatever parameters you deem necessary - good luck!
+  if(str.length === 0) return 0
+  let start = 0
+  let seen = new Set() //don't need to track index, just increment start while deleting in set until start char matches curr repeated char
+  let maxLength = 0
+  
+  for (let end = 0; end < str.length; end++){
+      let char = str[end]
+      if (seen.has(char)){
+          while(str[start] !== char) {
+              seen.delete(str[start])
+              start++
+          } //now start = first char appearance so want the char AFTER the first appearance to be the starting index
+          start++
+      } 
+      //can just add again regardless bc is a set anyways
+      seen.add(char)
+      maxLength = Math.max(maxLength, end - start + 1)
+      //+1 to be inclusive of where end is pointing to
+   }
+   return maxLength
+    
+}
+
