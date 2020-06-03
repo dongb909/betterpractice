@@ -8,6 +8,9 @@ Output: 1->1->2->3->4->4
  * Definition for singly-linked list.
  * }
  */
+
+import { program } from "@babel/types";
+
 /**
  * @param {ListNode} l1
  * @param {ListNode} l2
@@ -236,7 +239,7 @@ var mergeTwoLists = function(l1, l2) {
 // }
 // 94%
 
-
+//RECURSIVELY
 let mergeTwoLists= (l1, l2)=> {
   //this will catch all eventually empty list
   //will return either this function or return for the last function to be the last node.next
@@ -256,7 +259,34 @@ let mergeTwoLists= (l1, l2)=> {
 
 
 
+//IN PLACE ITERATIVELY
+let mergeTwoLists= (l1, l2)=> {
+  if (!l1||!l2) return l1 || l2;
+  // let pointer1 = l1; //NOOOO
+  // let pointer2 = l2;
+  let head, tail;
 
+  while(l1 && l2) {
+    if(l1 >= l2) {
+      if (!head) head = l1 = tail
+      else {
+        tail.next = l1
+        tail = tail.next
+      }
+      l1 = l1.next
+    } else {
+      if (!head) head = l2 = tail
+      else {
+        tail.next = l2
+        tail = tail.next
+      }
+      l2 = l2.next
+    }
+  }
+  if(!l1) tail.next = l2  //don't care to update tail bc we're done anyways
+  if(!l2) tail.next - l1
+  return head
+}
 
 
 
@@ -267,3 +297,6 @@ let mergeTwoLists= (l1, l2)=> {
 
 
 console.log(mergeTwoLists(l1, l2))
+
+
+4088857850 coumadin clinic anticoag clinic. from kristi pham called me yesterday to enroll mom into the program.
