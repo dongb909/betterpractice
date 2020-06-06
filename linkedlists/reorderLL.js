@@ -122,47 +122,21 @@ function reverse(head){
 } */
 
 
-/*var reorderList = function(head) {
+var reorderList = function(head) {
   if (!head || !head.next) return;
   let cur = head,
       arr = [];
   while (cur) {
     arr.push(cur);
     cur = cur.next;
-  }
+  } //now have arr of NODES (NOT JUST THE VALUES) in original order
   let left = 0,
       right = arr.length - 1;
-  while (left < right) {
+  while (left < right) {        //not even modifying the values of the nodes but the nodes themselves are being linked different. OR can just switch out the vals and leave nodes there
     arr[left].next = arr[right];
-    left++;
+    left++;     //incrementing the INDEX that holds the NODE REFERENCES
     arr[right].next = arr[left];
     right--;
   }
   arr[left].next = null;
-}; */
-
-
-/*
-var reorderList = function(head) {
-    if (!head || !head.next || !head.next.next) {
-        return head;
-    };
-    let n = 1;
-    let tail = head;
-    const nodeList = [];
-    while (tail !== null) {
-        nodeList.push(tail);
-        tail = tail.next;
-        n++;
-    }
-    
-    while (nodeList.length > 2) {
-        const tempHead = nodeList.shift();
-        const tempTail = nodeList.pop();
-        const temp = tempHead.next;
-        tempHead.next = tempTail;
-        tempTail.next = temp;
-    }
-    nodeList.pop().next = null;
-    return head;
-}; */
+}; 
