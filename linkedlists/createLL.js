@@ -6,13 +6,12 @@ class Node {
     this.next = next;
   }
 }
-
 // let createList = (arr) =>{    NOT A FUNCTION
 
 class LinkedList {
   constructor() {
     this.head=null;
-    this.size=0
+    this.size=0;
   }
 
   insertToFront(data){
@@ -37,10 +36,7 @@ class LinkedList {
 
   insertAtIndex(data, index){
     //account for negative numbers which shouldn't be allowed
-    if (this.size < index){
-      return;
-    } 
-    
+    if (this.size < index) return
     if(index===0) {
       this.insertToFront(data);
       return;
@@ -61,12 +57,9 @@ class LinkedList {
   }
 
   getAtIndex(index){
-    if (this.size < index && index>0) {
-      return;
-    }
-    if (index===0) {
-      return this.head;
-    }
+    if (this.size < index && index>0) return;
+    if (index===0) return this.head;
+  
     let current=this.head;
     let count=0;
     // while(count<index && current){
@@ -76,9 +69,7 @@ class LinkedList {
     // return current.data      no because what if while loop doesn't get to index, no node.data would equal null, only node.next does
 
     while(current){
-      if(index===count){
-        return current.data;
-      }
+      if(index===count) return current.data;
       current=current.next;
       count++
     }
@@ -86,16 +77,13 @@ class LinkedList {
   }
 
   removeAtIndex(index){
-    if(index>this.size && index>0){
-      return;
-    }
+    if(index>this.size && index>0) return
     let current=this.head;
     let previous;
     let count=0;
     //bc we don't set prev here
-    if(index===0) {
-      this.head=current.next
-    } else {
+    if(index===0) this.head=current.next 
+    else {
       while(count<index){
         count++
         previous=current;
@@ -103,7 +91,6 @@ class LinkedList {
   
       }
       previous.next=current.next
-
     }
     this.size--
   }
@@ -119,7 +106,6 @@ class LinkedList {
       console.log(current.data)
       current=current.next
     }
-
   }
 }
 

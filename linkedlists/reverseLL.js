@@ -1,7 +1,5 @@
 /*Reverse a singly linked head.
 
-Example:
-
 Input: 1->2->3->4->5->NULL
 Output: 5->4->3->2->1->NULL
 Follow up:
@@ -14,10 +12,7 @@ A linked list can be reversed either iteratively or recursively. Could you imple
  *     this.next = null;
  * }
  */
-/**
- * @param {ListNode} head
- * @return {ListNode}
- */
+//iterative
 var reverseList = function(head) {
     let prev = null; //is pretty much the head of the reversed list
     while (head){
@@ -33,31 +28,5 @@ var reverseList = function(head) {
     return head;
 };
 
+//recursive
 
-/*var reverseList = function(head) {
-    let prevNode = null
-    while (head != null) {
-        let nextNode = head.next
-        head.next = prevNode
-        prevNode = head
-        head = nextNode
-    }
-    return prevNode
-}; */
-
-/*var reverseList = function(head) {
-    
-    let prev = null
-    let current = head
-    
-    while (current !== null) {
-        let nextNode = current.next
-        current.next = prev
-        prev = current
-        current = nextNode
-    }
-    
-    return prev
-    
-}; */
-        // hundreds     ones  hundreds   ones

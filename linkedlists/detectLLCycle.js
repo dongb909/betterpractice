@@ -1,10 +1,7 @@
 /*Given a linked list, determine if it has a cycle in it.
-
 To represent a cycle in the given linked list, we use an integer pos which represents 
 the position (0-indexed) in the linked list where tail connects to. If pos is -1, then
  there is no cycle in the linked list.
-
- 
 
 Example 1:
 
@@ -25,25 +22,13 @@ Example 3:
 Input: head = [1], pos = -1
 Output: false
 Explanation: There is no cycle in the linked list.
-
-
- 
-
 Follow up:
+Can you solve it using O(1) (i.e. constant) memory? 
 
-Can you solve it using O(1) (i.e. constant) memory? */
-/**
- * Definition for singly-linked list.
  * function ListNode(val) {
  *     this.val = val;
  *     this.next = null;
  * }
- */
-
-/**
- * @param {ListNode} head
- * @return {boolean}
- */
 
  //mine
 // var hasCycle = function(head) {
@@ -60,7 +45,7 @@ Can you solve it using O(1) (i.e. constant) memory? */
 //     }
 //     return true;
 // };
-
+*/
 /*var hasCycle = function(head) {
     var slow=head;
     var fast=head;
@@ -74,24 +59,7 @@ Can you solve it using O(1) (i.e. constant) memory? */
     return false;
 }; */
 
-/*var hasCycle = function(head) {
-//    console.log("");
-    var buffer;
-    while(head) {
-        head.val = "v";
-//        console.log(head);
-        buffer = head.next;
-        if(buffer != null && buffer.val == "v") return true;
-        head = buffer;
-    }
-    return false
-}; */
 
-
-
-
-
-/*
 var hasCycle = function(head) {
   if (!head || !head.next) return false;
   let slow = head,
@@ -102,4 +70,4 @@ var hasCycle = function(head) {
     fast = fast.next.next;
   }
   return false;
-}; */
+};
