@@ -128,44 +128,28 @@
 
 //USING POINTERS
 const longestPalindrome = (s) => {
-  if (str === "" || !s) {
-    return "";
-  }
-  if (str.length === 1) {
-    return str
-  }
+  if (str === "" || !s) return ""
+  if (str.length === 1) return str
   let maxIndex=0;
   let maxLength=0;
-  let start = 0;
-  let end = 0; //in case there's no palindromes at all
-
-  for (let i = 1; i <str.length;i++ ) {
-    //odd palindrome
-    let odd = expandStr(str, i, i);
-    //even palindrome
-    let even = expandStr(str, i-1, i);
-    // console.log(odd, 'odd')
-    // console.log('even', even)
-    
-    //get the bigger length without an if statement
-    let max = Math.max(odd, even);
-    
+  // let start = 0;
+  // let end = 0; //in case there's no palindromes at all
+  for (let i = 1; i <str.length; i++) {
+    let odd = expandStr(str, i, i); //odd palindrome
+    let even = expandStr(str, i-1, i);//even palindrome
+    let max = Math.max(odd, even); //get the bigger length without an if statement
     //update the max size starting/ending to slice and return substring later instead of at each iteration and slicing each time to compare which isn't efficient
-    if (max > maxLength) {
-      //from the current index as middle or empty
+    if (max > maxLength) { //from the current index as middle or empty
       maxLength = max;
-      // console.log(i, 'i')
       maxIndex= i;
     }
   }//6/2= 3    i = 5  start 5-3 = 2 OK   end 5+3 = 8 
-  start = maxIndex - Math.floor(maxLength/2);
-  end = (maxLength%2===0) ? (maxIndex + Math.floor(maxLength/2)) : (maxIndex + Math.floor(maxLength/2) + 1);
-
+  let start = maxIndex - Math.floor(maxLength/2);
+  let end = (maxLength%2===0) ? (maxIndex + Math.floor(maxLength/2)) : (maxIndex + Math.floor(maxLength/2) + 1);
   return str.slice(start, end);
 }
 
 const expandStr = (s, left, right) => {
-  
   while (left>=0 && right <s.length && s.charAt(left)===s.charAt(right)) {
     left--;
     right++;
@@ -173,6 +157,5 @@ const expandStr = (s, left, right) => {
   //there's an extra left-- and right++
   return right-left-1 //length of this string
 }
-
 
 console.log(longestPalindrome(""))

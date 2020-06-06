@@ -32,7 +32,10 @@ All given inputs are in lowercase letters a-z. */
 // };
 
 
-//should be fine. Any index that is out of bounds for a string will result in undefined, not an error. So, if ["following", "follow"] are used, index 6 of "follow" will equal undefined which is not equal to "i" which is totally fine. slice will copy any range of characters up to a certain index. It shouldn't ever attempt to copy out of bounds characters here because of the above if, but if it did, it would just copy to the end of the string anyways without issue. eg. "hello".slice(0, 1000); would work just fine.
+//should be fine. Any index that is out of bounds for a string will result in undefined, not an error. 
+//So, if ["following", "follow"] are used, index 6 of "follow" will equal undefined which is not equal to "i" which is totally fine.
+// slice will copy any range of characters up to a certain index. It shouldn't ever attempt to copy out of bounds characters here because of the above if, 
+//but if it did, it would just copy to the end of the string anyways without issue. eg. "hello".slice(0, 1000); would work just fine.
 
 //still not the best method bc can have strings of same length but only the first characters match or something!
 

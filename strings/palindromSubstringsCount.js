@@ -21,19 +21,6 @@ Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa". */
 //O: number
 
 //FIRST ATTEMPT
-// let isPalindrome = (s) => {
-//   let shortenString = s.replace(/[^0-9a-z]/gi, "").toLowerCase();
-//   let length = shortenString.length - 1  
-//   for (let i = 0; i < Math.floor(shortenString.length/2); i++) {
-//     if (!(shortenString[i] === shortenString[length - i])) {
-//       return false;
-//     }
-//   }
-//   return true;
-  
-// }
-
-
 // let countSubstrings = (s) => {
 //   let count = s.length;
 //   console.log(count)
@@ -54,40 +41,36 @@ Explanation: Six palindromic strings: "a", "a", "a", "aa", "aa", "aaa". */
 //   }
 //   return count;
 // }
-
-
 // console.log(countSubstrings("abbca"))
 
 
-
-
 //SECOND ATTEMPT
-
 let countPalindrome = (s) => {
   let count = s.length;
   //skip the first index so we work backwards to ensure we stop at 0
   //if center is empty aka 2 letters
   let j;
-  for (let i = 1; i<s.length; i++){
+  for (let i = 1; i<s.length; i++){ //starting at index 1 NOT at 0, already accounted for zero anywayz
     // incrementing main index
     //check middle type
-    if (s[i]===s[i-1]){
+    //EVEN MIDDLE TYPE
+    if (s[i]===s[i-1]){ //aka char at 1 and at 0
       count++;
       //
-      j = 1;
+      j = 1; //middle technically is nothing so you're expanding out 1 char at a time from middle
       //check the ends if equal so to the Left of index aka -2 and to the right of index aka +1 becuase
       //must account for when past index 0 and when past length
-      while (s[i-1-j]===s[i+j] && (i-1-j) >=0 && i+j<s.length) {
-        count++;
-        j++;
-      }
+      while (s[i-1-j]===s[i+j] && (i-1-j) >=0 && i+j<s.length) {  //=> if out of bounds where undefined == s[i+j] and index !=0 and if length not longer than string
+        count++;  //meaning you keep iteration there at i but now use while loop to expand out from center and while indices are within bounds then add to count if palindrome
+        j++;      //the iterator to expand out in while loop since your i is going to stay the same the whole time until next iteration of i outside of this while loop
+      }   //NOT adding j to anything. it's jsut an inner loop marker
     }
-
     //if center is 1 letter, 1 letter is already accounted for, now check the sides
     //don't have to worry about passing 0 because i starts at 1 and always just checking i-1, nothing less
-    if (s[i-1]===s[i+1]){
+    //ODD MIDDLE TYPE where add is the i, now just checking i's surrounding
+    if (s[i-1]===s[i+1]){   //if s[0] = s[2] and then expand out from there with while loop
       count++;
-      j=2;  //bc now at 3 letters palindrome and centering around i
+      j=2;  //bc now at 3 letters palindrome and centering around i, already accouted for 1 out so now account for 2 out from middle
       while (s[i-j]===s[i+j] && (i-j) >=0 && (i+j) < s.length) {
         count++;
         j++;
@@ -97,4 +80,4 @@ let countPalindrome = (s) => {
   return count;
 }
 
-console.log(countPalindrome('abcba'))
+console.log(countPalindrome('aabcb'))

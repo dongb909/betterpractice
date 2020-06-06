@@ -26,6 +26,7 @@ let isPalindrome = (s) => {
   //don't need brackets if using the othet way
 
   let shortenString = s.replace(/[^0-9a-z]/gi, "").toLowerCase();
+  // console.log(shortenStrin                //^what replacing the chars you're taking out with.
   //odd or even does not matter because if odd, won't be touching middle anyways bc will go from comparing front to end and working way in
   let length = shortenString.length - 1  //this way it accounts for the -0 and you don't have to recalculate length each iteration
   for (let i = 0; i < Math.floor(shortenString.length/2); i++) {
@@ -36,7 +37,7 @@ let isPalindrome = (s) => {
   return true;
   
 }
-console.log(isPalindrome("A man, a plan, abnal: Panama"));
+console.log(isPalindrome("A man, a plan, aanal: Panama"));
 
 
 

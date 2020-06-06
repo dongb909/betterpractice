@@ -68,11 +68,6 @@ Output: true */
 
 //BigO=n
 
-
-
-
-
-
 /*const isValid = (s) => {
 
     let stack = [];
@@ -135,20 +130,14 @@ Output: true */
 
 
 let isValid = (s) => {
-  if(s.length%2===1) {
-    return false;
-  }
+  if(s.length%2===1) return false;
   let parens = new Map();
   parens.set("(",")");
   parens.set("[","]");
   parens.set("{", "}");
+  let open = []; //if item = key, add to arr
 
-  let open = [];
-  console.log(parens["{"])
-
-  for(let i = 0; i < s.length; i++){
-    //if item = key, add to arr
-    //when using Map, CANNOT use [] to retrieve. need to use set, get, has
+  for(let i = 0; i < s.length; i++){  //when using Map, CANNOT use [] to retrieve. need to use set, get, has
     if (parens.has(s[i])) {
       open.push(s[i]);
     } else if (open.length === 0) {
@@ -163,31 +152,3 @@ let isValid = (s) => {
 }
 
 console.log(isValid('()'))
-
-// let isValid = (s) => {
-//   if(s.length%2===1) {
-//     return false;
-//   }
-//   let parens = {"(":")","[":"]", "{":"}"};
-
-//   let open = [];
-
-//   for(let i = 0; i < s.length; i++){
-//     //if item = key, add to arr
-//     //when using Map, CANNOT use [] to retrieve. need to use set, get, has
-//     if (parens[s[i]]) {
-//       // console.log(parens[s[i]])
-//       open.push(s[i]);
-//       // console.log(open)
-//     } else if (open.length === 0) {
-//       return false;
-//     } else {
-//       if (parens[open[open.length-1]] === s[i]) {
-//         open.pop();
-//       }
-//     }
-//   }
-//   return open.length === 0
-// }
-
-// console.log(isValid('()'))

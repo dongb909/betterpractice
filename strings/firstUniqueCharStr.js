@@ -45,20 +45,21 @@ are there time and space constraints
 
 
 //brute force O(2n)
-var firstUniqChar = function(s) {
-    let chars = {}
-    for(char of s) {
-        if (chars[char]) chars[char]++
-        else chars[char] = 1
-    }
-    for (let i = 0; i<s.length; i++) {
-        if (chars[s[i]] === 1) return i
-    }
-    return -1
-};
+// var firstUniqChar = function(s) {
+//     let chars = {}
+//     for(let char in s) {
+//         console.log(char)
+//         if (chars[char]) chars[char]++
+//         else chars[char] = 1
+//     }
+//     for (let i = 0; i<s.length; i++) {
+//         if (chars[s[i]] === 1) return i
+//     }
+//     return -1
+// };
 
 
-//optimal O(n) space O(n)
+// optimal O(n) space O(n)
 var firstUniqChar = function(s) {
   let chars = "abcdefghijklmnopqrstuvwxyz"
   let firstIdx = new Map()
@@ -73,7 +74,7 @@ var firstUniqChar = function(s) {
   }
   let min = Number.MAX_VALUE
   for (const [char, idx] of firstIdx){
-      console.log(idx)
+      console.log(char, idx)
       if (idx > -1 && idx < min) min = idx
   }
   return (min === Number.MAX_VALUE) ? -1 : min

@@ -30,9 +30,6 @@ function longestNonrepeat (str) {
   let start = 0;
   let end = 0;
   let map = {};
-  let finalstart=0;
-  let finalend=0
-
     
   while (end < str.length) {
     //add all     DON'T USE SETS HEREEEEEEEEEEEE bc it's just very verbose 
@@ -95,7 +92,7 @@ console.log(longestNonrepeat ("eeedddde"))  //{ p:1, w:2, y:1, u:1,  }
   
 function findLongestSubstring(str){
   // add whatever parameters you deem necessary - good luck!
-  if(str.length === 0) return 0
+  if(str.length === 0 || !str) return 0
   let start = 0
   let seen = new Set() //don't need to track index, just increment start while deleting in set until start char matches curr repeated char
   let maxLength = 0
