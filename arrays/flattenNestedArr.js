@@ -15,3 +15,7 @@ let flatten = (arr) => {
 
 
 console.log(flatten([1,2,[3,4],[5,[6,[7], 8]]]))
+
+let i = [1,2]
+let j = [3,4]
+// console.log(i.concat(...j))
