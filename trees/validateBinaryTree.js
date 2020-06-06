@@ -98,3 +98,79 @@ console.log(isValidBST(tree))
 
 Complexity
 O(n)O(n) time and O(n)O(n) space.*/
+
+
+
+
+
+//recursively
+// var isValidBST = function(root) {
+//     return isValid(root, -Infinity, Infinity)//NO!! want them to == null to reflect leaf nodes children!
+//     // return isValid(root, null, null)
+// };
+
+// let isValid = function (node, min, max) {
+//     if(!node) return true;
+//     // console.log(0>max)
+//     //check if node val is OUTSIDE of your window
+//     if(node.val <= min || node.val >= max) return false;
+//     return isValid(node.left,min,node.val) && isValid(node.right, node.val, max)     //THINK WINDOWWWWW
+// }
+
+
+//shrinking window as you traverse
+    //     4
+    //   /   \
+    // 2       6
+    ///  \    /  \
+//   1    3   5   7
+/*Number.MIN_VALUE is 5e-324, i.e. the smallest positive number that can be represented within float precision, i.e. that's as close as you can get to zero. It defines the best resolution floats give you.
+
+Now the overall smallest value is Number.NEGATIVE_INFINITY although that's not really numeric in the strict sense.*/
+
+
+
+
+// IN ORDER TRAVERSAL
+// var isValidBST = function(root) {
+//     let stack = []
+    
+//     //prev at first is the null child of most left node, then also becomes the parent of right child
+//     while(root || stack.length){         //iterate all to left node
+//         while(root){
+//             stack.push(root)
+//             root = root.left
+//         }  
+//         //curr is not null so use stack and see if prev aka the left child node of curr is > curr(in the first case is -infinity)
+//         root = stack.pop()
+//         root = root.right //if right is ever less than prev that's false too
+//     }
+//     return true
+// };
+//[1,5,3,4,6]
+
+//stack is just to keep track of your traversal
+//it's separate from evaluating and comparing.
+//so traverse first then add the other stuff.
+
+var isValidBST = function(root) {
+  let stack = []
+  let curr = [root,-Infinity, Infinity]
+  //prev at first is the null child of most left node, then also becomes the parent of right child
+  while(curr[0] || stack.length){         //iterate all to left node
+      while(curr[0]){
+          stack.push(curr)
+          let [node, min, max] = curr
+          if (node.val <=min || node.val >= max) return false
+          curr = [node.left, min, node.val]
+          // curr = [curr[0].left, curr[1],curr[0].val] // KEEP WITHIN WINDOW
+      }  
+      //curr is not null so use stack and see if prev aka the left child node of curr is > curr(in the first case is -infinity)
+      curr = stack.pop()
+      let [node, min, max] = curr //if right is ever less than prev that's false too
+      if (node.val <=min || node.val >= max) return false
+      curr = [node.right, node.val, max]
+  }
+  return true
+};
+
