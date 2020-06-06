@@ -48,18 +48,17 @@ var mostCommonWord = function(paragraph, banned) {
   let result
   
   for (i in words) {  //i = index
+    console.log(i)
     if (!bannedSet.has(words[i])) {
       if (count.has(words[i])) {
-        count.set(words[i], count.get(words[i]) +1)
+        count.set(words[i], count.get(words[i])+1)
       } else {
         count.set(words[i],1)
       }
 //NOOOO you're using MAP so you can't do this.
     // count[words[i]] = count[words[i]] ? count[words[i]]+1 : 1 //must be +1 if doing it this way instead of ++
-
     }
   }
-  console.log(count)
   for (let [k,v] of count){ //OF NOT IN //i = actual key //ALL THIS WONT WORK so just use regular map!!
     if(v > maxCount) {
       maxCount = v

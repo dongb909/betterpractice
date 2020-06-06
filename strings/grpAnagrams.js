@@ -1,7 +1,4 @@
 /*Given an array of strings, group anagrams together.
-
-Example:
-
 Input: ["eat", "tea", "tan", "ate", "nat", "bat"],
 Output:
 [
@@ -9,15 +6,6 @@ Output:
   ["nat","tan"],
   ["bat"]
 ]
-Note:
-
-All inputs will be in lowercase.
-The order of your output does not matter. */
-/**
- * @param {string[]} strs
- * @return {string[][]}
- */
-
 //edge: if no words are anagrams, then still return each in its own batch within an arr
 //all same length or diff? allll are going to be same length
 
@@ -51,3 +39,20 @@ let hash = function (str) {
     str split t
     )*/
 //don't use n bc tho 1 input you have 2 functions
+
+const groupAnagrams = strs => {
+    const map = {};
+    
+    for (let str of strs) {
+        const key = [...str].sort().join('');
+
+        if (!map[key]) {
+            map[key] = [];
+        }
+
+        map[key].push(str);
+    }
+    
+    return Object.values(map);
+};
+console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"],))

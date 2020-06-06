@@ -83,31 +83,24 @@ var reorganizeString = function(S) {
     else chars[char]=1
   }
   let maxHeap = []
-  for(let [char, count] of Object.entries(chars)){        //NO SUCH THING AS (LET [KEY, VAL] IN {})
+  for(let [char, count] of Object.entries(chars)){        //NO SUCH THING AS (LET [KEY, VAL] IN {}) but yes (let [key, val] of {})
     maxHeap.push([char, count])
   }
-   console.log(maxHeap)
   let comparator = (a,b)=> {if (a[1]>b[1]) return -1}
   maxHeap.sort(comparator)
   if (maxHeap[0][1] > Math.ceil(S.length/2)) return ""
   let string = []
   let next = null
-  // let counter = 0
   while(maxHeap.length > 0 ){
-      // counter ++
-      // console.log(maxHeap.length)
-      // if (counter ===10) break
     let max = next ? next : maxHeap.shift()
     next = null
     string.push(max[0])
-    max[1] -= 1  
-      // console.log(max)
+    max[1]--
     if (max[1] >= 0 && maxHeap.length === 0) return string.join('')
     if (max[1] >= maxHeap[0][1]){
       next = maxHeap.shift()
       maxHeap.push(max)
       maxHeap.sort(comparator)
-        console.log(maxHeap)
     } else if(max[1]!== 0){
         maxHeap.push(max)
         maxHeap.sort(comparator)
@@ -115,7 +108,7 @@ var reorganizeString = function(S) {
   }
   return string.join('')
 };
-
+console.log(reorganizeString("aaaabbb"))
 
 
 // a:2, b:1
