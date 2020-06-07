@@ -24,17 +24,13 @@ You may assume k is always valid, 1 ≤ k ≤ array's length. */
 
 
 //nonbruteforce and without sorting
- 
-
 var findKthLargest = function(nums, k) {
-  if (nums.length < k) {
-    return null
-  }
+  if (nums.length < k) return null
   sort(nums, nums.length, 0, nums.length-1)
   return arr[nums.length-k-1]
 };
 
-let sort = (arr, length, start=0, end=arr.length-1) => {
+let sort = (arr, length, start, end) => {
   //get pivot
   if(length <2){
     return 

@@ -1,7 +1,4 @@
 /*Given a collection of distinct integers, return all possible permutations.
-
-Example:
-
 Input: [1,2,3]
 Output:
 [
@@ -33,16 +30,14 @@ var permute = function(nums) {
         })
     }
     helper(nums, [])
-
     //immediately invoked function expressions IIFE
-    
     return permutations
 }
 
 //note: trees = O(branchFactor^depth) bc options are fixed for branch factor
 //space: trees = //dont' count input, nor output, 
     //for DFS = O(n) stack space worst case is when have a linkedlist like tree
-          DFS = O(depth = log n) balanced because go down to root then up on one side to the other
+         // DFS = O(depth = log n) balanced because go down to root then up on one side to the other
     //for BFS = O(n) the largest queue length, callstack is just 1 frame though, don't assume binary tree
           //^ Think about 1 root and the the rest of n as that root node's children
           // if binary tree space = O(2^maxdepth)
