@@ -76,8 +76,16 @@ var maxProfit = function(prices) {
   }
   return max
 };
-console.log(maxProfit(
-  [7,2,5,3,1,4]))
+console.log(maxProfit([7,2,5,3,1,4]))
+
+  //  curr       min     max
+  //             7
+  //             2
+  //                     5-2=3
+  //                     3-1=1
+  //             1   
+  //                     4-1=3       
+
 
 // let dayToBuySell = (nums) => {
 //   let maxProfit = 0

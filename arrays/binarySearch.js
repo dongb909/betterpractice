@@ -8,7 +8,7 @@ let ex2 = [3,5,7,9] //find 10
 let biSearch = function (arr, target){
   let start = 0
   let end = arr.length - 1   //bc end is INDEX inbound
-  while(start !== end || start < end){
+  while(start < end && start !== end ){
     let pivot = Math.floor((end+start)/2)   //COMPUTE PIVOT WITHIN THE WHILE LOOP AND YOU WERE SUBTRACTING THE PIVOT INSTEAD OF ADDING
     let curr = arr[pivot]                 //IT'S ALWAYS SHIFTING FROM THE START BOARDER DIVIDED BY 2 INDEXES NOT THE LENGTH ITSELF BUT THE INDEXES!!
     if(curr===target) return pivot
@@ -19,7 +19,7 @@ let biSearch = function (arr, target){
   return -1
 }
 
-console.log(biSearch(ex2, 1))
+console.log(biSearch(ex2, -2))
 //have start and end
 //divide half to get pivot index
 //if pivot < target then start = pivot and recalc pivot with start and end

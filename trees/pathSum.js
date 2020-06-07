@@ -26,7 +26,7 @@ return true, as there exist a root-to-leaf path 5->4->11->2 which sum is 22. */
  * @param {number} sum
  * @return {boolean}
  */
-var hasPathSum = function(root, sum) {
+var hasPathSum = function(root, sum) { //we're going to subtract until reach the end to see if sum = 0 at root., returning T or F but entering math as arguments
      // if (sum < 0) return false; //don't need tjos and next line bc there's only 1 true condition
       // if(!root && sum > 0) return false;
       //if(!root && sum === 0) return true;
@@ -41,10 +41,10 @@ var hasPathSum = function(root, sum) {
   };
   
 
-// console.log(true && false)
-// console.log(true && true)
-//      console.log(false&& false)
-//           console.log(true || false)
-//                console.log(true || true)
-//                     console.log(false|| false)
-//                     console.log(false || true)
+console.log(true && false)
+console.log(true && true)
+     console.log(false&& false)
+          console.log(true || false)
+               console.log(true || true)
+                    console.log(false|| false)
+                    console.log(false || true)

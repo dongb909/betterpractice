@@ -31,14 +31,6 @@ adoptionClinic.enqueue(doggy);
 
 
 
-
-
-
-
-
-
-
-
 function reverseString(str) {
   return str.split('').reverse().join('');
 }
@@ -62,12 +54,8 @@ function uniquePalindromes(str){
       }
     }
   }
-  
   return new Array.from(unique);   copies over from set
-  return [...unique]
-  
-  
-  
+  return [...unique] 
 }
 
 
@@ -75,38 +63,6 @@ function uniquePalindromes(str){
 
 
 
-
-function reverseString(str) {
-  return str.split('').reverse().join('');
-}
-
-function isPalindrome(str){
-  return str === reverseString(str)
-}
-
-// input: ababababa
-//output: array of every unique palindrome
-//ex: a, b, aba, ababa, bab etc
-
-function uniquePalindromes(str){
-  // let result = [];
-  let unique = new Set();
-  
-  for (let i = 0; i< str.length; i++){
-    for(let j = 0; j< str.length; j++){
-      let forward = str.slice(i,j);
-      if (forward === reverseString(forward) && !unique.has(forward)){
-        unique.add(forward)
-      }
-    }
-  }
-  
-  return [...unique]
-}
-
-
-// ababa
-// abba
 
 function uniquePalin(str) {
   let unique = new Set();

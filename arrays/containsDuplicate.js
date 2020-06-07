@@ -30,9 +30,7 @@ Output: true */
 // };
 
 var containsDuplicate = function(nums) {
-  if(nums.length ===0){
-    return false
-  }
+  if(nums.length ===0)return false
   let unique = new Set(nums)//takes in an array ALWAYS, even if just 1 number
   // ********************
   // ********************

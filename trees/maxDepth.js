@@ -141,9 +141,9 @@ function findMaxDepth(root) {
 
 function traverse (node) {
  if(!node) return 0; // haven't yet accounted for the node, we must do so somewhere. right?
- let left = traverse(node.left)  // 0
- let right = traverse(node.right)  // 0
- return Math.max(left, right) + 1 // the 1 represents your 8 node
+ let left = 1 + traverse(node.left)  // 0
+ let right = 1 + traverse(node.right)  // 0
+ return Math.max(left, right) 
 }
 
 
@@ -152,7 +152,6 @@ function traverse (node) {
 function maxDepth(node) {   //THEY WANT ROOT TO BE 1 or else if there's no tree then return 0 levels
   if (!node) return 0; //no node is considered balanced
   //else there IS a node so check it's return, root node is always considered at height 0
-  //check node's left and right to see if their sum is < 2
   return Math.max(maxDepth(node.left), maxDepth(node.right)) + 1; //checking depth NOT if is balanced
 
 }

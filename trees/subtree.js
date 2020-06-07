@@ -90,8 +90,7 @@ class Node {
 
  const compareNodes = (snode, tnode) => { // boolean (true or false)
   if (!snode && !tnode) return true;
-  if (!snode || !tnode) return false;
-  if (snode.val !== tnode.val) return false;
+  if (!snode || !tnode || snode.val !== tnode.val) return false;
   //if equal then check children
   let left = compareNodes(snode.left, tnode.left)
   let right = compareNodes(snode.right, tnode.right)
