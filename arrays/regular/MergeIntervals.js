@@ -84,9 +84,7 @@ var merge = function(intervals) {
 if(intervals.length<2) return intervals;
     
 intervals.sort((a,b)=>a[0]-b[0]);
-
 const result = [intervals[0]];
-
 for(let i=1; i<intervals.length; i++) {
     const pre = result[result.length-1];
     if(intervals[i][0]<=pre[1]) {
@@ -96,6 +94,5 @@ for(let i=1; i<intervals.length; i++) {
         result.push(intervals[i]);
     }
 }
-
 return result;
 };

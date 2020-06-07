@@ -9,7 +9,6 @@ Output:
   [3,1,2],
   [3,2,1]
 ]*/
-
 var permute = function(nums) {
     let permutations =[]
     let helper = function(options, permutation) {
