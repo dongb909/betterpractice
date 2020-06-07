@@ -9,24 +9,22 @@ Output: 1->1->2->3->4->4
  * }
  */
 
-import { program } from "@babel/types";
-
 /**
  * @param {ListNode} l1
  * @param {ListNode} l2
  * @return {ListNode}
  */
-function ListNode(val) {
-    this.val = val;
-    this.next = null;
-}
-let l1= new ListNode(1);
-l1.next=  new ListNode(2)
-l1.next.next= new ListNode(4)
-// let l1=new ListNode();
-let l2= new ListNode(1);
-l2.next=  new ListNode(3)
-l2.next.next= new ListNode(4)
+// function ListNode(val) {
+//     this.val = val;
+//     this.next = null;
+// }
+// let l1= new ListNode(1);
+// l1.next=  new ListNode(2)
+// l1.next.next= new ListNode(4)
+// // let l1=new ListNode();
+// let l2= new ListNode(1);
+// l2.next=  new ListNode(3)
+// l2.next.next= new ListNode(4)
 
 // // console.log(l1, l2)
 // var mergeTwoLists = function(l1, l2) {
@@ -257,8 +255,6 @@ let mergeTwoLists= (l1, l2)=> {
   
 }
 
-
-
 //IN PLACE ITERATIVELY
 let mergeTwoLists= (l1, l2)=> {
   if (!l1||!l2) return l1 || l2;
@@ -284,18 +280,13 @@ let mergeTwoLists= (l1, l2)=> {
     }
   }
   if(!l1) tail.next = l2  //don't care to update tail bc we're done anyways
-  if(!l2) tail.next - l1
+  if(!l2) tail.next = l1
   return head
 }
-
-
 
 // let i = 5
 // let j = null
 // let mergeTwoLists= (hi,bye)=> {if(!i||!j) return j || i}
-
-
-
 console.log(mergeTwoLists(l1, l2))
 
 

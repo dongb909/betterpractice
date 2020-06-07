@@ -50,8 +50,3 @@
 vs eager evaluation*/
 
 //heap 
-class TopQs {
-  constructor(){
-
-  }
-}

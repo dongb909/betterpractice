@@ -1,28 +1,18 @@
-/*
-Share
-Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
-
+/*Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
 Example:
-
 Input:
 [
   1->4->5,
   1->3->4,
   2->6
 ]
-Output: 1->1->2->3->4->4->5->6
-*/
-
+Output: 1->1->2->3->4->4->5->6 */
 /**
  * Definition for singly-linked list.
  * function ListNode(val) {
  *     this.val = val;
  *     this.next = null;
  * }
- */
-/**
- * @param {ListNode[]} lists
- * @return {ListNode}
  */
 var mergeKLists = function(lists) {
   //min heap of k size, the smallest head and the list it belongs to.
@@ -35,7 +25,6 @@ var mergeKLists = function(lists) {
           minHeap.add(node)
       }
   }
-  
   while(minHeap.size() > 0){                         //  O(logk) even though popping from heap, not reducing heap size every time
      let listHead = minHeap.pop()                     //max time add heap 
      tail.next = listHead

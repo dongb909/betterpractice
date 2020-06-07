@@ -31,20 +31,6 @@ p and q are different and both values will exist in the BST. */
  *     this.left = this.right = null;
  * }
  */
-/**
- * @param {TreeNode} root
- * @param {TreeNode} p
- * @param {TreeNode} q
- * @return {TreeNode}
- */
-var lowestCommonAncestor = function(root, p, q) {
-    
-};
-
-
-
-
-
 
 
 const lowestCommonAncestor = (root, p, q) => {
@@ -57,12 +43,18 @@ const lowestCommonAncestor = (root, p, q) => {
 };
 
 
+
+
+
+
 function lowestCommonAncestor(root, p, q) {
   if (!root || root === p || root === q) return root;
   var resL = lowestCommonAncestor(root.left, p, q);
   var resR = lowestCommonAncestor(root.right, p, q);
   return (resL && resR) ? root : (resL || resR);
 }
+
+
 
 
 /*class Tree {

@@ -133,23 +133,6 @@ class LRUcache {
   console.log(cache)  // returns 1
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // make it dry,
 // need to find the mistakes when going through examples on your own
 // should really think about edge cases prior

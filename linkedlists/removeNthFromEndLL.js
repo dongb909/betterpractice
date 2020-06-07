@@ -1,35 +1,17 @@
 /*Given a linked list, remove the n-th node from the end of list and return its head.
-
 Example:
-
 Given linked list: 1->2->3->4->5, and n = 2.
 
 After removing the second node from the end, the linked list becomes 1->2->3->5.
 Note:
-
 Given n will always be valid.
-
 Follow up:
-
 Could you do this in one pass? */
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
-/**
- * @param {ListNode} head
- * @param {number} n
- * @return {ListNode}
- */
 
-
-function ListNode(val) {
-      this.val = val;
-      this.next = null;
-  }
+// function ListNode(val) {
+//       this.val = val;
+//       this.next = null;
+//   }
 // var removeNthFromEnd = function(head, n) {
   // if(!head) return null;
   // if (n===0) return head;
@@ -68,26 +50,22 @@ function ListNode(val) {
     
 var removeNthFromEnd = function(head, n) {
   if(!head ||!n) return null;
-
   let dummyNode = new ListNode(0);
-  dummyNode.next=head 
-  //don't want to use just head because if need to delete first node, we don't have to set other conditions
-  let nodeBeforeDelete = dummyNode;
-  //head will be the keeping track of the end of the list NOT the node AFTER delete
-  //signifies the END of the list from n+1
-  //set distance between node before the delete to the end
-  for (let i = 0; i<n; i++){
-    //if null then n is greater than list length
-    if(head===null) return null;
+  dummyNode.next=head                //don't want to use just head because if need to delete first node, we don't have to set other conditions
+  let prevToDel = dummyNode;
+  //head will be the keeping track of the end of the list PRIOR TO node to be deleted NOT the node to delete and NOT the node AFTER delete
+  //signifies the END of the list from n+1 //set distance between node before the delete to the end
+  for (let i = 0; i<n; i++){ //if null then n is greater than list length
+    if(!head) return null;
     head=head.next;
   }
   //move before and end together
   while (head !==null) {
     head=head.next;
-    nodeBeforeDelete=nodeBeforeDelete.next;
+    prevToDel=prevToDel.next;
   }
   //delete node
-  nodeBeforeDelete.next = nodeBeforeDelete.next.next
+  prevToDel.next = prevToDel.next.next
   return dummyNode.next
 }
 
@@ -97,7 +75,7 @@ var removeNthFromEnd = function(head, n) {
   tmp.next = head
   
   let [slow, fast] = [tmp, tmp]
-  for (let i = 0; i < n; i++){
+  for (let i = 0; i <= n; i++){
     fast = fast.next
   }
   while (fast.next != null){

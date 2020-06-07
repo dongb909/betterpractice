@@ -3,19 +3,17 @@
 Given such a binary tree, you need to output the second minimum value in the set made of all the nodes' value in the whole tree.
 
 If no such second minimum value exists, output -1 instead.
-
 Example 1:
-
 Input: 
     2
    / \
   2   5
      / \
     5   7
-
+        /\
+       8  7
 Output: 5
 Explanation: The smallest value is 2, the second smallest value is 5.
- 
 
 Example 2:
 
@@ -23,7 +21,6 @@ Input:
     2
    / \
   2   2
-
 Output: -1
 Explanation: The smallest value is 2, but there isn't any second smallest value. */
 /**
@@ -32,30 +29,19 @@ Explanation: The smallest value is 2, but there isn't any second smallest value.
  *     this.val = (val===undefined ? 0 : val)
  *     this.left = (left===undefined ? null : left)
  *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {TreeNode} root
- * @return {number}
- */
+ * } */
+
+ //ITERATIVE
 // var findSecondMinimumValue = function(root) {
 //     //if null root return -1
 //     //if left and right === return -1
 //     //if one side is -1 then return the other
-//     //else return smallest of two
-//     //recurse somewhere...
+//     //else return smallest of two//recurse somewhere...
 //     if (!root) return -1
-//     const left = findSecondMinimumValue(this.left)
+//     const left = findSecondMinimumValue(this.left)          //returns a number
 //     const right = findSecondMinimumValue(this.right)
 //     // if (left === right) return -1 NOOOO
-//     if (left === right) {
-//         if(left === root.val) {
-//             return -1
-//         }
-//         else {
-//             return root.val
-//         }
-//     }
+//     if (left === right) return -1
 //     if (left > -1 && right > -1) {
 //         if (left > root.val && right > root.val) {
 //             return Math.min(left, right)
@@ -70,6 +56,7 @@ Explanation: The smallest value is 2, but there isn't any second smallest value.
     
 // };
 
+//RECURSIVE
 var findSecondMinimumValue = function(root) {
     let min = root.val //nothing will be smaller than root
     // let secMin = Infinity
@@ -77,19 +64,19 @@ var findSecondMinimumValue = function(root) {
     
 }
 
-let traverse = function (node, min, secMin) {
+let traverse = function (node, minVal) {
     if (!node) return -1;
-    if (node.val !== min) return node.val
+    if (node.val !== minVal) return node.val
     //else current node is same as parent so keep traversing
-    const left = traverse(node.left, min)
-    const right = traverse(node.right, min)
+    const leftVal = traverse(node.left, minVal)
+    const rightVal = traverse(node.right, minVal)
      
     //if both children are null or equal to curr val
-    if (left === -1 && right === -1) return -1
+    if (leftVal === -1 && rightVal === -1) return -1
     //if one return is -1 and one is another num
-    if (left === -1 || right === -1) return Math.max(left, right)
-    //both are diff nums returned
-    return Math.min(left, right)
+    if (leftVal === -1 || rightVal === -1) return Math.max(leftVal, rightVal)
+        //have children on left and right
+    return Math.min(leftVal, rightVal)
 }
 
 

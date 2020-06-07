@@ -39,10 +39,10 @@ Output: 7 -> 8 -> 0 -> 7 */
         return list.val === 0 ? list.next : list;    
 }; */
 
-function ListNode(val) {
-  this.val = val;
-  this.next = null;
-}
+// function ListNode(val) {
+//   this.val = val;
+//   this.next = null;
+// }
 // let l1 = new ListNode(1);
 // l1.next =  new ListNode(2)
 // l1.next.next = new ListNode(3)
@@ -205,3 +205,54 @@ var addTwoNumbers = function(l1, l2) {
     return sum_llist.next;
     
 }; */
+
+var addTwoNumbers = function(l1, l2) {
+  let dummyHead = new ListNode(0);
+  // let l3 = dummyHead;
+  let prev = null;
+  
+  let stack1 = [];
+  let stack2 = [];
+  let carry = 0;
+  
+  while (l1 !== null) {
+    stack1.push(l1.val);
+    l1 = l1.next 
+  }
+  
+  while (l2 !== null) {
+    stack2.push(l2.val)
+    l2 = l2.next;
+  }
+  
+  while (stack1.length || stack2.length) {
+    let l1pop = stack1.pop();
+    let l2pop = stack2.pop()
+    
+    let l1Val = l1pop ? l1pop : 0;
+    let l2Val = l2pop ? l2pop : 0;
+  
+    let currentSum = l1Val + l2Val + carry;
+    
+    carry = Math.floor(currentSum / 10);
+    let digit = Math.floor(currentSum % 10);
+    
+    let currentNode = new ListNode(digit);
+
+    if (prev) currentNode.next = prev
+    prev = currentNode;
+  }
+  
+  
+  
+  if (carry > 0) {
+    let newNode = new ListNode(carry);
+    newNode.next = prev;
+    prev = newNode;
+  }
+  
+  dummyHead.next = prev;
+  
+  return dummyHead.next
+    
+};

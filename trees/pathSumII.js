@@ -1,11 +1,5 @@
 /*Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
-
-Note: A leaf is a node with no children.
-
-Example:
-
 Given the below binary tree and sum = 22,
-
       5
      / \
     4   8
@@ -14,7 +8,6 @@ Given the below binary tree and sum = 22,
  /  \    / \
 7    2  5   1
 Return:
-
 [
    [5,4,11,2],
    [5,8,4,5]
@@ -27,11 +20,6 @@ Return:
  *     this.left = (left===undefined ? null : left)
  *     this.right = (right===undefined ? null : right)
  * }
- */
-/**
- * @param {TreeNode} root
- * @param {number} sum
- * @return {number[][]}
  */
 var pathSum = function(root, sum) {
   // if (!root) return [] //takes care of very root node

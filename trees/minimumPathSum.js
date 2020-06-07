@@ -13,9 +13,6 @@ Input:
 Output: 7
 Explanation: Because the path 1→3→1→1→1 minimizes the sum. */
 
-
-
-
 //move DOWN or RIGHT only [right[1,0] down [0,1]]
 //edge: empty, 1 num, is the grid diff sizes
 
