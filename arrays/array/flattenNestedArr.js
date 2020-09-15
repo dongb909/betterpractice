@@ -3,11 +3,11 @@
 
 let flatten = (arr) => {
   let result = [];
-  for(let i = 0; i < arr.length; i++) {
-    if (Array.isArray(arr[i])) {
-      result = result.concat(flatten(arr[i]));
+  for(let el of arr) {
+    if (Array.isArray(el)) {
+      result = result.concat(flatten(el));
     } else {
-      result.push(arr[i])
+      result.push(el)
     }
   }
   return result;

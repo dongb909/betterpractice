@@ -102,3 +102,8 @@ var longestCommonPrefix = function(strs) {
 }
 
 //cost of appending to an existing string is more than joining an array because you'll be copying the old string as well which is (O)(str.length)
+
+//time: n = # of strings
+      // m = shortest string
+      // mn
+//space: O(m),  by Turring definition we don't consider output tape as part of the algorithm O(1)

@@ -47,7 +47,7 @@ E = empty matrix*/
 
 var rotate = function(matrix) {
     //transpose
-    let len= matrix.length
+    let len= matrix.length //rows
     let temp
   for (let i=0; i<len; i++){
     for(let j=i; j<len;j++){  //J must = I NOT 0

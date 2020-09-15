@@ -171,7 +171,6 @@ function setZeroes(arr){
       if(arr[i][j] === 0){
         rows.add(i)
         cols.add(j)
-        // console.log(rows,cols)
       }
     }
   }

@@ -30,9 +30,6 @@ var maxAreaOfIsland = function(grid) {
   for(let i = 0; i < rows; i++) {
       for (let j = 0; j < cols; j++){
           if (grid[i][j]===1){
-            // console.log(currArea , 'curr Area')
-            // console.log(maxArea , 'max Area')
-            // console.log(cols, rows, j, i)
               currArea= countArea(grid, i, j);
               maxArea = Math.max(maxArea, currArea); 
           }

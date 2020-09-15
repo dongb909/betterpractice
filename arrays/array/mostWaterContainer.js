@@ -43,3 +43,5 @@ console.log(maxAreaWater([1,8,6,2,5,4,8,3,7]))
 //   }
 //   return maxarea;
 // }
+
+//still have to explore every possibility before seeing where pointers meet so it's still O(n)

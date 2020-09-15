@@ -80,4 +80,8 @@ let countPalindrome = (s) => {
   return count;
 }
 
-console.log(countPalindrome('aabcb'))
+console.log(countPalindrome('aabcbccccccccc')) //center expansion, pointer that anchors here and other pointers to expand outwards to find all possible palindromes and increment
+                              ^
+
+                              //time: worst case is anchored in center n/2 which is basically O(n) so it's n^2 at end of day
+                              //space:O(1)

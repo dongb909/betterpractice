@@ -25,30 +25,23 @@ let isPalindrome = (s) => {
   //nor NOT you need the carrot ^
   //don't need brackets if using the othet way
 
-  let shortenString = s.replace(/[^0-9a-z]/gi, "").toLowerCase();
+  // let shortenString = s.replace(/[^0-9a-z]/gi, "").toLowerCase();
+  let chars = new Set("abcdefghijklmnopqrstuvwxyz".split(""));
+  let str = "";
+  for (let char of s.toLowerCase()) {
+    str = chars.has(char) ? str + char : str;
+  }
   // console.log(shortenStrin                //^what replacing the chars you're taking out with.
   //odd or even does not matter because if odd, won't be touching middle anyways bc will go from comparing front to end and working way in
-  let length = shortenString.length - 1  //this way it accounts for the -0 and you don't have to recalculate length each iteration
-  for (let i = 0; i < Math.floor(shortenString.length/2); i++) {
-    if (!(shortenString[i] === shortenString[length - i])) {
+  let length = str.length - 1; //this way it accounts for the -0 and you don't have to recalculate length each iteration
+  for (let i = 0; i < Math.floor(str.length / 2); i++) {
+    if (!(str[i] === str[length - i])) {
       return false;
     }
   }
   return true;
-  
-}
-console.log(isPalindrome("A man, a plan, aanal: Panama"));
-
-
-
-
-
-
-
-
-
-
-
+};
+console.log(isPalindrome("A man, a plan, anal: Panama"));
 
 //let compactString = startingString.replace(/[^0-9a-z]/gi, '').toLowerCase();
 //var newStr = str.replace(regexp|substr, newSubstr|function) aka (str taking out, str putting in)

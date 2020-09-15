@@ -132,7 +132,7 @@ var orangesRotting = function(grid) {
   let fresh = new Set();
   let rotten = new Set();
   
-  for(let i = 0; i < grid.length; i++) {
+  for(let i = 0; i < grid.length; i++) {            //mn
       for (let j = 0; j < grid[0].length; j++) {
           if (grid[i][j] === 1) {
               fresh.add("" + i + j);
@@ -164,7 +164,7 @@ var orangesRotting = function(grid) {
       // let iRow = currInfected[0]
       // let iCol = currInfected[1]
       //not shifting anything, just looping
-      for (rot of rotten) { //each rot is a string    let 2 strings minus each other OR parseInt
+      for (rot of rotten) { //each rot is a string    let 2 strings minus each other OR parseInt    //worst case is all infected mn
           let row = parseInt(rot[0])
           let col = parseInt(rot[1])
           //we already know this one is rotten so now we expand out and check those
@@ -194,44 +194,40 @@ var orangesRotting = function(grid) {
 }
 
 
-
-
-
-
-
-
+// Time: O(mn)
+// space:O(mn)
 
 
 
 ///FASTEST
-var orangesRotting = function(grid) {
-  const queue = [];       //index of rotten oranges
-  const directions = [[0, 1], [0, -1], [1, 0], [-1, 0]];
-  let freshCount = 0;
-  for (let i=0; i<grid.length; ++i) {
-      for(let j=0; j<grid[0].length; ++j) {
-          if (grid[i][j] === 1) {
-              freshCount++;
-          } else if (grid[i][j] === 2) {
-              queue.push([i, j]);
-          }
-      }
-  }
-  let minutes = 0;
-  while(queue.length && freshCount) {
-      let len = queue.length;
-      while(len) {
-          const rotten = queue.shift();
-          directions.forEach(dirc => {
-              if ((rotten[0]+dirc[0]) >= 0 && (rotten[0]+dirc[0]) < grid.length && (rotten[1]+dirc[1]) >= 0 && (rotten[1]+dirc[1]) < grid[0].length && grid[rotten[0]+dirc[0]][rotten[1]+dirc[1]] === 1) {
-                  grid[rotten[0]+dirc[0]][rotten[1]+dirc[1]] = 2;
-                  queue.push([rotten[0]+dirc[0], rotten[1]+dirc[1]]);
-                  freshCount--;
-              }
-          });
-          len--;
-      }
-      minutes++;
-  }
-  return freshCount ? -1 : minutes;
-};
+// var orangesRotting = function(grid) {
+//   const queue = [];       //index of rotten oranges
+//   const directions = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+//   let freshCount = 0;
+//   for (let i=0; i<grid.length; ++i) {
+//       for(let j=0; j<grid[0].length; ++j) {
+//           if (grid[i][j] === 1) {
+//               freshCount++;
+//           } else if (grid[i][j] === 2) {
+//               queue.push([i, j]);
+//           }
+//       }
+//   }
+//   let minutes = 0;
+//   while(queue.length && freshCount) {
+//       let len = queue.length;
+//       while(len) {
+//           const rotten = queue.shift();
+//           directions.forEach(dirc => {
+//               if ((rotten[0]+dirc[0]) >= 0 && (rotten[0]+dirc[0]) < grid.length && (rotten[1]+dirc[1]) >= 0 && (rotten[1]+dirc[1]) < grid[0].length && grid[rotten[0]+dirc[0]][rotten[1]+dirc[1]] === 1) {
+//                   grid[rotten[0]+dirc[0]][rotten[1]+dirc[1]] = 2;
+//                   queue.push([rotten[0]+dirc[0], rotten[1]+dirc[1]]);
+//                   freshCount--;
+//               }
+//           });
+//           len--;
+//       }
+//       minutes++;
+//   }
+//   return freshCount ? -1 : minutes;
+// };

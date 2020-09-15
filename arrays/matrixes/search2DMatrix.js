@@ -140,7 +140,15 @@ function searchMatrix(matrix, target) {
   return false;
 
 }
-
+//O(logm + logn)
+//space(1)
+//
+//while:
+  //watch your range but it's still iterating
+//
+//pointers: pointer = O(n) unless pointers can overalp eachotehr window
+    // going inwards from ends
+      
 
 
 console.log(searchMatrix([

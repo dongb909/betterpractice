@@ -71,23 +71,15 @@ A solution set is:
 
 let threeSum = (arr) => {
   let triplets = [];
-
   //if arr less than triplet then return
-  if (arr.length < 3){
-    return triplets;
-  }
+  if (arr.length < 3) return triplets;
   let sorted = arr.sort((a,b)=> {return a-b}) 
   for (let i = 0; i<arr.length-2; i++){  //-2 because k is at the other end
-
   //if first sorted number (i) is positive then adding the rest will just increase the number, never going to 0, so don't even have to check the rest
   //0 is ok because can be 0 0 0
-    if (sorted[i]>0) {
-      return triplets;
-    }
+    if (sorted[i]>0) return triplets;
     //no point in having any of the numbers equal the first number or else it'll never equal 0 and can have duplicates
-    if (i> 0 && sorted[i]=== sorted[i-1]){
-      continue;
-    }
+    if (i> 0 && sorted[i] === sorted[i-1])  continue
     //check from both ends since would be neg and pos number
     for (let j = i+1, k=arr.length-1; j<k;){ //comma NOT semicolon
       //this is the only time you push, all else , you just increment or decrement
@@ -121,7 +113,7 @@ let threeSum = (arr) => {
 }
 
 
-console.log(threeSum([-1, 0, 1, 2, -1, -4]))
+// console.log(threeSum([-1, 0, 1, 2, -1, -4]))
 
 
 
@@ -153,44 +145,40 @@ console.log(threeSum([-1, 0, 1, 2, -1, -4]))
 // return
 //terminal condition if 2sum =0
 
-function threeSum (arr) {
-  arr.sort((a,b) => {return a-b})
+function threeSum2 (arr) {
   let result = [];
+  if (arr.length < 3) return result;
+  arr.sort((a,b) => {return a-b})     //nlogn   
   let left = 0
   let right = arr.length-1;
-  while (left < right) {
-    
-    if (arr[left] <0 && arr[right]<0 || arr[left] > 0 && arr[right] > 0) return result;
+  while (left < right) {              //n  worst case will not break early
+    if (arr[left] <0 && arr[right]<0 || arr[left] > 0) return result;
+    if (left > 0 && arr[left] === arr[left-1]) {
+      left++
+      continue                    //inc left and dec right meet in middle but 1/2n is till n
+     } //to avoid duplicates
     let twoSum = arr[right] + arr[left]
     for (let thirdPtr = left+1; thirdPtr < right; thirdPtr++) {
-      // console.log(arr[thirdPtr])
-      // console.log('lefttttt', left)
-      if (twoSum - arr[thirdPtr] === 0) {
-      // console.log('lefttttt', left)
-      // console.log('right', right)
-        result.push([arr[left], arr[thirdPtr], arr[right]])
-        
-      }
-      
+      if (twoSum + arr[thirdPtr] === 0) {
+        result.push([arr[left], arr[thirdPtr], arr[right]])      
+      }   
     }
-    if(twoSum <=0){ 
-      left++
-      
-    } else {
-    right--;
-    }
+    if(twoSum <=0) left++
+    else right--
   }
   return result
-  
 }
 
-
-
-
-console.log(threeSum([-1,  0, 1, 2, -1, -4]))
+console.log(threeSum2([-1,  0, 1, 2, -1, -4]))
 
 //know time complex/space for sorts
 //non consistent style, better to use if else than ternary
 //spaces
 //give them examples while explaining so they can see it
 //consistent variable names, better with first, second, third, or a, b, c
+
+//why do you have to sort? bc there's possibility of duplicates and sorting will provide you where the duplicates are. HAVE TO SORT FOR ANY PROBLEMS NOT LEETING YOU HAVE DUPS to be efficient
+//can do threeSum if dups are ok
+//if can't sort then optimize by using set and no full scan of list again brute force which is less efficient
+//time: reduced from n^3 to n^2
+//space: O(1)

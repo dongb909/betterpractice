@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Progress Bar</title>
+    <meta charset="utf-8" />
+    <!-- <link rel="stylesheet" href="abc.css"/> -->
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        background-color: beige;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /*MUST have this or else can't center items*/
+      }
+
+      /* #title {
+        width: 100%;
+        height: 300px;
+        color:blue;
+        text-align: center;
+        font-size: 3em;
+        /* vertical-align: middle; */
+
+      #progressBar {
+        /*not putting flex and center here bc it will center the green portion and not the text aka content within the percentage
+      bc only centers it's direct children, not its children's content*/
+        height: 30px;
+        width: 600px;
+        border-radius: 20px;
+        background-color: rgb(154, 213, 228);
+        display: flex;
+        align-items: center;
+      }
+      #percentage {
+        /*goes ontop directly bc is a CHILD thus already WITHIN the preogressbar*/
+        /* background-color: green; */
+        background: linear-gradient(to left, #f2709c, #ff9472);
+        height: 20px;
+        border-radius: 20px;
+        width: 3%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="progressBar">
+      <div id="percentage" data-done="3"></div>
+    </div>
+
+    <script>
+      let percentEl = document.getElementById("percentage");
+      // console.log(percentEl.attributes)
+      let numStr = percentEl.getAttribute("data-done"); //this is needed so frame knows what number to strat from each time it runs
+      let numInt = parseInt(numStr);
+      console.log(typeof percentNum);
+      let id = setInterval(frame, 50);
+
+      function frame() {
+        if (numInt >= 100) clearInterval(id);
+        else {
+          numInt += 1;
+          percentEl.setAttribute("data-done", toString(numInt));
+          // percentEl.textContent(`${numInt}%`); //it's NOT a FUNCTION!!!!
+          percentEl.textContent = numInt + "%";
+          percentEl.style.width = numInt + "%";
+        }
+      }
+    </script>
+  </body>
+</html>

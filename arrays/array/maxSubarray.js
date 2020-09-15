@@ -69,10 +69,10 @@ Accepted */
     let maxSubArray = (arr) => {
       let currSum =0;
       let max = Number.NEGATIVE_INFINITY;
-      for (let i=0; i<arr.length; i++) {
-        currSum += arr[i];
-        if (arr[i]>currSum) {
-          currSum = arr[i]
+      for (let num of arr) {
+        currSum += num;
+        if (num>currSum) {
+          currSum = num
         }
         if (currSum > max) {
           max = currSum
