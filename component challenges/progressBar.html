@@ -26,7 +26,7 @@
         /* vertical-align: middle; */
 
       #progressBar {
-        /*not putting flex and center here bc it will center the green portion and not the text aka content within the percentage
+        /*not putting flex and center here bc it will c    enter the green portion and not the text aka content within the percentage
       bc only centers it's direct children, not its children's content*/
         height: 30px;
         width: 600px;
@@ -41,25 +41,46 @@
         background: linear-gradient(to left, #f2709c, #ff9472);
         height: 20px;
         border-radius: 20px;
+        /* width: attr(data-done);not working */
         width: 3%;
         display: flex;
         align-items: center;
         justify-content: center;
+        transition: ease .1s; /*makes it smoother than just js alone but only for the css transition NOT the inner text
+        to make it in sync with the text then change the interval time to be equivalent somehow*/
       }
     </style>
   </head>
   <body>
     <div id="progressBar">
-      <div id="percentage" data-done="3"></div>
+      <div id="percentage" data-done="3%"></div>
     </div>
+    <button id="download"> Click To Download</button>
+    <button id="reset"> Reset</button>
 
     <script>
       let percentEl = document.getElementById("percentage");
       // console.log(percentEl.attributes)
       let numStr = percentEl.getAttribute("data-done"); //this is needed so frame knows what number to strat from each time it runs
       let numInt = parseInt(numStr);
-      console.log(typeof percentNum);
-      let id = setInterval(frame, 50);
+      // console.log(typeof percentNum);
+      let download = document.getElementById("download");
+      let reset = document.getElementById("reset");
+      let id
+      download.addEventListener("click", function() {
+        id = setInterval(frame, 50);
+      })
+      reset.addEventListener("click", function(){
+
+          percentEl.setAttribute("data-done", '5%');
+          // percentEl.textContent(`${numInt}%`); //it's NOT a FUNCTION!!!!
+          percentEl.textContent = 5 + "%";
+          percentEl.style.width = 5 + "%";
+          // console.log('yo')
+          clearInterval(id);  //NEED TO ADD THESE TWO LINES OR ELSE CLICK TO DOWNLOAD WILL NOT FIRE ANYMORE though reset button still fires again
+                              //ALSO this is good so you can STOP the download right away, if this line is not here then you have to wait out the entire download before being able to click on reset
+          numInt = 5          //PLUS IT'S A 'RESET, SO YOU SHOULD RESET ALL VARIABLES'
+      })
 
       function frame() {
         if (numInt >= 100) clearInterval(id);
@@ -69,6 +90,7 @@
           // percentEl.textContent(`${numInt}%`); //it's NOT a FUNCTION!!!!
           percentEl.textContent = numInt + "%";
           percentEl.style.width = numInt + "%";
+          // console.log('hi')
         }
       }
     </script>
