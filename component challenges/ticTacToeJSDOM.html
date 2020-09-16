@@ -72,7 +72,8 @@
       .board.x .cell:not(.x):not(.o):hover::after {
         transform: rotate(-45deg);
       }
-
+      
+      /*This is for when there is a mark vs no mark for coloring*/
       .cell.x::before,
       .cell.x::after,
       .cell.o::before,
@@ -85,20 +86,12 @@
       .board.o .cell:not(.x):not(.o):hover::after {
         background-color: lightgrey; /*must display flex in .cell for this to even show up*/
       }
-      /*This is for when there is a mark vs no mark for coloring*/
 
-      /* .o::before,
-      .o::after {
-        content: ""; /* must do this for it to even have anything to render*/
-      /* background-color: black; must display flex in .cell for this to even show up
-        height: var(--char-size);
-        width: var(--char-size);
-      } */
       .cell.o::before,
       .cell.o::after,
       .board.o .cell:not(.x):not(.o):hover::before,
       .board.o .cell:not(.x):not(.o):hover::after {
-        content: "";
+        content: ""; 
         border-radius: 50%;
         position: absolute;
       }

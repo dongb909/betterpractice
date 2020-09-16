@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="searchBarCss.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Search Bar with Bootstrap</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+      <span class="navbar-brand mb-0 h1">Navbar</span>
+      <form class="form-inline my-2 my-lg-0">
+        <input
+          id="search"
+          class="form-control mr-sm-2"
+          type="search"
+          placeholder="Search"
+        />
+        <button
+          id="submit"
+          class="btn btn-outline-success my-2 my-sm-0"
+          type="submit"
+        >
+          Search
+        </button>
+      </form>
+    </nav>
+    <div class="container">
+      <h1 id="title">HARRY POTTER CHARACTERS</h1>
+      <div id="list" class="list"></div>
+    </div>
+    <script>
+      /* FIRST ATTEMPT COMPLETELY WRONG!!!!!!!! CHARACTERS GETS BACK A PROMISE! NOT AN ARRAY
+      async function getData(url){
+         const response = await fetch(url)
+         const data = await response.json()
+         return data
+       }
+       const characters = pageLoad('http://hp-api.herokuapp.com/api/characters')
+
+       function pageLoad(url){}
+       function postData(){}*/
+      /*2nd ATTEMPT WORKED TO JUST PRINT TO CONSOLE
+             let data2
+         fetch('http://hp-api.herokuapp.com/api/characters').then(res=> res.json()).then(data => {data2 = data; console.log(data2)})*/
+
+      //FETCH API
+      const charList = document.getElementById("list");
+      const searchBar = document.getElementById("search");
+      const submit = document.getElementById("submit");
+      let characters = [];
+      function getData() {
+        fetch("http://hp-api.herokuapp.com/api/characters")
+          .then((res) => {
+            if (res.status >= 400) {
+              return res.send("Content error");
+            } else {
+              return res.json();
+            }
+          })
+          .then((dataArr) => {
+            //  console.log(dataArr)
+            characters = dataArr; //this is load the characters but will only be able to use it AFTER page is loaded, which should happen before typing anything to search bar anyways
+            // console.log(characters)
+            displayCharacters(dataArr);
+          })
+          .catch((err) => console.log(err));
+      }
+
+      function displayCharacters(charArr) {
+        let string = charArr
+          .map((character) => {
+            //  console.log(character)
+            // return `<li class="character">
+            //          <h2>${character.name}</h2>
+            //          <p>${character.house}</p>
+            //          <img src="${character.image}"></img>
+            //        </li>`;
+            return `<div class="card" style="width: 18rem;">
+                      <img src="${character.image}" class="card-img-top" alt="${character.name}">
+                      <div class="card-body">
+                        <h5 class="card-title">${character.name}</h5>
+                        <p class="card-text">House of ${character.house}</p>
+                      </div>
+                    </div>`;
+          })
+          .join("");
+        charList.innerHTML = string;
+      }
+      getData();
+      //onchange will be too slow
+      searchBar.addEventListener("keyup", (e) => {
+        //USE KEYUP BC KEYDOWN/KEYPRESS WILL SHOW THE BEFORE PRESS VALUE SO IT'LL BE 1 VALUE BEHIND!
+        // e.preventDefault()
+        const searchWord = e.target.value.toLowerCase();
+        const filteredList = characters.filter((char) => {
+          return (
+            char.name.toLowerCase().includes(searchWord) ||
+            char.house.toLowerCase().includes(searchWord)
+          );
+        });
+        // console.log(filteredList)
+        console.log(searchWord);
+        displayCharacters(filteredList);
+      });
+
+      submit.addEventListener("click", (e) => {
+        e.preventDefault();
+        const searchWord = searchBar.value.toLowerCase();
+        const filteredList = characters.filter((char) => {
+          return (
+            char.name.toLowerCase().includes(searchWord) ||
+            char.house.toLowerCase().includes(searchWord)
+          );
+        });
+        console.log(searchWord);
+        displayCharacters(filteredList);
+      });
+      //ASYNC AWAIT
+
+      //AXIOS
+    </script>
+  </body>
+</html>
