@@ -15,7 +15,7 @@
       body {
         margin: 0;
       }
-      #board {
+      .board {
         height: 100vh;
         width: 100vw;
         display: grid;
@@ -158,9 +158,10 @@
     </style>
   </head>
   <body>
-    <div id="board" class="board o">
-      <div class="cell x"></div>
-      <div class="cell o"></div>
+    <div id="board" class="board">
+      <!-- id is for easier JS selection, class is for easier class selection esp for when have dynamic class combos, just easier to type '.' for everything instead of '# and .' -->
+      <div class="cell"></div>
+      <div class="cell"></div>
       <div class="cell"></div>
       <div class="cell"></div>
       <div class="cell"></div>
@@ -169,7 +170,7 @@
       <div class="cell"></div>
       <div class="cell"></div>
     </div>
-    <div class="winning-msg">
+    <div id="winning-msg" class="winning-msg">
       <div id="message">__ WINS!</div>
       <button id="btn">Play Again</button>
     </div>
@@ -178,39 +179,108 @@
       global
         xTurn: boolean
         gameStatus
-        cell elements
-      startGame 
+        cell elements*/
+      let xTurn = true;
+      // let gameEnded = false;
+      let cells = document.querySelectorAll(".cell"); //is an obj nodelist NOT an array
+      cells = [...cells];
+      let board = document.getElementById("board");
+      let winningMessage = document.getElementById("winning-msg");
+      let restartBtn = document.getElementById("btn");
+      let contentMessage = document.getElementById("message");
+      let wins = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
+
+      /* startGame
         so it happens only once and resets the board whever called
         clear all classes of x and o
         clear board show
-        clear previous event listener
-      
-      handleClick:
+        clear previous event listener*/
+
+      restartBtn.addEventListener("click", handleRestart);
+      function startGame() {
+        cells.forEach((cell) => {
+          cell.classList.remove("x");
+          cell.classList.remove("o");
+          console.log("hi");
+          cell.removeEventListener("click", handleClick);
+          cell.addEventListener("click", handleClick, { once: true });
+        });
+        winningMessage.classList.remove("show");
+        board.classList.add(currentTurn()); //need this so the hover effect works for mark to show up
+      }
+      startGame(); //test
+      /*handleClick:
           check turn
           place mark
           check win
           check draw
-          switch turn
+          switch turn*/
+      function currentTurn() {
+        return !xTurn ? "o" : "x";
+      }
+      // console.log(currentTurn())
 
-      placeMark(cell, char)
-        add mark to class to be handled by css
+      function handleClick({ target }) {
+        let player = currentTurn();
+        target.classList.add(player);
+        if (checkWins(player)) {
+          contentMessage.innerText = ` Player ${player} won! `;
+          winningMessage.classList.add("show");
+        }
+        // console.log(checkWins(player));
+        if (isTied()) {
+          contentMessage.textContent = "Game ended in a tie! Let's play again!"; //NOT A FUNCTION!!!!!! TEXTCONTENT works too
+          winningMessage.classList.add("show");
+        }
+        swapTurn();
+        setHoverChar();
+        // console.log(isTied())
+      }
 
-      swap turn
-       turn and also board hover class //NO! need to separate them bc need the hover at the start of the game too when there's nothing already on the board!!
+      /*swap turn
+       turn and also board hover class //NO! need to separate them bc need the hover at the start of the game too when there's nothing already on the board!*/
+      function swapTurn() {
+        return (xTurn = !xTurn);
+      }
 
-       setHoverChar
-       //just remove both o and x instead of checking which one it has bc either way you'll be removing both and then do conditional based on turn
+      //setHoverChar
+      //just remove both o and x instead of checking which one it has bc either way you'll be removing both and then do conditional based on turn
+      function setHoverChar() {
+        board.classList.remove("x");
+        board.classList.remove("o");
+        board.classList.add(currentTurn());
+      }
+      //  checkWins
+      function checkWins(player) {
+        return wins.some((combo) =>
+          combo.every(
+            (cellIndex) => cells[cellIndex].classList.contains(player)
+            //     cells[cellIndex].classList.contains("x") ||   NO!!! want to check specific marker after each turn!
+            //     cells[cellIndex].classList.contains("o")
+          )
+        );
+      }
 
-       checkWins
+      //  checkTies: NOT nested array of matrix though so can't use that
+      function isTied() {
+        //  endGame //don't need because already handled in in the startGame function
+        return cells.every((cell) => {
+          return cell.classList.contains("x") || cell.classList.contains("o");
+        });
+      } //  handleRestart
 
-       checkTies
-
-       endGame //don't need because already handled in in the startGame function
-
-       handleRestart
-
-
-*/
+      function handleRestart() {
+        startGame();
+      }
     </script>
   </body>
 </html>
