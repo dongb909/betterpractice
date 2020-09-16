@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic Tac Toe</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      :root {
+        --cell-size: 100px;
+        --char-size: calc(var(--cell-size) * 0.8);
+      }
+      body {
+        margin: 0;
+      }
+      #board {
+        height: 100vh;
+        width: 100vw;
+        display: grid;
+        justify-content: center;
+        align-content: center;
+        grid-template-columns: repeat(3, auto);
+      }
+      .cell {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+        display: flex;
+        position: relative;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+      }
+
+      .cell:first-child,
+      .cell:nth-child(2),
+      .cell:nth-child(3) {
+        border-top: none;
+      }
+
+      .cell:nth-child(3n) {
+        border-right: none;
+      }
+
+      .cell:nth-child(3n-2) {
+        border-left: none;
+      }
+
+      .cell:last-child,
+      .cell:nth-child(8),
+      .cell:nth-child(7) {
+        border-bottom: none;
+      }
+
+      .cell.x::before,
+      .cell.x::after,
+      .board.x .cell:not(.x):not(.o):hover::before, /*when board has x aka x turn, then when cell doesn't have x or o upon hover*/
+      .board.x .cell:not(.x):not(.o):hover::after {
+        content: ""; /* must do this for it to even have anything to render*/
+        /* background-color: black; must display flex in .cell for this to even show up */
+        height: var(--char-size);
+        width: calc(var(--char-size) * 0.17);
+        position: absolute;
+      }
+      .cell.x::before,
+      .board.x .cell:not(.x):not(.o):hover::before {
+        transform: rotate(45deg);
+      }
+      .cell.x::after,
+      .board.x .cell:not(.x):not(.o):hover::after {
+        transform: rotate(-45deg);
+      }
+
+      .cell.x::before,
+      .cell.x::after,
+      .cell.o::before,
+      .cell.o::after {
+        background-color: black; /*must display flex in .cell for this to even show up*/
+      }
+      .board.x .cell:not(.x):not(.o):hover::before,
+      .board.x .cell:not(.x):not(.o):hover::after,
+      .board.o .cell:not(.x):not(.o):hover::before,
+      .board.o .cell:not(.x):not(.o):hover::after {
+        background-color: lightgrey; /*must display flex in .cell for this to even show up*/
+      }
+      /*This is for when there is a mark vs no mark for coloring*/
+
+      /* .o::before,
+      .o::after {
+        content: ""; /* must do this for it to even have anything to render*/
+      /* background-color: black; must display flex in .cell for this to even show up
+        height: var(--char-size);
+        width: var(--char-size);
+      } */
+      .cell.o::before,
+      .cell.o::after,
+      .board.o .cell:not(.x):not(.o):hover::before,
+      .board.o .cell:not(.x):not(.o):hover::after {
+        content: "";
+        border-radius: 50%;
+        position: absolute;
+      }
+      .cell.o::before,
+      .board.o .cell:not(.x):not(.o):hover::before {
+        height: var(--char-size);
+        width: var(--char-size);
+      }
+      .cell.o::after,
+      .board.o .cell:not(.x):not(.o):hover::after {
+        height: calc(var(--char-size) * 0.7);
+        width: calc(var(--char-size) * 0.7);
+        background-color: white;
+      }
+
+      .cell.x:hover,
+      .cell.o:hover {
+        cursor: not-allowed;
+      }
+
+      .winning-msg {
+        display: none; /*TO HIDE CONTENT UNTIL YOU OVERRIDE IT WITH DISPLAY FLEX*/
+        position: fixed; /*must have this or fixed or else nothing will show up!!!!!*/
+        background-color: rgba(0, 0, 0, 0.7);
+        /* height: 100vh;
+        width: 100vw; */
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        /* display: flex;  MUST HAVE THIS FOR ANYTHING TO EVEN SHOW because need to OVERRIDE THE DISPLAY NONE FROM ABOVE */
+        justify-content: center;
+        align-items: center;
+        font-size: 5em;
+        color: white;
+        flex-direction: column;
+      }
+      #btn {
+        font-size: 2rem;
+        border: 2px solid black;
+        border-radius: 8px; /*NOT percentages*/
+        padding: 0.3rem 0.8rem;
+        margin: 1rem;
+        background-color: white;
+      }
+
+      #btn:hover {
+        background-color: green;
+        color: white;
+        cursor: pointer;
+      }
+
+      .winning-msg.show {
+        /*only shows up if game ends*/
+        display: flex; /*MUST HAVE THIS FOR ANYTHING TO EVEN SHOW because need to OVERRIDE THE DISPLAY NONE FROM ABOVE */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="board" class="board o">
+      <div class="cell x"></div>
+      <div class="cell o"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+      <div class="cell"></div>
+    </div>
+    <div class="winning-msg">
+      <div id="message">__ WINS!</div>
+      <button id="btn">Play Again</button>
+    </div>
+    <script>
+      /*
+      global
+        xTurn: boolean
+        gameStatus
+        cell elements
+      startGame 
+        so it happens only once and resets the board whever called
+        clear all classes of x and o
+        clear board show
+        clear previous event listener
+      
+      handleClick:
+          check turn
+          place mark
+          check win
+          check draw
+          switch turn
+
+      placeMark(cell, char)
+        add mark to class to be handled by css
+
+      swap turn
+       turn and also board hover class //NO! need to separate them bc need the hover at the start of the game too when there's nothing already on the board!!
+
+       setHoverChar
+       //just remove both o and x instead of checking which one it has bc either way you'll be removing both and then do conditional based on turn
+
+       checkWins
+
+       checkTies
+
+       endGame //don't need because already handled in in the startGame function
+
+       handleRestart
+
+
+*/
+    </script>
+  </body>
+</html>
