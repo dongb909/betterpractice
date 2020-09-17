@@ -1,39 +1,163 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <title>Practice with RESTful APIs Fetch, Async Await, Axios</title>
   </head>
   <body>
-    <div id="container">
-
-    </div>
+    <div id="container"></div>
     <script>
-      //FETCH
-      function sendHttpRequest(method, url, data, params) {
-        fetch('https://jsonplaceholder.typicode.com/posts', {
+      /*
+      //FETCH- DOES NOT TAKE PARAMS!!!!!!! JUST PUT IT IN THE URL STRING!!!
+      function sendHttpRequest(method, url, data) {
+        console.log(data)
+        return fetch(url, { //DON'T FORGET TO RETURN!!!!
           method: method,
-          body: JSON(data),
-          headers: data ? {'Content-Type': 'application/json'} : {},
-          params: params ? params : {}
-        })
+          body: JSON.stringify(data), //if no data then will return UNDEFINED which will work but NULL or {} will NOT work for GET methods
+          headers: data
+            ? { "Content-Type": "application/json; charset=UTF-8" }
+            : {}
+        }).then((res) => {
+          if (!res.ok) throw new Error("Something went wrong with req");
+          return res.json();
+        });
       }
       //params: {ID: 12345}
-      function getData(){
-        let response = sendHttpRequest(GET, 'https://jsonplaceholder.typicode.com/posts').catch(err => console.log(err))
-        
+      function getData() {
+        let response = sendHttpRequest(
+          "GET",
+          "https://jsonplaceholder.typicode.com/posts?userId=1"
+        );
+        response
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err.message));
       }
+      // getData()
 
+      function postData() {
+        let response = sendHttpRequest(
+          "POST",
+          "https://jsonplaceholder.typicode.com/posts",
+          {
+            title: "Oh the Places You'll Go",
+            body: "Amazing book to read", //id automatically generated
+            userId: 99, //userId is one you define
+          }
+        );
+        response
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err.message));
+      }
+      // postData()
 
+      function updateData() { 
+        //REPLACES WHOLE THING
+        // return sendHttpRequest('PUT', "https://jsonplaceholder.typicode.com/posts/1", {id:2, title: 'Nutella'}).then(data => console.log(data))
+        //UPDATES only PARTS
+        return sendHttpRequest('PATCH', "https://jsonplaceholder.typicode.com/posts/3", {id:3, title: 'Nutella'}).then(data => console.log(data))
+      }
+      // updateData()
 
+      function removeData() {
+        return sendHttpRequest('DELETE', "https://jsonplaceholder.typicode.com/posts/3").then(res => console.log(res, 'hii')).catch(err=> console.log(err.message))
+      }
+      // removeData()
+      */
+
+      ///////////////////////////
+      ///////////////////////////
+      //////////////////////////
+
+      /*
       //ASYNC AWAIT
+      async function getData() {
+        try {
+          //RES IS NOT A PROMISE!!! BC YOU ALREADY WAITED FOR THE PROMISED ITEM TO RETURN!!! CAN WORK DIRECTLY WITH IT
+          let res = await fetch('https://jsonplaceholder.typicode.com/posts')
+          if(!res.ok) {
+            // console.log(response.status)
+            throw new Error('Something went wrong') //test this by putting in a single extra quote in url
+          } else {
+            //HERE YOU ARE AWAITING THE .JSON METHOD WHICH IS A ASYNC FUNCTION TO RETURN!! NOT WORKING ON A PROMISE ITESELF!
+            let data = await res.json()
+            //NOTTTTEEEEE:
+            console.log(Array.isArray(data)) //good to go! does NOT equal another promise!!! like if you were to use just regular fetch like above!!!!
+          }
+        } catch (err) {
+           console.error( err.message)
+
+        }
+      }
+      // getData()
 
 
+      async function postData() {
+        try{  //can use const bc getting back actual data, not just a promise
+          const res = await fetch('https://jsonplaceholder.typicode.com/posts', {
+            method: 'POST',
+            body: JSON.stringify({
+              Id:1234,
+              title: 'Naruto',
+              body:'jkflsdjfkldsjflskjfslkjflksd'
+            }),
+            headers: {'Content-Type': 'application/json; charset=UTF-8'} //NOTE!! CHARSET IS 'EQUALLLLL' NOT :
+          })
+          // console.log(responseP) //can actually do this BECAUSE the promise is completed!!!! so an acutal obj gets returned!!
+          if(res.status >= 400) throw new Error('Something went wrong')
+          const data = await res.json()
+          console.log(data)
+        }catch(err){
+          console.log(err.message)
+        }
+      }
+      // postData()
 
+      async function updateData() {
+        try{  //dont' forget to write AWAIT and ASYNC or will get error
+          const res = await fetch('https://jsonplaceholder.typicode.com/posts/1', {
+            method: 'PATCH',
+            body: JSON.stringify({userId:9, title:'Ayoooo'}), //you're stringifying this already into a json obj
+            headers: {
+              'Content-Type': 'application/json; charset=UTF-8'//need to send it correctly as a json obj since you're not stringifying it
+            }
+          })
+          if(!res.ok) throw new Error('Something went wrong')//will complete step out of this block early
+          const data = await res.json()
+          console.log(data)
+        } catch(err){
+          console.error(err.message)
+        }
+      }
+      // updateData()
+
+      async function removeData() {
+        try{
+          let res = await fetch('https://jsonplaceholder.typicode.com/posts/1', {
+            method:'DELETE'
+          })
+          if (!res.ok) throw new Error("Could not delete item")
+          console.log(await res.json())
+          //=> {} it's just deleted BASED SOLELY ON THIS WEBSITE's description
+        }catch (err){
+          console.error(err.message)
+        }
+      }
+      removeData()
+      */
+
+      ///////////////////////////
+      ///////////////////////////
+      //////////////////////////
 
       //AXIOS
+      function getData() {}
+
+      function postData() {}
+
+      function updateData() {}
+
+      function removeData() {}
     </script>
   </body>
 </html>
-
