@@ -8,6 +8,13 @@
   <body>
     <div id="container"></div>
     <script>
+      //GOOD RESOURCES:
+      //https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await
+      //https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+      // https://www.npmjs.com/package/axios
+      //https://gomakethings.com/error-handing-when-using-the-vanilla-js-fetch-method-with-async-and-await/
+      //https://jsonplaceholder.typicode.com/guide.html
+
       /*
       //FETCH- DOES NOT TAKE PARAMS!!!!!!! JUST PUT IT IN THE URL STRING!!!
       function sendHttpRequest(method, url, data) {
@@ -151,13 +158,52 @@
       //////////////////////////
 
       //AXIOS
-      function getData() {}
 
-      function postData() {}
+      function getData() {
+        axios //no need to return anything in this function bc will be doing so in the res .then
+          .get("https://jsonplaceholder.typicode.com/posts")
+          .then((res) => console.log(res.data))
+          .catch((err) => console.error(err.message));
+      }
+      // getData()
+      function postData() {
+        axios
+          .post("https://jsonplaceholder.typicode.com/posts/", {
+            title: "Hiii",
+            userId: 3,
+            body: "jkflsdjfksl",
+            randomPropertyNew: "i am newwwwwww", //can add new params in post
+          })
+          .then((res) => console.log(res.data))
+          .catch((err) => console.error(err.message));
+      }
+      // postData();
 
-      function updateData() {}
+      function updateData() {
+        // axios.put("https://jsonplaceholder.typicode.com/posts/1",{
+        //     title: "Hiii",
+        //     userId: 3,
+        //     body:"jkflsdjfksl" ,
+        //     randomPropertyNew: 'i am newwwwwww' //can add new params in update!! but also depends on if the api is strict or not
+        //   }).then((res) => console.log(res.data))
+        //   .catch((err) => console.error(err.message));
+        axios
+          .patch("https://jsonplaceholder.typicode.com/posts/9", {
+            title: "Hiii",
+            randomPropertyNew: "i am newwwwwww", //can add new params in update!! but also depends on if the api is strict or not
+          })
+          .then((res) => console.log(res.data))
+          .catch((err) => console.error(err.message));
+      }
+      // updateData()
 
-      function removeData() {}
+      function removeData() {
+        axios
+          .delete("https://jsonplaceholder.typicode.com/posts/9")
+          .then((res) => console.log(res.data))
+          .catch((err) => console.error(err.message));
+      }
+      removeData();
     </script>
   </body>
 </html>
