@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Practice with RESTful APIs Fetch, Async Await, Axios</title>
+  </head>
+  <body>
+    <div id="container">
+
+    </div>
+    <script>
+      //FETCH
+      function sendHttpRequest(method, url, data, params) {
+        fetch('https://jsonplaceholder.typicode.com/posts', {
+          method: method,
+          body: JSON(data),
+          headers: data ? {'Content-Type': 'application/json'} : {},
+          params: params ? params : {}
+        })
+      }
+      //params: {ID: 12345}
+      function getData(){
+        let response = sendHttpRequest(GET, 'https://jsonplaceholder.typicode.com/posts').catch(err => console.log(err))
+        
+      }
+
+
+
+      //ASYNC AWAIT
+
+
+
+
+      //AXIOS
+    </script>
+  </body>
+</html>
+

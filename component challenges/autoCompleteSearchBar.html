@@ -9,6 +9,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="searchBarCss.css" />
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Responsive Search Bar with Bootstrap</title>
   </head>
@@ -55,24 +56,41 @@
       const searchBar = document.getElementById("search");
       const submit = document.getElementById("submit");
       let characters = [];
-      function getData() {
-        fetch("http://hp-api.herokuapp.com/api/characters")
-          .then((res) => {
-            if (res.status >= 400) {
-              return res.send("Content error");
-            } else {
-              return res.json();
-            }
-          })
-          .then((dataArr) => {
-            //  console.log(dataArr)
-            characters = dataArr; //this is load the characters but will only be able to use it AFTER page is loaded, which should happen before typing anything to search bar anyways
-            // console.log(characters)
-            displayCharacters(dataArr);
-          })
-          .catch((err) => console.log(err));
-      }
+      /*
+      //SUCCESSSSSSSSSSS
+      // function getData() {
+      //   fetch("http://hp-api.herokuapp.com/api/characters")
+      //     .then((res) => {
+      //       if (res.status >= 400) {
+      //         return res.send(throw new Error("Content error"));
 
+                // ORRRRR return response.json().then(errObj => {
+                  const error = new Error('Something went wrong! )
+                  error.data = errObj
+                  throw error
+                })
+      //       } else {
+      //         return res.json();
+      //       }
+      //     })
+      //     .then((dataArr) => {
+      //       //  console.log(dataArr)
+      //       characters = dataArr; //this is load the characters but will only be able to use it AFTER page is loaded, which should happen before typing anything to search bar anyways
+      //       // console.log(characters)
+      //       displayCharacters(dataArr);
+      //     })
+      //     .catch((err) => console.log(err));
+      // }
+      */
+
+      /*if POST then
+      fetch(url, {
+        method: post,
+        body: JSON.stringify({} obj data to send),
+        headers: {
+          'Content-Type': 'application/json'} if not sending data then {}
+        }
+      })*/
       function displayCharacters(charArr) {
         let string = charArr
           .map((character) => {
@@ -93,7 +111,7 @@
           .join("");
         charList.innerHTML = string;
       }
-      getData();
+      // getData();
       //onchange will be too slow
       searchBar.addEventListener("keyup", (e) => {
         //USE KEYUP BC KEYDOWN/KEYPRESS WILL SHOW THE BEFORE PRESS VALUE SO IT'LL BE 1 VALUE BEHIND!
@@ -122,9 +140,57 @@
         console.log(searchWord);
         displayCharacters(filteredList);
       });
-      //ASYNC AWAIT
 
-      //AXIOS
+      /* SUCCCCCCESSSSSSSS
+      //ASYNC AWAIT
+      async function getData(url){
+        try{
+          let responseP = await fetch("http://hp-api.herokuapp.com/api/characters")
+          //NOT THIS BECAUSE NEED TO DEAL WITH REJECTED PROMISE TOO 
+          //let responseJsonPromise = await responsePromise.json()
+          // responseJsonPromise.then()
+          if(!responseP.ok) {
+            throw new Error(`HTTP error status: ${response.status}`) 
+          } else {
+            let data = await responseP.json()
+            // console.log(data, "hiii") //the await makes everything single threaded
+            characters = data
+            // console.log(characters)
+            displayCharacters(characters)
+          }
+        } 
+        catch(err){
+          console.log(err.message, 'hiiii') //network error like wrong url
+        }
+      }
+      getData("http://hp-api.herokuapp.com/api/characters")
+      */
+
+      //AXIOS - the only thing that needs to be downloaded /cdn installed above
+      //ERRORS for catch SOLELY FOR AXIOS ALSO CATCHES ANY ERRORS/REJECTIONS, NOT JUST NETWORK ERRORS
+      //Axios automatically throws an error if the response as an error status code so you as the coder just handle it in the catch block
+      //err.response = error obj
+      // function getData() {
+      //   axios.get("http://hp-api.herokuapp.com/api/characters").then((res) => {
+      //     // console.log(res); //already parsed as obj//error is automatically thrown
+      //     //if want params then (url, {params: {ID:12345}})
+      //ORRRR axios.get(url/?ID=12345)
+      //     displayCharacters(res.data);
+      //   });
+      // }
+
+      //ASYNC AWAIT STYLE
+      async function getData() {
+        try {
+          const response = await axios.get(
+            "http://hp-api.herokuapp.com/api/characters"
+          );
+          displayCharacters(response.data);
+        } catch (err) {
+          console.error(err); //catches all network AND 400s
+        }
+      }
+      getData();
     </script>
   </body>
 </html>
