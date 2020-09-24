@@ -30,7 +30,7 @@ Words only consist of letters, never apostrophes or other punctuation symbols. *
 
 var mostCommonWord = function(paragraph, banned) {
   if(paragraph.length === 0) return ""
-  let bannedSet = new Set(banned)     //takes in the NAME of the arr, and it spreads itself. DO NOT place an array literal, it won't work
+  let bannedSet = new Set(banned)     //takes in the NAME of the arr, and it spreads itself
   //if banned is empty the it'll just return an empty set
 
   //return a string of just words and then turn it to an arr
@@ -40,10 +40,10 @@ var mostCommonWord = function(paragraph, banned) {
   // don't need to do replace.let words = paragraph.replace(/\W+/gi, " ") //g=global, i = case insensitive, ^=finall all characters that are NOT in a-z
   //can just split directly with regex, need the + outside of the []
   //???? 
-  let words = paragraph.toLowerCase().split(/[^a-z]+/)
+  let words = paragraph.toLowerCase().split(/[^a-z]+/)  //+ = more than 1 occurance
   // let words = paragraph.replace(/[^a-zA-Z]+/gi, ' ').split(' '); This works but extra step
 
-  let count = new Map()
+  let count = new Map() //use map so it can be iterated over easily later instead of obj literal bc that's not iterable
   let maxCount=0
   let result
   
