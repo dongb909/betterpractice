@@ -157,10 +157,13 @@ const expandStr = (s, left, right) => {
   }
   //there's an extra left-- and right++
   // console.log(s, left, right);
-  console.log(right - left - 1); //length of this string    abba right = 4, left = 0-1 NOO!!
+  return right - left - 1; //length of this string    abba right = 4, left = 0-1 NOO!!
+  //NOT RETURNING TRUE OR FALSE.
   //for even then starting left =1, right = 2,    then left = 0, right =3,
   // then since loop does an extra -- and ++ the left = -1, right =4
   // 4- -1 = 5 -1 =4
+  //don't need a condition to return if string breaks early bc since r and l are so close together, it won't return a big nunmber anywayz
+  //and really, it's seeing HOW long a palandrome can be formed from that index so if there's nothing it'll just return -1 or 0 which doesn't really affect the max of anything anyways.
 };
 
 console.log(longestPalindrome("abba"));
