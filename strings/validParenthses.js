@@ -30,13 +30,13 @@ Output: true */
 // let isMatch = (lastOpenChar, currentChar) => {
 //   if (lastOpenChar === "{" && currentChar==="}") {
 //     return true;
-    
+
 //   } else if (lastOpenChar === "[" && currentChar==="]") {
 //     return true;
-    
+
 //   } else if (lastOpenChar === "(" && currentChar===")") {
 //     return true;
-    
+
 //   } else {
 //     return false;
 //   }
@@ -105,50 +105,47 @@ Output: true */
 
 // var isValid = function(s) {
 //     if(s.length % 2 > 0)  return false;
-    
+
 //     let map = new Map();
 //     map.set("(",")");
 //     map.set("[","]");
 //     map.set("{","}");
-    
-//     let arr = []; 
-    
+
+//     let arr = [];
+
 //     for(let char of s ){
 //         if(map.has(char)){
 //             arr.push(char);
 //         }else{
 //             if (arr.length === 0) return false;
-                
+
 //             if(map.get(arr[arr.length - 1]) === char){
 //                 arr.pop();
 //             }
 //         }
 //     }
-    
+
 //     return arr.length === 0
 // };
 
-
 let isValid = (s) => {
-  if(s.length%2===1) return false;
+  if (s.length % 2 === 1) return false; //check if even even
   let parens = new Map();
-  parens.set("(",")");
-  parens.set("[","]");
+  parens.set("(", ")");
+  parens.set("[", "]");
   parens.set("{", "}");
   let open = []; //if item = key, add to arr
-
-  for(let i = 0; i < s.length; i++){  //when using Map, CANNOT use [] to retrieve. need to use set, get, has
+  for (let i = 0; i < s.length; i++) {
+    //when using Map, CANNOT use [] to retrieve. need to use set, get, has
     if (parens.has(s[i])) {
       open.push(s[i]);
-    } else if (open.length === 0) {
-      return false;
     } else {
-      if (parens.get(open[open.length-1]) === s[i]) {
-        open.pop();
-      }
+      //if is closing bracket
+      if (open.length === 0) return false; //but there's no opening brackets for it
+      if (parens.get(open[open.length - 1]) === s[i]) open.pop();
     }
   }
-  return open.length === 0
-}
+  return open.length === 0;
+};
 
-console.log(isValid('()'))
+console.log(isValid("()"));

@@ -12,19 +12,25 @@ Note: You may assume the string contains only lowercase alphabets.
 Follow up: What if the inputs contain unicode characters? How would you adapt your solution to such case? */
 let isAnagram = function(s, t) {
   //check length or null or empty
-  if (s.length !== t.length || !s || !t )return false;
   if (s==="" && t==="") return true;
+  if (s.length !== t.length || !s || !t )return false;
+  //count s characters
   let storageS = {}
   for (let i = 0; i < s.length; i ++) {
-    if (storageS[s[i]]) storageS[s[i]] ++;
-    else storageS[s[i]]=1;
+    let sChar = s[i]
+    if (storageS[sChar]) storageS[sChar] ++;
+    else storageS[sChar]=1;
   }
   // console.log(storageS, '1')
+  //subtract from s characters
   for(let j=0; j < t.length; j++) {
-    if (storageS[t[j]] && storageS[t[j]] !== 0) storageS[t[j]] --;
+    let tChar = t[j]
+    if (storageS[tChar] && storageS[tChar] !== 0) storageS[tChar] --;
     else return false;
   }
-  // console.log(storageS,'2')
+  //MUST RUN THROUGH smap 1 more time to ensure no keys are greater than 0 
+  //so can iterate through map again OR keep a count of what's reached 0 and compare to map size. if equal then all are 0
+  //MISSING IMPLEMENTATION HERE BECAUSE TOO LAZY
   return true;
 };
 

@@ -1,4 +1,6 @@
 //Number.MAX_VALUE
+// console.log(!"") ==> true
+// console.log(![]) ==> false
 
 const array = ["a", "b", "c", "d"];
 const obj = { a: "b", c: "d", e: "f" };
@@ -15,7 +17,8 @@ for (let char of "string") {
   // console.log(char) //==> ALPHABET CHARS
 }
 
-for (let char in "string") { //*********CHAR COMES BACK AS A STRING!!!! BE CAREFUL!!!
+for (let char in "string") {
+  //*********CHAR COMES BACK AS A STRING!!!! BE CAREFUL!!!
   // console.log(char) //==> 012345
 }
 
@@ -102,6 +105,7 @@ let betterRegex = paragraph.replace(/[^a-z]+/gi, " ").split(" "); //==> Bob hit 
 // or can first lowercase it and then not have to add the gi and split it on all characters BUT a-z so skipping the 'REPLACE" method
 let betterRegex2 = paragraph.toLowerCase().split(/[^a-z]+/); //BEEEESTTTT ONE HERE**********************8 */
 // console.log(betterRegex2)
+//GET RID OF EXTRA SPACE AT END WITH .TRIM
 // [
 //   'bob',   'hit',  'a',
 //   'ball',  'the',  'hit',
@@ -111,22 +115,105 @@ let betterRegex2 = paragraph.toLowerCase().split(/[^a-z]+/); //BEEEESTTTT ONE HE
 //   'hit',   ''
 // ]
 
-//g=global, i = case insensitive, ^=finall all characters that are NOT in a-z, + = more than 1 occurance
+//g=global aka repeating til end of str, i = case insensitive, ^=finall all characters that are NOT in a-z, + = more than 1 occurance
 //MUST HAVE THE FORWARD SLASHES OR ELSE IT WILLNOT WORK
 // NO ("[^a-zA-Z]", " ")
 //NOT [^a-zA-Z]
 
 // let betterRegex3 = paragraph.replace(/\w+/gi, " ") //==> LOWERCASE \w/gi means to keep all symples and get rid of all letters
 // console.log(betterRegex3)
+//ANOTHER WAY TO DO IT WITHOUT REGEX
+function getAlphaCharsOnly(s) {
+  // let shortenString = s.replace(/[^0-9a-z]/gi, "").toLowerCase(); if want to keep in numbers
+  let chars = new Set("abcdefghijklmnopqrstuvwxyz".split(""));
+  let str = "";
+  for (let char of s.toLowerCase()) {
+    str = chars.has(char) ? str + char : str;
+  }
+  // ...
+}
+//let compactString = startingString.replace(/[^0-9a-z]/gi, '').toLowerCase();
+//var newStr = str.replace(regexp|substr, newSubstr|function) aka (str taking out, str putting in)
+
+/*
+const regex = /dog/gi    where /   /gi is a reg expression
+reg expression = inate js character that describes a string. IS NOT A DATA TYPE
+The literal notation's parameters are enclosed between slashes and do not use quotation marks.
+The constructor function's parameters are not enclosed between slashes, but do use quotation marks.
+The following expressions create the same regular expression:
+
+/ab+c/i
+new RegExp(/ab+c/, 'i') // literal notation
+new RegExp('ab+c', 'i') // constructor
+The literal notation provides a compilation of the regular expression when the expression is evaluated. Use literal notation when the regular expression will remain constant. For example, if you use literal notation to construct a regular expression used in a loop, the regular expression won't be recompiled on each iteration.
+
+The constructor of the regular expression object—for example, new RegExp('ab+c')—provides runtime compilation of the regular expression. Use the constructor function when you know the regular expression pattern will be changing, or you don't know the pattern and are getting it from another source, such as user input.
+
+When using the constructor function, the normal string escape rules (preceding special characters with \ when included in a string) are necessary.
+
+For example, the following are equivalent:
+
+let re = /\w+/
+let re = new RegExp('\\w+') (+= a repeating thing)
+
+\d	
+Matches any digit (Arabic numeral). Equivalent to [0-9]. For example, /\d/ or /[0-9]/ matches "2" in "B2 is the suite number".
+
+\D	
+Matches any character that is not a digit (Arabic numeral). Equivalent to [^0-9]. For example, /\D/ or /[^0-9]/ matches "B" in "B2 is the suite number".
+
+\w	
+Matches any alphanumeric character from the basic Latin alphabet, including the underscore. Equivalent to [A-Za-z0-9_]. For example, /\w/ matches "a" in "apple", "5" in "$5.28", and "3" in "3D".
+
+\W	
+Matches any character that is not a word character from the basic Latin alphabet. Equivalent to [^A-Za-z0-9_]. For example, /\W/ or /[^A-Za-z0-9_]/ matches "%" in "50%".
+
+x*	    match ZERO or more times
+Matches the preceding item "x" 0 or more times. For example, /bo*./ matches "boooo" in "A ghost booooed" and "b" in "A bird warbled", but nothing in "A goat grunted".
+
+x+	match AT LEAST 1 or more times
+Matches the preceding item "x" 1 or more times. Equivalent to {1,}. For example, /a+/ matches the "a" in "candy" and all the "a"'s in "caaaaaaandy".
+
+x?	  both 'e' can be there or not BUT "l" must be there
+Matches the preceding item "x" 0 or 1 times. For example, /e?le?/ matches the "el" in "angel" and the "le" in "angle." 
+If used immediately after any of the quantifiers *, +, ?, or {}, makes the quantifier non-greedy (matching the minimum number of times), as opposed to the default, which is greedy (matching the maximum number of times).
+
+x{n}	
+Where "n" is a positive integer, matches exactly "n" occurrences of the preceding item "x". For example, /a{2}/ doesn't match the "a" in "candy", but it matches all of the "a"'s in "caandy", and the first two "a"'s in "caaandy".
+
+x{n,}	
+Where "n" is a positive integer, matches at least "n" occurrences of the preceding item "x". For example, /a{2,}/ doesn't match the "a" in "candy", but matches all of the a's in "caandy" and in "caaaaaaandy".
+
+x{n,m}	
+Where "n" is 0 or a positive integer, "m" is a positive integer, and m > n, matches at least "n" and at most "m" occurrences of the preceding item "x". For example, /a{1,3}/ matches nothing in "cndy", the "a" in "candy", the two "a"'s in "caandy", and the first three "a"'s in "caaaaaaandy". Notice that when matching "caaaaaaandy", the match is "aaa", even though the original string had more "a"s in it.
+
+x*?
+x+?
+x??
+x{n}?
+x{n,}?
+x{n,m}?
+
+By default quantifiers like * and + are "greedy", meaning that they try to match as much of the string as possible. The ? character after the quantifier makes the quantifier "non-greedy": meaning that it will stop as soon as it finds a match. For example, given a string like "some <foo> <bar> new </bar> </foo> thing":
+
+/<.*>/ will match "<foo> <bar> new </bar> </foo>"
+/<.*?>/ will match "<foo>"
+
+
+The g modifier is used to perform a global match (find all matches rather than stopping after the first match).
+
+Tip: To perform a global, case-insensitive search, use this modifier together with the "i" modifier.
+The i modifier is used to perform case-insensitive matching.
+ */
 
 //********************************************************/
 //**************        SORTING        *****************/
 //********************************************************/
 //ALL SORTED IN PLACE
-const arrBigNum = [1,21,40,9,590,100000]
-const arrOneDigits = [9,2,4,6,0,1,3]  //==> YES 0-9
-const arrAlpha = 'absckdoig'.sort() //==> YES a->z
-const months = ["Dec", "Feb", "Jan", "March"]
+const arrBigNum = [1, 21, 40, 9, 590, 100000];
+const arrOneDigits = [9, 2, 4, 6, 0, 1, 3]; //==> YES 0-9
+const arrAlpha = "absckdoig".sort(); //==> YES a->z
+const months = ["Dec", "Feb", "Jan", "March"];
 //-normally called with:    but The time and space complexity of the sort cannot be guaranteed as it depends on the implementation.
 // console.log(arrNum.sort())   // DOES NOT RETURN 1-9 as a guararantee
 // console.log(arrAlpha.sort()) //DOES NOT RETURN  a-z as a guarantee
@@ -152,22 +239,22 @@ function compare(a, b) {    ==> will sort in order, if want descending order the
 /*
 function compareNumbers(a, b) {
   return a - b;  ==> [1, 2, 3, 4, 5]
+  return a > b   ==> [1, 2, 3, 4, 5]
   return b - a   ==> [5, 4, 3, 2, 1]
+  return a < b   ==> [5, 4, 3, 2, 1]
 }
   
 */
 
-
-console.log()
-console.log()
-console.log()
-console.log()
-console.log()
-console.log()
+console.log();
+console.log();
+console.log();
+console.log();
+console.log();
+console.log();
 
 //but can also put in a compare function
 
 //********************************************************/
 //**************        HEAPS        *****************/
 //********************************************************/
-

@@ -25,8 +25,9 @@ let isPalindrome = (s) => {
   //nor NOT you need the carrot ^
   //don't need brackets if using the othet way
 
+  //BOTH THE FOLLOWING WORKS
   // let shortenString = s.replace(/[^0-9a-z]/gi, "").toLowerCase();
-  let chars = new Set("abcdefghijklmnopqrstuvwxyz".split(""));
+  let chars = new Set("abcdefghijklmnopqrstuvwxyz".split("")); //turn into a fully connected string of chars
   let str = "";
   for (let char of s.toLowerCase()) {
     str = chars.has(char) ? str + char : str;
@@ -35,7 +36,9 @@ let isPalindrome = (s) => {
   //odd or even does not matter because if odd, won't be touching middle anyways bc will go from comparing front to end and working way in
   let length = str.length - 1; //this way it accounts for the -0 and you don't have to recalculate length each iteration
   for (let i = 0; i < Math.floor(str.length / 2); i++) {
-    if (!(str[i] === str[length - i])) {
+    //comparing both ends up until the middle, ignoring if there's a singular middle char
+    if (!(str[i] === str[length - i - 1])) {
+      //bc if string.length - 0, it's undefined, need to do length - 0 - 1
       return false;
     }
   }

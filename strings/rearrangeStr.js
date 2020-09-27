@@ -112,15 +112,15 @@ var reorganizeString = function (S) {
   let string = [];
   let next = null;
   while (maxHeap.length > 0) {
-    let max = next ? next : maxHeap.shift(); //like pop
+    let max = next ? next : maxHeap.shift(); //like pop but in front
     next = null;
     string.push(max[0]);
     max[1]--;
-    if (max[1] >= 0 && maxHeap.length === 0) return string.join("");
-    if (max[1] >= maxHeap[0][1]) {
+    if (max[1] >= 0 && maxHeap.length === 0) return "";
+    if (max[1] >= maxHeap[0][1]) {  //bc there are other letters that will make up the space too
       next = maxHeap.shift();
       maxHeap.push(max);
-      maxHeap.sort(comparator);
+      // maxHeap.sort(comparator);
     } else if (max[1] !== 0) {
       maxHeap.push(max);
       maxHeap.sort(comparator);
@@ -128,7 +128,7 @@ var reorganizeString = function (S) {
   }
   return string.join("");
 };
-console.log(reorganizeString("aaaabbb"));
+// console.log(reorganizeString("aaaabbb"));
 
 // a:2, b:1
 
@@ -153,3 +153,56 @@ questions
 examples
 
 */
+
+
+function rearrangeStr(str) {
+  //count characters
+  const map = new Map()
+  for(const char of str){
+    if(!map.has(char)) map.set(char, 1)
+    else map.set(char, map.get(char) + 1)
+  }
+  //create heap
+  const heap = []
+  for(const [char, count] of map){
+    heap.push([char, count])
+  }
+  //sort heap
+  function comparator (a, b) {
+    return b[1] - a[1]
+    // return a[1] < b[1]
+  }
+  heap.sort(comparator) // heap.sort(sortMax())   ==>NO DONT HAVE TO CALL IT. SORT WILL USE IT AS A CB
+  if(heap[0][1] > Math.ceil(heap.length/2)) return 'Not valid rearrangement'
+  //recreate string
+  const newStr = []
+  // let max NO NOT MAX HERE BUT NEXT
+  let next = null
+  while(heap.length > 0) {
+    // let maxCountPair = heap.pop() NOOO 
+    let max = next ? next : heap.shift() //need to know next in case the max and next are equal in number
+    newStr.push(max[0])
+    max[1]--
+    //break out early if all units are used up
+    console.log(heap)
+    if(heap.length === 0 && max[1] >= 0) return "" //means there's more duplicate chars than needed
+    //set next 
+    //get next and add back to front since it's still a max num
+    next = heap.shift()
+    if(max[1] !== 0) {
+      heap.unshift(max)
+      if(max[1] >= heap[0][1]) heap.sort(comparator) //NOT LESS THAN!!!!
+    } //only sort if max is not even equal or greater than the next NEXT char
+    // NOT if(max[1] >= heap[0][1]) heap.shift(max)  NO DON'T NEED ALL THIS. BC SINCE USING A HEAP, THINGS SHOULD ALREADY BE IN ORDER, SO OUR MAX SHOULD NEVER BE LESS THAN THE NEXT MAX ANYWAY. IT'S EITHER GREATER OR EQUAL SO SHIFTING IT BACK TO THE FRONT SHOULDL BE OK?
+    //NO STILL NEED TO SORT BC WHAT IF OUR MAX IS 7 AND NEXT MAX IS 7, 7, AFTER OUR USE, MAX IS 6, SHIFTING BACK IN, IT NEEDS TO BE RESORTED
+  }
+  //add very last char
+  newStr.push(next[0])
+  return (newStr.join(''))
+}
+console.log(rearrangeStr('aaaaaaaaaaaaaaaaaaabbbccfe'))
+
+// let arr = ['a', 'b', 'c']
+// arr.unshift([1,2])
+// console.log(arr)
+
