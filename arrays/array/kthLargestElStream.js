@@ -15,7 +15,9 @@ kthLargest.add(4);   // returns 8
 Note:
 You may assume that nums' length ≥ k-1 and k ≥ 1. */
 
-var KthLargest = function(k, nums) {
+var KthLargest = function(k, nums) {  //THEY'RE TREATING THIS LIKE A CLASS! NOTE THE CAPITAL K AND THE "NEW" KEYWORD
+    this.k = k
+    this.nums = nums
     
 };
 
