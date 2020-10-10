@@ -11,6 +11,8 @@ If you have figured out the O(n) solution, try coding another solution using the
 
 Accepted */
 
+const { ConsoleWriter } = require("istanbul-lib-report");
+
 // var maxSubArray = function(nums) {
 //     let max = Number.NEGATIVE_INFINITY +1;
 //     let nextMax = Number.NEGATIVE_INFINITY;
@@ -80,4 +82,17 @@ let maxSubArray = (arr) => {
   }
   return max;
 };
-console.log(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
+
+//PRACTICE
+let maxSubArray2 = (arr) => {
+  let currSum = 0;
+  let max = Number.NEGATIVE_INFINITY; //NOT Math.NEGATIVE_INFINITY
+  for (let num of arr) {
+    currSum += num;
+    if (num > currSum) currSum = num; //This NEEDS TO GO FIRST in order to set max correctly
+    if (currSum > max) max = currSum; // don't care about when it's = max really unless we want the actual subarray taht we need to keep track on indicies
+    // if(currSum < max) currSum = num /NOOOO!!!
+  }
+  return max;
+};
+console.log(maxSubArray2([-2, 1, -3, 4, -1, 2, 1, -5, 4])); //6
