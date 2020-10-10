@@ -16,18 +16,15 @@ NOTE: input types have been changed on April 15, 2019. Please reset to default c
 //   return rooms
 // };
 
-// console.log(minMeetingRooms(
-  
-// [[9,10],[4,9],[4,17]]
-// ))
+// console.log(minMeetingRooms([[9,10],[4,9],[4,17]]))
 // [4,9],[9,10][4,17],[12,13]
 // if there's a meeting btwn 8 am and 10 am and i have a meeting at 2 
 // another meeting 9-11
 
-startMinHeap: 12
-endMinHeap: 10,13, 17
-if start min < end min then increment extract start min
-if start min >= end min then leave as is and take out both mins
+// startMinHeap: 12
+// endMinHeap: 10,13, 17
+// if start min < end min then increment extract start min
+// if start min >= end min then leave as is and take out both mins
 
 // roomCount = 2
 // return room Count when start heap is 0,, don't care when other meetings end. bc no more meetings are needed to be schedule. 

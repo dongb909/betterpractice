@@ -22,7 +22,6 @@ Accepted */
 //       }
 //     }
 
-
 // };
 
 //CONTIGUOUS ARRAY
@@ -43,7 +42,7 @@ Accepted */
 
 //   if ( nums[i] > currSum) {
 
-//     currSum = nums[i] 
+//     currSum = nums[i]
 //     if (nums[i]>max){
 
 //       max=nums[i]
@@ -51,33 +50,34 @@ Accepted */
 //   }
 
 //  }
-// //  let maxArr = nums.slice(start, end+1)
+// //  let maxArr = nums.slice(start, end+1) //only if need to return the actual subarray and not just its sum
 //  return max
 // }
 
 // const maxSubArray = (nums) => {
-  //   let sum=0;
-  //   let ans=Number.NEGATIVE_INFINITY;
-  //   for (let i=0; i<nums.length; i++) {
-    //     sum += nums[i];
-    //     if (nums[i] > sum) sum = nums[i];
-    //     ans = Math.max(sum, ans);
-    //   }
-    //   return ans;
-    // };
-    
-    let maxSubArray = (arr) => {
-      let currSum =0;
-      let max = Number.NEGATIVE_INFINITY;
-      for (let num of arr) {
-        currSum += num;
-        if (num>currSum) {
-          currSum = num
-        }
-        if (currSum > max) {
-          max = currSum
-        }
-      }
-      return max
+//   let sum=0;
+//   let ans=Number.NEGATIVE_INFINITY;
+//   for (let i=0; i<nums.length; i++) {
+//     sum += nums[i];
+//     if (nums[i] > sum) sum = nums[i];
+//     ans = Math.max(sum, ans);
+//   }
+//   return ans;
+// };
+
+let maxSubArray = (arr) => {
+  let currSum = 0;
+  let max = Number.NEGATIVE_INFINITY;
+  for (let num of arr) {
+    currSum += num;
+    if (num > currSum) {
+      //bc added a negative prevSum with a current positive num that either made it less negative or just now a positive number, either way, is a positive nnumber vs negative sum
+      currSum = num;
     }
-    console.log(maxSubArray([-2,1,-3,4,-1,2,1,-5,4]))
+    if (currSum > max) {
+      max = currSum;
+    }
+  }
+  return max;
+};
+console.log(maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
