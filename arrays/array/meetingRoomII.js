@@ -43,6 +43,7 @@ const { start } = require("repl");
 //other method with only 1 heap only maintains meeting that's happening and then evict rooms when incoming meeting is starting later than what's at top of heap
 // and add new room in, comparing 1 item to see if it's overlatpping and then evitt one of them
 
+//WITH HEAP
 var minMeetingRooms = function (meetings) {
   if (!meetings.length || !meetings[0].length) return 0;
   let rooms = 0; //start with 0 so it's just easier to not add additional conditions
@@ -59,10 +60,12 @@ var minMeetingRooms = function (meetings) {
     minHeapEnd.add(meeting[0]);
   }
   while (minHeapStart.size() > 0) {
-    if (minHeapStart.peek() < minHeapStart.peek()) {
+    if (minHeapStart.peek() < minHeapEnd.peek()) {
+      //bc if the prev meeting hasn't end yet, and another meeting is starting then a new room is needed
       rooms++;
       minHeapStart.pop();
     } else if (minHeapStart.peek() >= minHeapEnd.peek()) {
+      //no new room needed since new meeting is starting AFTER other meeting ended
       minHeapEnd.pop();
       minHeapStart.pop();
     }
@@ -89,3 +92,41 @@ var minMeetingRooms = function (meetings) {
 // total room 3
 
 //room 1: [4,9],[9,15]     room2: [4,17]   room 3: [9,10][12,13][14,15]      room 4:[]
+
+//without heap but trying to mimic heap with sorted arr
+var minMeetingRooms2 = function (meetings) {
+  let rooms = 0;
+
+  //creating minHeaps
+  let minHeapStart = [];
+  let minHeapEnd = [];
+  for (let time of meetings) {
+    minHeapStart.push(time[0]);
+    minHeapEnd.push(time[1]);
+  }
+  minHeapStart.sort((a, b) => a - b);
+  minHeapEnd.sort((a, b) => a - b);
+  // while (!minHeapStart.length) { DON'T EVER DO THIS
+  while (minHeapStart.length !== 0) {
+    console.log(minHeapStart, minHeapEnd);
+    if (minHeapStart[0] < minHeapEnd[0]) {
+      rooms++;
+      minHeapStart.shift();
+    } else {
+      minHeapStart.shift();
+      minHeapEnd.shift();
+    }
+  }
+  return rooms;
+};
+
+console.log(
+  minMeetingRooms2([
+    // [4, 9],
+    // [4, 17],
+    // [9, 10],
+    // [9, 15],
+    // [12, 13],
+    // [14, 15],
+  ])
+);
