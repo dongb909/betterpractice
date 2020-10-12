@@ -120,10 +120,11 @@
 // // }
 
 //USING POINTERS
+//go through each index and see how long of an even or odd palindrome can be formed and which index the max palindrom is at
 const longestPalindrome = (str) => {
   if (!str) return "";
   if (str.length === 1) return str; //bc no point in putting it through the helper fnc
-  let maxIndex = 0;
+  let maxIndex = 0; //need index for slicing later
   let maxLength = 0;
   // let start = 0;
   // let end = 0; //in case there's no palindromes at all
@@ -167,3 +168,6 @@ const expandStr = (s, left, right) => {
 };
 
 console.log(longestPalindrome("abba"));
+
+//PRACTICE
+const longestPalindrome2 = (str) => {};

@@ -2,6 +2,8 @@
 // console.log(!"") ==> true
 // console.log(![]) ==> false
 
+// str.split('') === [...str]
+
 const array = ["a", "b", "c", "d"];
 const obj = { a: "b", c: "d", e: "f" };
 const map = new Map();
@@ -24,10 +26,13 @@ for (let char in "string") {
 
 for (let char of ["a", "b", "c", "d"]) {
   // console.log(char) //==> ALPHABET CHARS
+  //if numbers then will return as NUMBERS
 }
 
 for (let char in ["a", "b", "c", "d"]) {
   // console.log(char) //==> 0123
+  //BE CAREFUL!!!! THE CHAR HERE ALTHOUGH REPRESENT INDICES, THEY RETURN AS STRINGSS!! NOT NUMBERED INDICES BUT NUMBERED STRINGS!!
+  //THESE WILL WORK FINE IF PLACED IN A MATH EQUATION BUT NOT BY THEMSELVES
 }
 
 for (const key in obj) {
@@ -58,6 +63,8 @@ for (const [key, val] of map) {
   //can do const bc the key and val are just placeholders for the actual key and val
   // console.log(key, val) //==> a b c d e f
 }
+
+if (key in map) return true;
 
 //******************************************************* */
 //********       Creating sets           ********** */
@@ -258,3 +265,153 @@ console.log();
 //********************************************************/
 //**************        HEAPS        *****************/
 //********************************************************/
+
+//********************************************************/
+//**************        LINKED LISTS        *****************/
+//********************************************************/
+//SAME PATTERN FOR BOTH
+// let fast = head, slow = head;
+// while (fast && fast.next) {
+//   slow = slow.next;
+//   fast = fast.next.next;
+// }
+
+var middleNode = function (head) {
+  if (!head) return null; //not checking head.next because could be the only node which would make it the middle node
+  let fast = head;
+  let slow = head;
+  while (fast && fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+  }
+  return slow;
+};
+
+//DETECT CYCLE
+const hasCycle2 = function (head) {
+  if (!head || !head.next) return false; //bc there's no list or there's just 1 node thus no cycle possible
+  let slow = head,
+    fast = head;
+  while (fast && fast.next) {
+    //if there's a cycle, slow.next AND fast.next will NEVER = null so if with 1 run, they don't equal, they eventually will
+    slow = slow.next; //move slow by 1
+    fast = fast.next.next; //move fast by 2
+    if (slow === fast) return true;
+  }
+  return false; //reached null before finding a cycle
+};
+
+//REVERSE
+const reverseLL = (head) => {
+  //need to put the actual HEAD, not just the ll.
+  let prev = null;
+  while (head && head.next) {
+    //MUST DO HEAD.NEXT TOO OR ELSE WILL BE RETURNING HEAD = NULL
+    let next = head.next;
+    head.next = prev;
+    prev = head;
+    head = next;
+    // console.log('hiiiiiiiiiiiiiii',head);
+  }
+  head.next = prev; //MUST HAVE THIS HERE!!!
+  // console.log(head)
+  return head;
+};
+// reverseLL(ll.head);
+// console.log(reverseLL(ll.head))
+
+//********************************************************/
+//**************        FLATTENING        *****************/
+//********************************************************/
+function flatten(arr) {
+  let result = [];
+  for (const el of arr) {
+    // if(Array.isArray(el)) result.push(flatten(el)) //NOOOOO DO NOT PUSH BECAUSE YOU'RE RETURNING ANOTHER ARRAY AT EACH RECURSION!!
+    // else result.push(el)
+    if (Array.isArray(el)) {
+      result = result.concat(flatten(el)); //MUST RESET RESULT ASSIGNMENT BECAUSE 'CONCAT' ALWAYS RETURNS A NEW ARRAY OR STRING
+    } else result.push(el); //can push here bc this el is not an arr
+  }
+  return result;
+}
+console.log(flatten([1, 2, [3, 4], [5, [6, [7], 8]]]));
+
+//why do you have to sort? bc there's possibility of duplicates and sorting will provide you where the duplicates are. HAVE TO SORT FOR ANY PROBLEMS NOT LEETING YOU HAVE DUPS to be efficient
+//if can't sort then optimize by using set and no full scan of list again brute force which is less efficient
+
+//********************************************************/
+//**************        MORE REGEX         *****************/
+//********************************************************/
+//let compactString = startingString.replace(/[^0-9a-z]/gi, '').toLowerCase();
+//var newStr = str.replace(regexp|substr, newSubstr|function) aka (str taking out, str putting in)
+
+/*
+const regex = /dog/gi    where /   /gi is a reg expression
+reg expression = inate js character that describes a string. IS NOT A DATA TYPE
+The literal notation's parameters are enclosed between slashes and do not use quotation marks.
+The constructor function's parameters are not enclosed between slashes, but do use quotation marks.
+The following expressions create the same regular expression:
+
+/ab+c/i
+new RegExp(/ab+c/, 'i') // literal notation
+new RegExp('ab+c', 'i') // constructor
+The literal notation provides a compilation of the regular expression when the expression is evaluated. Use literal notation when the regular expression will remain constant. For example, if you use literal notation to construct a regular expression used in a loop, the regular expression won't be recompiled on each iteration.
+
+The constructor of the regular expression object—for example, new RegExp('ab+c')—provides runtime compilation of the regular expression. Use the constructor function when you know the regular expression pattern will be changing, or you don't know the pattern and are getting it from another source, such as user input.
+
+When using the constructor function, the normal string escape rules (preceding special characters with \ when included in a string) are necessary.
+
+For example, the following are equivalent:
+
+let re = /\w+/
+let re = new RegExp('\\w+') (+= a repeating thing)
+
+\d	
+Matches any digit (Arabic numeral). Equivalent to [0-9]. For example, /\d/ or /[0-9]/ matches "2" in "B2 is the suite number".
+
+\D	
+Matches any character that is not a digit (Arabic numeral). Equivalent to [^0-9]. For example, /\D/ or /[^0-9]/ matches "B" in "B2 is the suite number".
+
+\w	
+Matches any alphanumeric character from the basic Latin alphabet, including the underscore. Equivalent to [A-Za-z0-9_]. For example, /\w/ matches "a" in "apple", "5" in "$5.28", and "3" in "3D".
+
+\W	
+Matches any character that is not a word character from the basic Latin alphabet. Equivalent to [^A-Za-z0-9_]. For example, /\W/ or /[^A-Za-z0-9_]/ matches "%" in "50%".
+
+x*	    match ZERO or more times
+Matches the preceding item "x" 0 or more times. For example, /bo*./ matches "boooo" in "A ghost booooed" and "b" in "A bird warbled", but nothing in "A goat grunted".
+
+x+	match AT LEAST 1 or more times
+Matches the preceding item "x" 1 or more times. Equivalent to {1,}. For example, /a+/ matches the "a" in "candy" and all the "a"'s in "caaaaaaandy".
+
+x?	  both 'e' can be there or not BUT "l" must be there
+Matches the preceding item "x" 0 or 1 times. For example, /e?le?/ matches the "el" in "angel" and the "le" in "angle." 
+If used immediately after any of the quantifiers *, +, ?, or {}, makes the quantifier non-greedy (matching the minimum number of times), as opposed to the default, which is greedy (matching the maximum number of times).
+
+x{n}	
+Where "n" is a positive integer, matches exactly "n" occurrences of the preceding item "x". For example, /a{2}/ doesn't match the "a" in "candy", but it matches all of the "a"'s in "caandy", and the first two "a"'s in "caaandy".
+
+x{n,}	
+Where "n" is a positive integer, matches at least "n" occurrences of the preceding item "x". For example, /a{2,}/ doesn't match the "a" in "candy", but matches all of the a's in "caandy" and in "caaaaaaandy".
+
+x{n,m}	
+Where "n" is 0 or a positive integer, "m" is a positive integer, and m > n, matches at least "n" and at most "m" occurrences of the preceding item "x". For example, /a{1,3}/ matches nothing in "cndy", the "a" in "candy", the two "a"'s in "caandy", and the first three "a"'s in "caaaaaaandy". Notice that when matching "caaaaaaandy", the match is "aaa", even though the original string had more "a"s in it.
+
+x*?
+x+?
+x??
+x{n}?
+x{n,}?
+x{n,m}?
+
+By default quantifiers like * and + are "greedy", meaning that they try to match as much of the string as possible. The ? character after the quantifier makes the quantifier "non-greedy": meaning that it will stop as soon as it finds a match. For example, given a string like "some <foo> <bar> new </bar> </foo> thing":
+
+/<.*>/ will match "<foo> <bar> new </bar> </foo>"
+/<.*?>/ will match "<foo>"
+
+
+The g modifier is used to perform a global match (find all matches rather than stopping after the first match).
+
+Tip: To perform a global, case-insensitive search, use this modifier together with the "i" modifier.
+The i modifier is used to perform case-insensitive matching.
+ */

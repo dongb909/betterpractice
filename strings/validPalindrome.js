@@ -44,8 +44,23 @@ let isPalindrome = (s) => {
   }
   return true;
 };
-console.log(isPalindrome("A man, a plan, anal: Panama"));
 
+//PRACTICE
+let isPalindrome2 = (s) => {
+  let alpha = s.replace(/[^a-z]/gi, "").toLowerCase();
+  console.log(alpha);
+  const length = alpha.length; //[a,b,c,d,e,f,g] length = 7
+  for (let i = 0; i < Math.floor(length / 2) - 1; i++) {
+    //7/2 = 3.5 = 3 floored - 1 = up to index 2
+    // console.log(alpha[i], alpha[length-i-1])
+    if (alpha[i] !== alpha[length - 1 - i]) {
+      return false;
+    }
+  }
+  return true;
+};
+
+console.log(isPalindrome2("A man, a plan, anal: Panama"));
 //let compactString = startingString.replace(/[^0-9a-z]/gi, '').toLowerCase();
 //var newStr = str.replace(regexp|substr, newSubstr|function) aka (str taking out, str putting in)
 

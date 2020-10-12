@@ -40,19 +40,29 @@ let hash = function (str) {
     )*/
 //don't use n bc tho 1 input you have 2 functions
 
-const groupAnagrams = strs => {
-    const map = {};
-    
-    for (let str of strs) {
-        const key = [...str].sort().join('');
+const groupAnagrams = (strs) => {
+  const map = {};
 
-        if (!map[key]) {
-            map[key] = [];
-        }
+  for (let str of strs) {
+    const key = [...str].sort().join(""); //sort the actual letters in each word and set the sorted word as a key
 
-        map[key].push(str);
+    if (!map[key]) {
+      map[key] = [];
     }
-    
-    return Object.values(map);
+
+    map[key].push(str);
+  }
+
+  return Object.values(map);
 };
-console.log(groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"],))
+
+const groupAnagrams2 = (strs) => {
+  const grps = new Map();
+  for (str of strs) {
+    const sortedKey = str.split("").sort().join("");
+    if (!grps.has(sortedKey)) grps.set(sortedKey, []);
+    grps.get(sortedKey).push(str);
+  }
+  return grps.values();
+};
+console.log(groupAnagrams2(["eat", "tea", "tan", "ate", "nat", "bat"]));
