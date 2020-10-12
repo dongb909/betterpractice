@@ -167,7 +167,38 @@ const expandStr = (s, left, right) => {
   //and really, it's seeing HOW long a palandrome can be formed from that index so if there's nothing it'll just return -1 or 0 which doesn't really affect the max of anything anyways.
 };
 
-console.log(longestPalindrome("abba"));
+// console.log(longestPalindrome("abba"));
 
 //PRACTICE
-const longestPalindrome2 = (str) => {};
+const longestPalindrome2 = (s) => {
+  if (!s) return "";
+  if (s.length === 1) return s;
+  let max = 0,
+    maxIdx;
+  for (let i = 1; i < s.length; i++) {
+    let mid = maxLength2(s, i, i); //counting the middle letter as it's own length of 1
+    let noMid = maxLength2(s, i, i - 1); //bc starting i at 1 and want 0
+    let currMax = Math.max(mid, noMid);
+    if (currMax > max) {
+      max = currMax;
+      maxIdx = i;
+    }
+  }
+  let half = Math.floor(max / 2);
+  let start = maxIdx - half;
+  let end = max % 2 === 0 ? maxIdx + half : maxIdx + half + 1;
+  return s.slice(start, end);
+};
+
+const maxLength2 = (s, right, left) => {
+  //aba,1,1     abba,1,0
+  while (s[left] === s[right] && left >= 0 && right < s.length) {
+    //b=b         b!=a so doesn't enter while loop
+    left--; //right 2      right still 1
+    right++; //left 0      left still 0
+  } //a=a
+  return right - left - 1; //right 3
+}; //left -1
+// should return    3- (-1) = 4 -1 = 3    1 - 0 = 1 - 1 = 0
+
+console.log(longestPalindrome2("babcbad"));
