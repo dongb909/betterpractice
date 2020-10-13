@@ -66,7 +66,7 @@ let sort = (arr, length, start, end) => {
 } 
 
 
-console.log(findKthLargest([3,2,3,1,2,4,5,5,6],4))
+// console.log(findKthLargest([3,2,3,1,2,4,5,5,6],4))
 
 
 
@@ -144,3 +144,28 @@ function nthElement(arr,n,l = 0,r = arr.length - 1){
 }; */
 
 
+//using heaps
+var findKthLargest2 = function(nums, k) {
+  if(nums.length < k) return null
+  const minHeap = []
+  let i = k
+  //making minheap default
+  while(k){
+    minHeap.push(nums.pop())
+    k--
+  }
+  // //heapify so not counting this as sorting in this case
+  minHeap.sort((a,b) => a - b)
+  while(nums.length > 0) {
+    let currNum = nums.pop()
+    if (currNum > minHeap[0]){
+      minHeap.shift()
+      minHeap.push(currNum)
+    }
+  }
+  console.log(minHeap)
+  return minHeap.shift()
+}
+
+console.log(findKthLargest2([3,2,3,1,2,4,5,5,6],4)) //4
+// console.log(findKthLargest2([3,2,1,5,6,4],2)) //5
