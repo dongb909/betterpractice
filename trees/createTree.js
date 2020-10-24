@@ -221,11 +221,11 @@ class BST {
     return height(node) !== Infinity;
   }
 
-  //DEPTH FIRST SEARCH - traverses each branch
+  //DEPTH FIRST SEARCH - traverses each branch all the way first
   //LMR always returning an array
   inOrder() {
-    if (this.root === null) return null;
     let result = [];
+    if (this.root === null) return result;
     const traverse = (node) => {
       //DOESN'T RETURN ANYTHING! OTHER THAN TRAVERSE AND ADD TO RESULT
       //will always care about left child first. not even current node
@@ -237,10 +237,64 @@ class BST {
     return result;
   }
 
+  inOrderRecursive() {
+    let result = [];
+    if (this.root === null) return result;
+    let stack = []; //DON'T START OFF WITH THIS.ROOT AND ALSO SET CURR TO THIS.ROOT, OR ELSE WILL GET DUPLICATES OF THE RIGHT SIDE OF THE TREE
+    let curr = this.root;
+    /* NOOO
+    while (curr) {
+      stack.push(curr)
+      curr = curr.left
+    }
+    while (stack.length > 0) {
+      curr = stack.pop()
+      // result.push(curr.data)   //NO BECAUSE WILL print ==> 1,  2,  4, 5, 6,  7, 9, 10, 11, 7, 9, 10,11  INSTEAD OF   1, 2, 4,  5,  6, 7, 8, 9, 10, 11, MISSING ALL THE RIGHT'S LEFTS
+      // if (curr.right) stack.push(curr.right)
+      //SOLN: JUST forget that we even checked all the lefts, with the curr node, check for left again, then break out if there is left after you pushedm BUT THEN have to be careful not to push the lefts we've already done back either
+    }
+    */
+
+    /*YES 
+    list = new ArrayList<>();
+    if(root == null) return list;
+    stack = new Stack<>();
+    while(root != null || !stack.empty()){
+        while(root != null){
+            stack.push(root);
+            root = root.left;
+        }
+        root = stack.pop();
+        list.add(root.val);
+        root = root.right;}*/
+    //so you were separating out the iteration til the end of left branch but only for the root node, you should do that for every node/outerloop BEFORE you pop
+    // while (curr && stack.length > 0) { NOOOOO DO ORRRR
+    while (curr || stack.length > 0) {
+      //iterate and add all the left children of this current node first before moving to the right now or popping from the stack
+      while (curr) {
+        stack.push(curr);
+        curr = curr.left;
+      }
+      //now work with last node but using the same variable, just reassigning, DON'T USE A NEW VARIABLE BC YOU WANT YOUR OUTTER WHILE LOOP TO STILL WORK
+      curr = stack.pop();
+      //if there was a left to this node, it would have already been added AFTER this node thus, would already been popped and handled, so don't have to worry about left anymore. just currently popped node
+      result.push(curr.data);
+      //now if curr node HAS a right, then want to set it to curr to go throuhg the next loop round to add all its possible left nodes, which this right node will be the first node to be added to the stack in the round before the other lefts
+      //just set it. not doing anything to the right until the next loop which is right after this
+      // if(curr.right) curr = curr.right
+      //^^NOOO DON'T EVEN CHECK IF THERE IS A RIGHT, YOU'LL END UP IN AN INFINITE LOOP BC CURR IS NEVER SET TO NULL,
+      //JUST GO AHEAD AND ASSIGN CURR AS THE RIGHT NODE WHETHER IT EXISTS OR NOT.
+      //****HERE IS THE REASON WHY YOU WANT TO MAKE YOUR OUTTER CONDITIONAL AN || NOT && */
+      //IF RIGHT IS NULL THEN THERE WON'T BE ADDITIONAL LEFTS ADDED BUT CURR WILL BE REASSIGNED RIGHT AWAY TO THE NEXT NODE ON THE STACK. NO WORRIES
+      curr = curr.right;
+    }
+
+    return result;
+  }
   //MLR
   preOrder() {
-    if (this.root === null) return null;
     let result = [];
+    if (this.root === null) return result;
     const traverse = (node) => {
       //this function just pushes new values to result to be returned later, it doesn't return anything itself
       result.push(node.data);
@@ -253,8 +307,8 @@ class BST {
 
   //LRM
   postOrder() {
-    if (this.root === null) return null;
     let result = [];
+    if (this.root === null) return result;
     const traverse = (node) => {
       if (node.left) traverse(node.left);
       if (node.right) traverse(node.right);
@@ -277,14 +331,58 @@ class BST {
     }
     return result;
   }
-
-  validateBST(node = this.root) {}
+  // The left subtree of a node contains only nodes with keys less than the node's key.
+  // The right subtree of a node contains only nodes with keys greater than the node's key.
+  // Both the left and right subtrees must also be binary search trees.
+  validateBSTRecursive(node = this.root) {
+    //putting node here so it looks like if we were writing it out in a separate function instead of a class like on leetcode
+    if (!node) return true;
+    if (
+      (node.left && node.left.data >= node.data) || //need the '=' to make sure there's no duplicates
+      (node.right && node.right.data <= node.data)
+    )
+      return false;
+    return (
+      this.validateBSTRecursive(node.left) &&
+      this.validateBSTRecursive(node.right)
+    );
+  } //YAYYY did it without looking!
+  //Complexity
+  // O(n)O(n) time and O(n)O(n) space.
+  //
+  //
+  validateBSTIterative(node = this.root) {
+    //should maybe do it level by level but must use a queue in order to keep track of the curr node's children as we work on curr node, and their children's children
+    if (!node) return true;
+    let q = [node];
+    let valid = true;
+    let currNode;
+    while (q.length > 0 && valid) {
+      let currNode = q.shift();
+      // console.log(currNode)
+      // if(currNode.left && currNode.val > currNode.left.val) q.push(currNode.left) //NO CHECK FOR THINGS TO BREAK OUT FIRST!!!
+      // if(currNode.right && currNode.val < currNode.right.val) q.push(currNode.right)
+      if (
+        (currNode.left && currNode.data < currNode.left.data) ||
+        (currNode.right && currNode.data > currNode.right.data)
+      ) {
+        valid = false;
+        console.log(valid);
+        break; //CANNOT JUST 'RETURN' FROM WITHIN A WHILE LOOP. MUST BREAK OUT FIRST
+      }
+      //so left and right child should be valid, now add to q
+      // console.log(currNode.data, currNode.left.data, currNode.right.data)
+      currNode.left && q.push(currNode.left);
+      currNode.right && q.push(currNode.right);
+    }
+    return valid;
+  }
 }
 
 const bst = new BST();
 // for (let i = 1; i < 20; i++){
 //   bst.add(i)
-// }
+// // }
 bst.add(7); //don't matter the order you add it, it'll get placed in the right place.
 bst.add(5);
 bst.add(9);
@@ -294,14 +392,18 @@ bst.add(4);
 bst.add(6);
 bst.add(2);
 bst.add(1);
-// bst.add(11);
+bst.add(11);
 // bst.remove(7);
-
+// console.log(bst.inOrder());
+console.log(bst.inOrderRecursive());
 // console.log(bst.findMinNum());
 // console.log(bst.findMaxNum());
 // console.log(bst.findMinHt());
-console.log(bst.isBalanced());
-console.log(bst.isBalancedWithoutMinMaxHtFncs());
+// console.log(bst.isBalanced());
+// console.log(bst.isBalancedWithoutMinMaxHtFncs());
+// console.log(bst.validateBSTRecursive());
+// console.log(bst.validateBSTIterative());
+
 /*          7   //height of root starts at 0, if want start at 1 then just add 1 to the final count before returning
         5     9
       4   6 8   10
