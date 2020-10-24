@@ -44,34 +44,41 @@ Output: false */
  */
 
 class Node {
-constructor(val) {
-        this.val = val
-        this.right = this.left = null
+  constructor(val) {
+    this.val = val;
+    this.right = this.left = null;
+  }
 }
-}
 
-let s = new Node(3)
-s.right = new Node(5)
-s.left = new Node(4)
-s.left.left = new Node (1)
-s.left.right = new Node (2)
+let s = new Node(3);
+s.right = new Node(5);
+s.left = new Node(4);
+s.left.left = new Node(1);
+s.left.right = new Node(2);
 
+// let t
+let t = new Node(4);
+t.left = new Node(1);
+t.right = new Node(2);
 
-let t = new Node(4) 
-t.left = new Node(1)
-t.right = new Node(2)
+// let v
+let v = new Node(4);
+v.left = new Node(1);
+v.right = new Node(2);
 
-let v = new Node(4) 
-v.left = new Node(1)
-v.right = new Node(2)
+// var isSameTree = function(p, q) {
+//   if (p === null && q === null) return true;         DON'T DO THIS!! BC IT WON'T ACCOUNT FOR IF P OR Q IS UNDEFINED!!!!
+//   if (!p || !q || p.val !== q.val) return false;
+//   return isSameTree(p.left,q.left) && isSameTree(p.right,q.right)
+// };
 
-
-
-
-var isSameTree = function(p, q) {
-  if (p === null && q === null) return true;
+//PRACTICE
+let isSameTree = function (p, q) {
+  //   if(!p || !q || p.val !== q.val) return false NOO CANNOT BE IN THIS ORDER, REVERSE IT BC || vs &&
+  //   if(!p && !q) return true
+  if (!p && !q) return true;
   if (!p || !q || p.val !== q.val) return false;
-  return isSameTree(p.left,q.left) && isSameTree(p.right,q.right)
+  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
 };
 
-console.log(isSameTree(v,t))
+console.log(isSameTree(v, t));

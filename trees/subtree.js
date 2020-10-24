@@ -42,16 +42,16 @@ Return false. */
  */
 
 class Node {
-   constructor(val) {
-     this.val = val
-     this.right = this.left = null
-   }
- }
- 
- // let result = null;
- 
+  constructor(val) {
+    this.val = val;
+    this.right = this.left = null;
+  }
+}
+
+// let result = null;
+
 //THIS WORKS BUT NOT FOR IF THERE ARE DUPLICATE NUMBERS
- /********************** 
+/********************** 
  const isSubtree = (s, t) => { // boolean (true or false)
    if (!s || !t) return false;
    let nodeFound = findPair(s,t);
@@ -75,7 +75,7 @@ class Node {
    
  }
  ******************/
-
+/*
  //FOR DUPLICATE NUMBERS, HAVE TO JUST USE 2 RECURSIONS INSTEAD OF THREE
  const isSubtree = (s, t) => { 
   if (!s || !t) return false;
@@ -98,29 +98,21 @@ class Node {
   
 }
 
- 
- 
- let s = new Node(3)
- s.right = new Node(5)
- s.left = new Node(4)
- s.left.left = new Node (1)
- s.left.right = new Node (2)
- 
- 
- let t = new Node(4)
- t.left = new Node(1)
- t.right = new Node(2)
- 
- isSubtree(s,t)
- console.log(result);
- 
- 
- // IFFE (immediate invoked function expression)
+ */
 
+let s = new Node(3);
+s.right = new Node(5);
+s.left = new Node(4);
+s.left.left = new Node(1);
+s.left.right = new Node(2);
 
+let t = new Node(4);
+t.left = new Node(1);
+t.right = new Node(2);
 
+// IFFE (immediate invoked function expression)
 
- /* class Solution {
+/* class Solution {
     public boolean isSubtree(TreeNode s, TreeNode t) {
         if (s == null) return false;
         /* treat each node as a root 
@@ -137,8 +129,6 @@ class Node {
         
     }
 } */
-
-
 
 /*
 var isSubtree = function(s, t) {
@@ -166,8 +156,6 @@ function isSameTree(s,t) {
     }
 } */
 
-
-
 /*var isSubtree = function(s, t) {
     
     const checkTraversal = (snode, tnode) => {
@@ -190,3 +178,24 @@ function isSameTree(s,t) {
     return traverse(s,t)
     
 }; */
+
+//PRACTICE
+const compareNodes = (sNode, tNode) => {
+  //this function is used to strictly compare this tree/subtree as if they one, going the same speed and direction always
+  if (!sNode && !tNode) return true;
+  if (!sNode || !tNode || sNode.val !== tNode.val) return false; //already checked if equal so don't have to check again
+  return (
+    compareNodes(sNode.left, tNode.left) &&
+    compareNodes(sNode.right, tNode.right)
+  );
+};
+const isSubtree = (s, t) => {
+  //this function is where you can compare if the subtree is further down the other tree
+  if (!s || !t) return false;
+  if (compareNodes(s, t)) return true; //if the entire tree from this root is true bc this root returns true then break
+  //t is ALWAYS smaller than S, you want the entire tree of t but only need a part of s so traverse s as starting root, not need to adjust t
+  return isSubtree(s.left, t) || isSubtree(s.right, t); //current root nodes don't work so try a different combo down further in the s tree
+};
+
+console.log(isSubtree(s, t));
+// console.log(result);
