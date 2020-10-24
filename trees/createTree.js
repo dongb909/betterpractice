@@ -1,3 +1,5 @@
+const { nodeInternals } = require("stack-utils");
+
 class Node {
   constructor(data, left = null, right = null) {
     this.data = data;
@@ -76,7 +78,76 @@ class BST {
   }
 
   //FOR REMOVING, HAVE TO REORDER ALL THE NODES BELOW IT AS WELL
-  remove(data) {}
+  // NOOOOOOOOOOOOO/ DON'T DO THIS
+  // remove(data) {
+  //   if(!this.root) return "tree is empty"
+  //   while(!currNode){
+  //     if (data < currNode.data) currNode = currNode.left
+  //     else if (data > currNode.data) currNode = currNode.right
+  //     else if (data === currNode.data) {
+  //IGNORE WHAT SAYING HERE.
+  //       //the number that makes most sense to replace this node is the current node's right node's furthest left. it's larger then the current left node and smaller than the current right node.
+  //       //don't want to just detach that and attach the same right node bc might get a really unbalanced tree if done too many times. want to reorder the rest of the tree from that node being replaced but only its RIGHT side's most left
+
+  //NOOOOOOOOO
+  // remove(data) { //not returning other than removing and reordering nodes
+  //   function removeNode (node){
+  //     // if (!node || (!node.left && !node.right)) return null NOO TWO SEPARATE THINGS
+  //     if (!node) return null
+  //     if (!)
+  //     else if (node.left)
+  //   }
+  //   return removeNode(this.root)
+  //NOT RETURNING THIS.ROOT!!!!!! want to sTART WITH THIS.ROOT (see next try of function)
+  // }
+
+  remove(data) {
+    //PRACTICE THIS ONEEEEEE. HELLA CONFUSING
+    function removeNode(node, data) {
+      if (!node) return null; //so if starting at root, if there's no node, then there no tree so root is null still which is fine //or for when reach leaf
+      // if(data < node.data) return removeNode(node.left, data) NOOO
+      // else if(data > node.data) return removeNode(node.right, data)
+      if (data < node.data) {
+        node.left = removeNode(node.left, data); //YOU DIDN'T DO THIS
+        //CHECKING TO SEE IF NODE.LEFT.DATA IS WHAT WE'RE LOOKING FOR, IF SO THEN REPLACE THAT NODE AND TRICKLE DOWN
+        //IF DATA IS STILL < NEW LEFT'S LEFT NODE THEN ENTER HERE AGAIN AND CONTINUE DOWN THE LEFT SIDE. STILL TRYING TO FIND THE SAME DATA NUMBER
+        return node; //YOU DIDN'T DO THIS
+        //RETURN THIS CURRENT NODE YOU'RE OWN REGARDLESS OF IF ITS LEFT NODE CHANGED.
+      } else if (data > node.data) {
+        node.right = removeNode(node.right, data);
+        return node;
+      } else if (node.data === data) {
+        //NOT !== can only be equal or < or > !!
+        if (!node.left && !node.right) return null;
+        //if it's the leaf node your'e deleting or root is the value of data, then return null as root
+        else if (!node.left) return node.right;
+        //if there's no left node, then replace current node with right node (dont' have to worrying aboubt having to restructure)
+        else if (!node.right) return node.left;
+        else {
+          //if there's both a left and a right makes most sense to replace this node is the current node's right node's furthest left. it's larger then the current left node and smaller than the current right node.
+          //don't want to just detach and attach the right node BECAUSE the current node position ALREADY HAS a LEFT NODE, can't have the current right node's LEFT node compete with the current left node at the node we're replacing!!!!
+          //thus have to restructure the ENTIRE right side. Doesn't make since to do it to the left bc of the order
+          //get right node
+          let deepestLeftNodeFromRight = node.right;
+          //get right node's leftest left node
+          // let rightsFurthestLeftNode = NO!!
+          while (deepestLeftNodeFromRight.left)
+            deepestLeftNodeFromRight = deepestLeftNodeFromRight.left;
+          //take this node's data and replace it with our current main node that matched our data
+          node.data = deepestLeftNodeFromRight.data; //aka WE DELETED/OVERWRITTEN THE OLD 'DATA NUMBER' WE WERE RECURSING TO FIND!!
+          //YOU THOUGHT => BUT NOOOO =>delete this node now but check it it has a right child too. it def doesn't have a left child, but since now moving this data, need to replace it if there's a right so recurse
+          // NOT ^^^^ you're just setting the main node data to the data you need, now you have RECURSE AND REMOVE THE NODE WITH THE VALUE YOU JUST TOOK, BUT HAVE TO GO THROUGH THE WHOLE SUBTREE AGAIN STARTING FROM MAIN NODE.RIGHT AS ROOT
+          //MOST CONFUSION CAME FROM THIS LINE BELOW. THINK ABOUT IT.
+          //node.right bc we know it's on the right side of our current node.
+          node.right = removeNode(node.right, deepestLeftNodeFromRight.data); //NOW TREATING TO FIND THE NODE WITH THE 'DATA NUMBER' THAT WE JUST REPLACED THE OLD DATA NUMBER WITH SO WE CAN REMOVE THAT NODE FROM ITS ORIGINAL POSITION ALL THE WAY UNTIL WE REPLACE THE NODE WE NEEED TO REPLACE WITH NULL
+          //is still the OLD RIGHT NODE ATTACHED TO THE CURRENT NODE WE JUST REPLACED DATA FOR, now want to find the value we just used to replace and replace THAT node's value we took  by finding that node again
+          return node; //so RETURNING SAME NODE working on, just changed it's data and children
+        }
+      }
+    }
+    this.root = removeNode(this.root, data);
+    //JUST NEED TO SET THE NEW ROOT and START FROM ROOT IN CASE THAT'S THE TARGET TO REPLACE
+  }
 
   //a tree is balanced if the difference btwn min height and max height is 0 or 1
   isBalanced() {
@@ -183,6 +254,7 @@ bst.add(6);
 bst.add(2);
 bst.add(1);
 bst.add(11);
+bst.remove(7);
 
 // console.log(bst.findMinNum());
 // console.log(bst.findMaxNum());
