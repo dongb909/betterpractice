@@ -73,7 +73,7 @@
 
 // }
 
-
+/*
 
 
 let height = function(root){
@@ -98,11 +98,14 @@ var isBalanced = function(root) {
   
   var dfs = function(node) {
       if (!node) return 0;
-      let left = 1 + dfs(node.left);
+      let left = 1 + dfs(node.left); //if there is no node.left, then current node is 1
       let right = 1 + dfs(node.right);
-      if (Math.abs(left - right) > 1) return Infinity;
+      if (Math.abs(left - right) > 1) return Infinity; //DOESN'T MATTER WHICH IS BIGGER TO SUBTRACT AS LONG AS THE DIFFERENCE IS < 1
+      //THIS IS ANYWHERE ALONG THE RECURSION, IF >1 IN DIFFERENCE THEN BREAK OUT EARLY
       return Math.max(left, right);
   }
   
   return dfs(root)==Infinity?false:true;
 };
+*/
+

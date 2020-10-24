@@ -174,17 +174,51 @@ class BST {
     let leftHt = this.findMinHt(node.left);
     let rightHt = this.findMinHt(node.right);
     if (leftHt <= rightHt) return leftHt + 1;
+    //RETURN THE SMALLER NUMBER +1
     //bc want the lower number
     else return rightHt + 1; //bc right is the smaller number
   }
-
+  //THIS IS COMPLETELY DIFFERENT WAY THAN BALANCED TREES BECAUSE HERE, WE'RE CALCULATING MIN AND MAX HT SEPARATE
   findMaxHt(node = this.root) {
     if (!node) return -1;
     let leftHt = this.findMaxHt(node.left);
     let rightHt = this.findMaxHt(node.right);
     if (leftHt >= rightHt) return leftHt + 1;
+    //RETURN THE BIGGER NUMBER +1
     //bc want the larger number
     else return rightHt + 1; //bc right is larger than left
+  }
+
+  /* FIRST ATTEMPT
+  isBalancedWithoutMinMaxHtFncs(node = this.root) { //NOT CARING ABOUT DATA/VALUES!! JUST THAT THERE'S A VALID NON NULL NODE OR NOT
+    // if (!node || !node.left && !node.right) return true //NO NOT RETURNING TRUE OR FALSE, NEED TO CALCULATE IF HT DIFFERENCE IS >1 THUS NEED NUMBERS!!
+    //NOT node.left, node.right existance here, we're going from bottom up, no top bottom
+    if (!node) return 0;
+    let leftSumHt = this.isBalancedWithoutMinMaxHtFncs(node.left) + 1   ///DOESN'T WORK!! NEED 2 FUNCTIONS, ONE THAT DEALS WITH ADDING AND 'RETURNING NUMNBERS'
+    let rightSumHt = this.isBalancedWithoutMinMaxHtFncs(node.right) + 1 //THE OUTTER FUNCTION DEALS WITH RETURNING TRUE OR FALSE
+    let diff = Math.abs(leftSumHt - rightSumHt) 
+    return (diff >1)? false: 
+  }
+  */
+
+  //SECOND
+  isBalancedWithoutMinMaxHtFncs(node = this.root) {
+    if (!node) return true;
+    function height(currNode) {
+      if (!currNode) return 0; //can return 0 or -1 depending on if root counts as 1 or as 0 but result is the same bc returning t/f, if numeric then result will be different. need clearification
+      let left = height(currNode.left) + 1;
+      let right = height(currNode.right) + 1;
+      // let diff = Math.abs(left - right)
+      // console.log(diff)
+      // return diff > 2 ? Infinity : diff NO NOT HERE, WANT TO GET THE MAX HEIGHT OF THE CURRENT NODE.
+      if (Math.abs(left - right) > 1) return Infinity; //IF YOU COMPARE IT AND IT'S ALREADY NOT BALANCED THEN RETURN INFINITIY WHICH STOPS EVERYTHING
+      //NOT > 2, if 2 the >= 2
+      //YOU DIDN'T ACCOUNT FOR IF ABS IS <=2 //YOU DIDN'T EVEN THINK ABOUT THIS PART AT ALLLLLLLLLL
+      return Math.max(left, right);
+    }
+    // return height(node) < 2//NOOO
+    //SINCE THE HEIGHT FUNCTION RETURNS INFINITY OR A 0 OR 1, JUST DO CONDITION ON INFINITY SO IT'S JUST 1 THING TO WORK WITH
+    return height(node) !== Infinity;
   }
 
   //DEPTH FIRST SEARCH - traverses each branch
@@ -243,6 +277,8 @@ class BST {
     }
     return result;
   }
+
+  validateBST(node = this.root) {}
 }
 
 const bst = new BST();
@@ -258,13 +294,14 @@ bst.add(4);
 bst.add(6);
 bst.add(2);
 bst.add(1);
-bst.add(11);
-bst.remove(7);
+// bst.add(11);
+// bst.remove(7);
 
 // console.log(bst.findMinNum());
 // console.log(bst.findMaxNum());
 // console.log(bst.findMinHt());
-console.log(bst.levelOrder());
+console.log(bst.isBalanced());
+console.log(bst.isBalancedWithoutMinMaxHtFncs());
 /*          7   //height of root starts at 0, if want start at 1 then just add 1 to the final count before returning
         5     9
       4   6 8   10
