@@ -17,6 +17,8 @@ The number of nodes in the given tree is between 1 and 10^4.
  * @param {TreeNode} root
  * @return {number}
  */
+
+/*
 var maxLevelSum = function(root) {
   let maxSum = Number.NEGATIVE_INFINITY
   let maxLevel = 0
@@ -45,3 +47,38 @@ var maxLevelSum = function(root) {
   }
   return maxLevel
 };
+
+*/
+
+var maxLevelSum = function (root) {
+  //can't really do recursion on DFS
+  let minimumMaxLevel = 0,
+    currLevel = 1,
+    maxSum = Number.NEGATIVE_INFINITY,
+    q = [root],
+    nextQ = [],
+    currSum = 0,
+    currNode;
+  if (!root) return minimumMaxLevel;
+  while (q.length > 0) {
+    currNode = q.pop(); //don't really need a q per se since it doesn't matter the order you add it, just the sum of the level
+    currSum += curr.val;
+    if (currNode.left) nextQ.push(currNode.left);
+    if (currNode.right) nextQ.push(currNode.right);
+    if (q.length === 0) {
+      q = nextQ;
+      nextQ = [];
+      if (currSum > maxSum) {
+        maxSum = currSum;
+        minimumMaxLevel = currLevel;
+      } else if (currSum === maxSum) {
+        minimumMaxLevel = Math.min(minimumMaxLevel, currLevel);
+      }
+      currLevel++;
+      currSum = 0; //YOU TOTALLY FORGOT TO RESET CURRSUM!!! so you got some right answers and some wrong
+    }
+  }
+  //   console.log(maxSum)
+  return minimumMaxLevel;
+};
+//WORKS! confirmed on leetcode
