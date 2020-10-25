@@ -31,7 +31,30 @@ DFS - tracking depth, must pass depth down with param as(node, depth) with each 
 
 */
 
+letLevelOrderPractice = function (root) {
+  if (!root) return []
+  let result = [], q = [root], nextQ = [], values= [], curr
+  // , tracker = 0
+  while (q.length > 0) {
+    // [curr, lev] = q.shift()
+    curr = q.shift()
+    values.push(curr.val)
+    curr.left && nextQ.push(curr.left)
+    curr.right && nextQ.push(curr.right)
+    if(q.length === 0){ //you were putting this in the beginning and also you were pushing to nextQ instead of pushing to values
+      result.push(values)
+      q = nextQ
+      nextQ = new Array()
+      values = new Array()
+    } 
+  }
+  // if(nextQ.length >0) result.push(nextQ)
+  return result
 
+} //WORKS! on leetcode.
+
+
+/*
 //NOTE: USE 2 QUEUES AND SWAP THEM AND ALL VALUES ARE IN OUTTER PORTION
 var levelOrder = function(root) {
   const finalOrder = []
@@ -55,3 +78,4 @@ var levelOrder = function(root) {
   }
   return finalOrder
 };
+*/

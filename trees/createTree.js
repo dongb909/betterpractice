@@ -39,12 +39,12 @@ class BST {
           //if empty then add new node, else recurse on left node //should return each time only if want it to print out, or else just print them out later
           else return searchTree(node.left);
           //if data is greater than current node then go right
-        } else if (data > node.data) {
-          if (node.right === null) {
-            node.right = n;
-            return;
-          } else return searchTree(node.right);
-        } else return null;
+        } 
+        else if (data > node.data) {
+          if (!node.right) return node.right = n
+          else return searchTree(node.right);
+        } 
+        else return null;
         //if they're both even then no need for it to be in the tree
       };
       //always remember to call the function
