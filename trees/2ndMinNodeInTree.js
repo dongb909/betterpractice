@@ -63,7 +63,7 @@ var findSecondMinimumValue = function(root) {
     return traverse(root, min)
     
 }
-
+//NOTE, WE'RE NOT SOLVING WITH A BST. JUST A NORMAL BINARY TREE
 let traverse = function (node, minVal) {
     if (!node) return -1;
     if (node.val !== minVal) return node.val

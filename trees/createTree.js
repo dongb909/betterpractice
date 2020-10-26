@@ -1,4 +1,5 @@
 const { nodeInternals } = require("stack-utils");
+const { Z_BEST_COMPRESSION } = require("zlib");
 
 class Node {
   constructor(data, left = null, right = null) {
@@ -427,6 +428,29 @@ class BST {
     }
     return valid;
   }
+
+  get2ndMinIterative(node = this.root) {
+    //find min node which is the most left node.
+    //if no right on min node then parent is 2nd min
+    //if right on min node then most left of right of min node is 2nd smallest (just like 2nd max but reversed)
+    //if there's NO LEFT CHILD ON ROOT then 2nd smallest is first right child's most left's parent
+    if (!node) return "No root";
+    let prev,
+      curr = this.root;
+    while (curr.left) {
+      prev = curr;
+      curr = curr.left;
+    }
+    //have smallest node, now check it it as no right, then return parent
+    if (!curr.right) return prev.data;
+    //if smallest node has a right then check its right's leftmost child
+    curr = curr.right;
+    while (curr.left) curr = curr.left;
+    return curr.data;
+  }
+  get2ndMinRecursive(node = this.root) {
+    //eh just see the 2nd max. too complicated try implementing recursion on the 2ndminnodeintree for regular binary tree problem
+  }
 }
 
 const bst = new BST();
@@ -434,19 +458,26 @@ const bst = new BST();
 //   bst.add(i)
 // // }
 bst.add(7); //don't matter the order you add it, it'll get placed in the right place.
-bst.add(5);
+// bst.add(5);
 bst.add(9);
 bst.add(8);
-// bst.add(10);
-bst.add(4);
-bst.add(6);
-bst.add(2);
-bst.add(1);
-// bst.add(11);
-bst.remove(7);
+bst.add(10);
+// bst.add(4);
+// bst.add(6);
+// bst.add(2);
+// bst.add(1);
+bst.add(11);
+// bst.remove(7);
+bst.add(20);
+bst.add(15);
+bst.add(18);
+bst.add(19);
+bst.add(17);
+bst.add(16);
 // console.log(bst.inOrder());
 // console.log(bst.secondLargestVal())
-console.log(bst.secondLargestValIterative());
+// console.log(bst.secondLargestValIterative());
+console.log(bst.get2ndMinIterative());
 // console.log(bst.inOrderRecursive());
 // console.log(bst.findMinNum());
 // console.log(bst.findMaxNum());
@@ -460,7 +491,12 @@ console.log(bst.secondLargestValIterative());
         5     9
       4   6 8   10
     2             11
-  1     
+  1                 20
+                  15
+                      18
+                    17    19
+                  16
+
 */
 
 /*
