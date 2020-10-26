@@ -21,7 +21,7 @@ but you can’t invert a binary tree on a whiteboard so f*** off. */
 var invertTree = function(root) {  
   if (!root) return root ; //just used to stop recursion but not storing anything anywhere
   //same with if one child is null and other is value bc still swapping so only care about swapping
-  if(!root.left && !root.right)return root //this allows it to skip the last step of the leaf node
+  if(!root.left && !root.right) return root //this allows it to skip the last step of the leaf node
     //good for when you have a lot of leaf nodes. if not then it makes th ecode more ugly
   invertTree(root.left)   // 9  //inverted IN PLACE
   invertTree(root.right)   //6  //inverted IN PLACE

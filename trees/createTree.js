@@ -39,12 +39,10 @@ class BST {
           //if empty then add new node, else recurse on left node //should return each time only if want it to print out, or else just print them out later
           else return searchTree(node.left);
           //if data is greater than current node then go right
-        } 
-        else if (data > node.data) {
-          if (!node.right) return node.right = n
+        } else if (data > node.data) {
+          if (!node.right) return (node.right = n);
           else return searchTree(node.right);
-        } 
-        else return null;
+        } else return null;
         //if they're both even then no need for it to be in the tree
       };
       //always remember to call the function
@@ -223,6 +221,58 @@ class BST {
 
   //DEPTH FIRST SEARCH - traverses each branch all the way first
   //LMR always returning an array
+  secondLargestVal() {
+    //PRETTY MUCH YOU CAN DO IT RECURSIVELY BUT YOU'LL BE DOING EXTRA ROUNDS, IT WON'T JUST STOP AT 2
+    let result = [];
+    function find2ndLargest(node) {
+      // if (count >=2) return//these BASES UP HERE DONT DO ANYTHING AT ALL. NOT SURE WHY
+      // if(count < 2) {
+      node.right && find2ndLargest(node.right);
+      result.push(node.data);
+      console.log(result);
+      // }
+      //// if(result.length === 2) console.log(true) //PUTTING IT HERE MAKES IT GO THROUGH THE ENTIRE TREE STILL THO
+      //// if(result.length !==2){//it doesn't care if the length is !2, it prints everything anyways
+      if (result.length >= 2) return; //ABLE to get it to STOP with at least 1/2 the list, still not at just length 2 though.
+      // console.log('hi')
+      node.left && find2ndLargest(node.left);
+    }
+    find2ndLargest(this.root);
+    return result[1];
+  }
+  secondLargestValIterative(node = this.root) {
+    if (!node) return "No root";
+    let pre;
+    let curr = node;
+    while (curr.right) {
+      //get the max node first
+      pre = curr;
+      curr = curr.right;
+    }
+    // if(!curr.left && !curr.right) return pre.data //NO! don't include the right side bc we already accounted for there not being a right side in the previous while loop
+    // if(!curr.right){ //NOT RIGHT BUT LEFT
+    if (!curr.left) return pre.data;
+    //don't need another if condition bc already checked for no right and no left. it's iterative so now it means there's a curr.left
+    //only have to go down left side 1 node bc it's RIGHT should be the max for that subtree anyways
+    curr = curr.left;
+    // console.log(curr.data)
+    while (curr.right) {
+      curr = curr.right;
+    }
+    return curr.data;
+  }
+
+  reverseInOrder() {
+    let result = [];
+    function traverse(node) {
+      node.right && traverse(node.right);
+      result.push(node.data);
+      node.left && traverse(node.left);
+    }
+    traverse(this.root);
+    return result;
+  }
+
   inOrder() {
     let result = [];
     if (this.root === null) return result;
@@ -387,15 +437,17 @@ bst.add(7); //don't matter the order you add it, it'll get placed in the right p
 bst.add(5);
 bst.add(9);
 bst.add(8);
-bst.add(10);
+// bst.add(10);
 bst.add(4);
 bst.add(6);
 bst.add(2);
 bst.add(1);
-bst.add(11);
-// bst.remove(7);
+// bst.add(11);
+bst.remove(7);
 // console.log(bst.inOrder());
-console.log(bst.inOrderRecursive());
+// console.log(bst.secondLargestVal())
+console.log(bst.secondLargestValIterative());
+// console.log(bst.inOrderRecursive());
 // console.log(bst.findMinNum());
 // console.log(bst.findMaxNum());
 // console.log(bst.findMinHt());
