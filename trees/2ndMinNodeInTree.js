@@ -1,4 +1,5 @@
-/*Given a non-empty special binary tree consisting of nodes with the non-negative value, where each node in this tree has exactly two or zero sub-node. If the node has two sub-nodes, then this node's value is the smaller value among its two sub-nodes. More formally, the property root.val = min(root.left.val, root.right.val) always holds.
+/*Given a non-empty special binary tree consisting of nodes with the non-negative value, where each node in this tree has exactly two or zero sub-node. If the node has two sub-nodes, then this node's value is the smaller value among its two sub-nodes. More formally, the property root.val = min(root.left.val, root.right.val) always holds. THIS ALSO MEANS THOUGH THAT THE VALUES
+GET LARGER AS YOU GO DOWN THE TREE THOUGH THERE'S NO ORDER IN THE NUMBERS THEMSELVES.
 
 Given such a binary tree, you need to output the second minimum value in the set made of all the nodes' value in the whole tree.
 
@@ -31,7 +32,7 @@ Explanation: The smallest value is 2, but there isn't any second smallest value.
  *     this.right = (right===undefined ? null : right)
  * } */
 
- //ITERATIVE
+//ITERATIVE
 // var findSecondMinimumValue = function(root) {
 //     //if null root return -1
 //     //if left and right === return -1
@@ -53,33 +54,30 @@ Explanation: The smallest value is 2, but there isn't any second smallest value.
 //     }
 //     if (left === -1 && right > root.val) return right
 //     if (right === -1 && left > root.val) return left
-    
+
 // };
 
 //RECURSIVE
-var findSecondMinimumValue = function(root) {
-    let min = root.val //nothing will be smaller than root
-    // let secMin = Infinity
-    return traverse(root, min)
-    
-}
+var findSecondMinimumValue = function (root) {
+  let min = root.val; //nothing will be smaller than root
+  // let secMin = Infinity
+  return traverse(root, min);
+};
 //NOTE, WE'RE NOT SOLVING WITH A BST. JUST A NORMAL BINARY TREE
 let traverse = function (node, minVal) {
-    if (!node) return -1;
-    if (node.val !== minVal) return node.val
-    //else current node is same as parent so keep traversing
-    const leftVal = traverse(node.left, minVal)
-    const rightVal = traverse(node.right, minVal)
-     
-    //if both children are null or equal to curr val
-    if (leftVal === -1 && rightVal === -1) return -1
-    //if one return is -1 and one is another num
-    if (leftVal === -1 || rightVal === -1) return Math.max(leftVal, rightVal)
-        //have children on left and right
-    return Math.min(leftVal, rightVal)
-}
+  if (!node) return -1;
+  if (node.val !== minVal) return node.val;
+  //else current node is same as parent so keep traversing
+  const leftVal = traverse(node.left, minVal);
+  const rightVal = traverse(node.right, minVal);
 
-
+  //if both children are null or equal to curr val
+  if (leftVal === -1 && rightVal === -1) return -1;
+  //if one return is -1 and one is another num
+  if (leftVal === -1 || rightVal === -1) return Math.max(leftVal, rightVal);
+  //have children on left and right
+  return Math.min(leftVal, rightVal);
+};
 
 /*
 def findSecondMinimumValue(self, root):
@@ -110,3 +108,12 @@ var findSecondMinimumValue = function(node, minVal = node.val) {
 
     return Math.min(leftVal, rightVal);
 };*/
+
+//PRACTICE
+//ITERATIVE
+var findSecondMinimumValueIterative = function (root) {
+  
+};
+
+//PRACTICE RECURSIVE
+var findSecondMinimumValueRecur = function (root) {};
