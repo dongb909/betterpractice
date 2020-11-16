@@ -274,7 +274,7 @@ class BST {
     return result;
   }
 
-  inOrder() {
+  inOrderRecursive() {
     let result = [];
     if (this.root === null) return result;
     const traverse = (node) => {
@@ -288,7 +288,7 @@ class BST {
     return result;
   }
 
-  inOrderRecursive() {
+  inOrderIterative() {
     let result = [];
     if (this.root === null) return result;
     let stack = []; //DON'T START OFF WITH THIS.ROOT AND ALSO SET CURR TO THIS.ROOT, OR ELSE WILL GET DUPLICATES OF THE RIGHT SIDE OF THE TREE
@@ -298,7 +298,7 @@ class BST {
       stack.push(curr)
       curr = curr.left
     }
-    while (stack.length > 0) {
+    while (stack.length > 0) { DON'T BASE IT OFF OF STACK! BASE IT OFF OF CURR !== NULL
       curr = stack.pop()
       // result.push(curr.data)   //NO BECAUSE WILL print ==> 1,  2,  4, 5, 6,  7, 9, 10, 11, 7, 9, 10,11  INSTEAD OF   1, 2, 4,  5,  6, 7, 8, 9, 10, 11, MISSING ALL THE RIGHT'S LEFTS
       // if (curr.right) stack.push(curr.right)

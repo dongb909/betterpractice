@@ -41,29 +41,29 @@ All given inputs are in lowercase letters a-z. */
 
 
 //THIS IS ONLY 5% SPEEEEEEDDDDD
-var longestCommonPrefix = function(strs) {
-  if(strs.length === 0 ||!strs) return ''
-  //find shortest string
-  let prefix = ''
-  let maxLength = Math.min(...strs.map(str => str.length));
-  for(let i = 0; i < maxLength; i++){
-      let letter = strs[0][i]
-      if (strs.every(str => str[i] === letter)){
-          prefix += letter
-      } else {
-          return prefix //return early before going on 
-      }
-      // for(let str = 1; str < strs.length; str++) {
-      //     if (strs[0][i] === strs[str][i]){
-      //         longestPref+=strs[0][i]
-      //     } else {
-      //         return longestPref
-      //     }
-      // }
-  }
-  return prefix //returns '' if ['']
+// var longestCommonPrefix = function(strs) {
+//   if(strs.length === 0 ||!strs) return ''
+//   //find shortest string
+//   let prefix = ''
+//   let maxLength = Math.min(...strs.map(str => str.length));
+//   for(let i = 0; i < maxLength; i++){
+//       let letter = strs[0][i]
+//       if (strs.every(str => str[i] === letter)){
+//           prefix += letter
+//       } else {
+//           return prefix //return early before going on 
+//       }
+//       // for(let str = 1; str < strs.length; str++) {
+//       //     if (strs[0][i] === strs[str][i]){
+//       //         longestPref+=strs[0][i]
+//       //     } else {
+//       //         return longestPref
+//       //     }
+//       // }
+//   }
+//   return prefix //returns '' if ['']
   
-}
+// }
 
 //Questions: time complexity of slice?
 //if slice is O(1) and hits undefined, returns right? so why slower?

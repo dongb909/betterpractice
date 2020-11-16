@@ -114,7 +114,7 @@ var minMeetingRooms2 = function (meetings) {
       minHeapStart.shift();
     } else {
       minHeapStart.shift();
-      minHeapEnd.shift();
+      minHeapEnd.shift(); //don't care if there's a lot left over in minheap end. just care about getting minheap start to 0
     }
   }
   return rooms;

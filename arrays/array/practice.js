@@ -38,12 +38,12 @@ var findKthLargest = function(nums, k) {
 };
 
 
-[1,2,3,4,5,6] => 5
-[1,2,2,3,3,4,5,5,6] => 4
+// [1,2,3,4,5,6] => 5
+// [1,2,2,3,3,4,5,5,6] => 4
     
-    5
-    /
-    6
+//     5
+//     /
+//     6
 
 
 // n(arr)logk(heapification) with heap space O(k)
@@ -65,7 +65,7 @@ var findKthLargest = function(nums, k) {
  */
 var topKFrequent = function(words, k) {
     let counter = words.reduce((acc, el) => {
-        if (const el in acc) {
+        if (el in acc) {
             acc[el]++
             return acc;
         } else {

@@ -59,15 +59,27 @@ Can you solve it using O(1) (i.e. constant) memory?
     return false;
 }; */
 
+// var hasCycle = function(head) {
+//   if (!head || !head.next) return false;  //bc there's no list or there's just 1 node thus no cycle possible
+//   let slow = head,
+//       fast = head.next;
+//   while (fast && fast.next) {
+//     if (slow === fast) return true;
+//     slow = slow.next;
+//     fast = fast.next.next;
+//   }
+//   return false;
+// };
 
-var hasCycle = function(head) {
-  if (!head || !head.next) return false;
+const hasCycle2 = function (head) {
+  if (!head || !head.next) return false; //bc there's no list or there's just 1 node thus no cycle possible
   let slow = head,
-      fast = head.next;
+    fast = head;
   while (fast && fast.next) {
+    //if there's a cycle, slow.next AND fast.next will NEVER = null so if with 1 run, they don't equal, they eventually will
+    slow = slow.next; //move slow by 1
+    fast = fast.next.next; //move fast by 2
     if (slow === fast) return true;
-    slow = slow.next;
-    fast = fast.next.next;
   }
-  return false;
+  return false; //reached null before finding a cycle
 };

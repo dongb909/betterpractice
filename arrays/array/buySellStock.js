@@ -127,7 +127,7 @@ let dayToBuySell = (prices) => {
   let minIdx, maxIdx;
   let maxProfit = 0;
   let finalMinIdx, finalMin; //YOU FORGOT THIS PART BEFORE
-  for (const idx in prices) {
+  for (const idx in prices) { //idx returns as a string!!!!! bc of syntax
     if (prices[idx] < min) {
       min = prices[idx];
       minIdx = parseInt(idx); //GO AHEAD AND SET MIN AND MINIDX HERE BUT IT JUST KEEPS TRACK OF CURRENT

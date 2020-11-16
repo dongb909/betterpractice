@@ -122,7 +122,7 @@ function reverse(head){
 } */
 
 
-var reorderList = function(head) {
+var reorderList = function(head) { //only use this if you're allowed to use more space which is the array
   if (!head || !head.next) return;
   let cur = head,
       arr = [];
@@ -130,13 +130,15 @@ var reorderList = function(head) {
     arr.push(cur);
     cur = cur.next;
   } //now have arr of NODES (NOT JUST THE VALUES) in original order
-  let left = 0,
-      right = arr.length - 1;
+  let left = 0
+  let right = arr.length - 1;
   while (left < right) {        //not even modifying the values of the nodes but the nodes themselves are being linked different. OR can just switch out the vals and leave nodes there
     arr[left].next = arr[right];
     left++;     //incrementing the INDEX that holds the NODE REFERENCES
-    arr[right].next = arr[left];
+    arr[right].next = arr[left];//THIS IS THE NEXT LEFT NODE, not the SAME LEFT node you just added right to
     right--;
   }
   arr[left].next = null;
 }; 
+
+//OR have a fast and slow pointer, split the list, reverse 2nd half and then merge but this is a lot of steps. this is fine if you don't have more space

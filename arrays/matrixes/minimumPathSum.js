@@ -25,7 +25,7 @@ var minPathSum = function(grid) {
 let findSmallest = function (grid, sum, row, col) {
   let rows = grid.length
   let cols = grid[0].length
-  if (row === rows || col === cols) return Infinity //boundary check
+  if (row === rows || col === cols) return Infinity //boundary check, the infinity will be checked by Math.min line 32 so it's ok
   const currSum = grid[row][col] + sum
   if (row === rows-1 && col === cols-1) return currSum //return when reach last cell
   
@@ -35,6 +35,12 @@ let findSmallest = function (grid, sum, row, col) {
   ) 
 
 }
+
+console.log(minPathSum([
+  [1,3,1,5,1],
+  [1,5,1,2,1],
+  [4,2,1,1,1]
+]))
 //NOTTTTTT:
 // function dfs(grid, row, col, sum) {
 //     let rows = grid.length, cols = grid[0].length;

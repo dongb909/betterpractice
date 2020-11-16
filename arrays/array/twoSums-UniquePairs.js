@@ -17,24 +17,34 @@ Explanation:
 
 let twoSumUnique = (nums, target) => {
   let dict = new Map();
-  let pushed = new Set()
+  let pushed = new Set();
   let pairs = [];
   let diff;
-  for (let i = 0; i < nums.length; i++){
+  for (let i = 0; i < nums.length; i++) {
     // console.log(nums.length)
     // if (!dict.has(nums[i]) ){
-      diff = target-nums[i]
+    diff = target - nums[i];
 
-      if (!pushed.has(diff) && dict.has(diff)){
-          pairs.push([nums[i], diff])
-          pushed.add(nums[i])
-          pushed.add(diff)
-        } 
-      dict.set(nums[i], i); //key value pairs with key being the element and value being the index
+    if (!pushed.has(diff) && dict.has(diff)) {
+      pairs.push([nums[i], diff]);
+      pushed.add(nums[i]);
+      pushed.add(diff);
     }
+    dict.set(nums[i], i); //key value pairs with key being the element and value being the index
+    console.log(dict, pushed, diff, nums[i]);
+  }
   // }
-  return pairs
-}
+  return pairs;
+};
+
+//aka with every el, add the el and its index to map
+//before adding to map though, check to see if THE DIFFERENCE, NOT the ELEMENT already in the map or already in pushed
+//if difference already in map BUT NOT pushed then add current el and diff (aka a num you've already seen) to pushed set
+//at the same time, add the PAIR to pairs
+//the set is there so you don't have to iterate through your pairs to check if you've already had those nums. so there's no duplicates
+//you really don't even need the index, you can just have both key and value as itself.
+//DON'T HAVE TO CHECK FOR DUPLICATE EITHER, CAN JUST OVERRIDE IT IN THE MAP SINCE YOU REALLY ONLY CARE ABOUT 1 BEING IN THE PAIR OF RESULTS
+//DON'T WORRY ABOUT DELETING FROM THE MAP EITHER EVEN AFTER USE. IT'S JUST THERE FOR STORAGE OF WHAT YOU'VE ALREADY ENCOUNTERED
 /*
 {el 1: index 0}
 //el 1 get over written
@@ -50,6 +60,6 @@ if next round is also 45, then it won't add because !pushed.has(45) will return 
 so push 46 and diff to pairs and add both to set
 and so on
  */
-console.log(twoSumUnique([ 1, 1, 2, 45, 46, 46], 47))
+console.log(twoSumUnique([1, 1, 2, 45, 46, 46], 47));
 
 // O(n)

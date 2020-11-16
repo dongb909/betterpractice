@@ -23,7 +23,7 @@ var spiralOrder = function(matrix) {
   let startColumn = 0;
   let endColumn = matrix[0].length - 1;
   //****************** must be <= not just < and must be && not ||
-  while (topRow <= bottomRow && startColumn <= endColumn) {
+  while (topRow <= bottomRow && startColumn <= endColumn) {   //boundaries
   //***************** 
     //iterate through each col of first row and add (row stays same)
     for (let col = startColumn; col <= endColumn; col++) {
@@ -38,14 +38,14 @@ var spiralOrder = function(matrix) {
     //done with last col so update last col to next to last col
     endColumn--;
     //now move left through columns in bottom row (row stays same)
-    if(topRow <= bottomRow) {
+    if(topRow <= bottomRow) { //MUST CHECK THIS AGAIN BECAUSE WE ++
       for (let col = endColumn; col >= startColumn; col--) {
         result.push(matrix[bottomRow][col]);
       }
       //done with last row so update the row to the next level up towards center
       bottomRow--;
     }
-    if(startColumn <= endColumn) {
+    if(startColumn <= endColumn) { //MUST CHECK THIS AGAIN BECAUSE WE --
       for (let row = bottomRow; row >= topRow; row--) {  //BE CAREFUL OF THE CONDITIONALS! > vs <
         result.push(matrix[row][startColumn]);
       }

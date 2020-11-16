@@ -191,14 +191,14 @@ const longestPalindrome2 = (s) => {
 };
 
 const maxLength2 = (s, right, left) => {
-  //aba,1,1     abba,1,0
+                                                                      //aba,1,1     abba,1,0
   while (s[left] === s[right] && left >= 0 && right < s.length) {
-    //b=b         b!=a so doesn't enter while loop
-    left--; //right 2      right still 1
-    right++; //left 0      left still 0
-  } //a=a
-  return right - left - 1; //right 3
-}; //left -1
-// should return    3- (-1) = 4 -1 = 3    1 - 0 = 1 - 1 = 0
+                                                                      //b=b         b!=a so doesn't enter while loop
+    left--;                                                           //right 2      right still 1
+    right++;                                                          //left 0      left still 0
+  }                                                                   //a=a
+  return right - left - 1;                                            //right 3
+};                                                                    //left -1
+                                                                      // should return    3- (-1) = 4 -1 = 3    1 - 0 = 1 - 1 = 0
 
 console.log(longestPalindrome2("babcbad"));

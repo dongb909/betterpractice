@@ -42,16 +42,16 @@ var maxAreaOfIsland = function(grid) {
 let countArea=(grid,row,col) =>{
   // console.log(row, col)
   let count=0;
-  if(row<0 || row>grid.length-1 ||col<0 ||col>grid[0].length){
+  if(row<0 || row>grid.length-1 ||col<0 ||col>grid[0].length || grid[row][col]=== 0){
       return count;
   } else {
       if(grid[row][col]===1){
           count+=1;
           grid[row][col]=0;
-          count+= countArea(grid,row-1,col);
-          count+=countArea(grid,row+1,col);
-          count+=countArea(grid,row,col-1);
-          count+=countArea(grid,row,col+1);
+          count += countArea(grid,row-1,col);
+          count += countArea(grid,row+1,col);
+          count += countArea(grid,row,col-1);
+          count += countArea(grid,row,col+1);
       }
   }
   return count

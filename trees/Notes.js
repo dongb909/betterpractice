@@ -1,3 +1,6 @@
+//console.log('abc, de@#$,f GH   i'.split(/\W+/))
+//=> ["abc", "de", "f", "GH", "i"]
+
 //Number.MAX_VALUE
 // console.log(!"") ==> true
 // console.log(![]) ==> false
@@ -5,7 +8,10 @@
 // str.split('') === [...str]
 //let array = Array(rows).fill().map(() => Array(columns).fill(0));         //Array(rows).fill(Array(columns)) will result in all rows being the reference to the same array!!
 const array = ["a", "b", "c", "d"];
-const nested = [["a", "b", "c"], ["d","e","f"]]
+const nested = [
+  ["a", "b", "c"],
+  ["d", "e", "f"],
+];
 const obj = { a: "b", c: "d", e: "f" };
 const map = new Map();
 map.set("a", "b");
@@ -18,7 +24,8 @@ map.set("e", "f");
 //********************************************************/
 //**************        IN VS OF         *****************/
 //********************************************************/
-for (let [i, j, k] of nested){ //==> a b c      d e f 
+for (let [i, j, k] of nested) {
+  //==> a b c      d e f
   // console.log(i,j,k)
 }
 for (let char of "string") {
@@ -57,7 +64,8 @@ for (const key in obj) {
 }
 
 // console.log(Object.entries(obj))
-for (let [key, val] of Object.entries(obj)) { //CANNOT JUST DO THIS ON the obj itself. BC an obj cannot be iterated!!
+for (let [key, val] of Object.entries(obj)) {
+  //CANNOT JUST DO THIS ON the obj itself. BC an obj cannot be iterated!!
   // console.log(key,val) //THIS WORKS!! BC OBJ.ENTRIES ==> [ [ 'a', 'b' ], [ 'c', 'd' ], [ 'e', 'f' ] ] which is iterable
 }
 

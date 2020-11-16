@@ -15,7 +15,7 @@ function numberTreasureTrucks(rows, columns, grid) {
   //go through each coloumn of each row 
   //if there's a 1 then look upbove it, below, left and right
   //make sure is not out of bounds
-  if (grid.length !==rows || grid === null ||grid.length ===0) return 0;
+  if (grid.length !==rows || grid === null ||grid.length === 0) return 0;
   let count = 0;
   for (let row = 0; row<rows; row++) {
     for (let col = 0; col<columns; col++){  //when encounter 0, won't visit again and in worst case then entire matrix is 1 so entire matrix will be converted to 0 in 1 go so it's s

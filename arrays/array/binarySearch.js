@@ -15,7 +15,7 @@ let biSearch = function (arr, target){
     if(curr > target) end = pivot - 1     //already CHECKED pivot. so hop to next or prev
     else start = pivot + 1            //REMEMBER THE OFFS BY 1S
   }
-  if(arr[start]===target) return start
+  if(arr[start]===target) return start // now start = end
   return -1
 }
 

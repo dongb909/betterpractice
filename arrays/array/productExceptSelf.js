@@ -13,7 +13,7 @@ var productExceptSelf = function(nums) {
   for (let i = 0; i < nums.length; i++){//setting output arr:: going left to right, there's nothing to the left of 0 index
     output[i] = leftProd      //must SET output indices first to a value or else will get NaN
     leftProd *= nums[i]//from orig numbers:: now left products to the next index will be the currently calculated times curr val
-  }
+  } // the very last round, doesn't matter if *4 because won't be included in results
   for (let j = nums.length - 1; j>=0; j--){ //going right to left, there's nothing to the right of the last num thus 1
     output[j] *= rightProd        //have all prods to left of index, now * to prods to right of index 
     rightProd *= nums[j]  //update products to include current index val for next index
@@ -24,9 +24,9 @@ var productExceptSelf = function(nums) {
 //O(n) DOES NOT MEAN 1 PASS!!!!
 // [1,2,3,4]
 //      c
-// iteration 1 => 1, 1, 2, 6    -> = from left
+// iteration 1 => 1, 1, 2, 6    -> = from left   product of all nums to left of index
 
-// iteration 2 => 24, 12, 4, 1   <- = from right
+// iteration 2 => 24, 12, 4, 1   <- = from right  product of all nums to right of index
 
 // iterate c => index c-1 + c+1 indexing with boundary check and place in final arr
 

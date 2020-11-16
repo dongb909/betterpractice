@@ -14,9 +14,9 @@ Output: [[3,3],[-2,4]]
 
 var kClosest = function(points, K) {
   //go through points and store distance with points to origin but add into queue as you go
-  let pq = new PriorityQueue((a,b) => b.distance - a.distance); //== [] with insert and extractMax functions//ABSTRACT OUT THE SORTING AND []
+  let pq = new MaxPriorityQueue((a,b) => b.distance - a.distance); //== [] with insert and extractMax functions//ABSTRACT OUT THE SORTING AND []
   points.forEach(([x,y], idx) => {  //pythag = d^2 = (x1-x2)^2 + (y1-y2)^2
-      let distance = Math.sqrt(x*x + y*y)
+      let distance = Math.sqrt(x*x + y*y)  //Euclidean distance = sqrt(x^2 + y^2)
       let point = {distance, point: points[idx]}
       if(pq.size() < K) pq.add(point)
       else if (distance < pq.peek().distance){

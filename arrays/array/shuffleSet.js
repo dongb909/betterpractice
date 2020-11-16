@@ -73,4 +73,4 @@ function testChars(testSet){
 }
 fisher shuffle
 console.assert(testLength(newSet) === true, "Test length of newSet should return true")
-console.assert(testChars(newSet) === true, "Shuffled order was the same as original set")
+console.assert(testChars(newSet) === true, "Shuffled order was not the same as original set")

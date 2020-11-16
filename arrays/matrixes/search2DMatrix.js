@@ -90,56 +90,69 @@ Accepted */
 
 
 ///2ND ATTEMPT
-// function searchMatrix(matrix, target) {
-//   if (!matrix.length || !matrix[0].length) return false; 
-
-//   let row=0;
-//   let col=matrix[0].length-1;
-
-//   while(row < matrix.length && col>=0){
-//     console.log(row, col)
-//     if(matrix[row][col] === target){
-//       return true;
-//     } else if(matrix[row][col] > target){
-//       col--;
-//     } else {
-//       row++;
-//     }
-//   }
-//   return false;
-// }
-
-//3RD ATTEMPT WITH BINARY SEARCH
-
 function searchMatrix(matrix, target) {
-  if (!matrix.length) return false;
-  let rows=matrix.length;
-  let cols=matrix[0].length;
-  
-  let left = 0;
-  //right is area of array but remember to -1 to factor in 0
-  let right = rows*cols-1;
+  if (!matrix.length || !matrix[0].length) return false; 
 
-  //treat the matrix as a single sorted array and go inwards until left passes right, want to still check the element where left=right
-  while(left <=right) {
-    //find current midpoint
-    //is not just right/2 because have to account for where left is and where the midpt is btwn l and r compared to 0
-    //so half of the current box plus it's left posiiton from 0
-    let midpointIndex = left + (right-left)/2; //DIVIDE 2 ON THE OUTSIDE!!
-    //take that index and divide by how many cols it'll take. the whole number is row, the remainder is the col position (1/3 = 0 whole number and remainder is 1)
-    let midpointValue = matrix[midpointIndex/cols][midpointIndex%cols];
-    if (midpointValue === target){
+  let row=0;  //bc wanna move down if num is bigger to elim row
+  let col=matrix[0].length-1; //want to move left if num is smaller to elim col
+//also picking it like this helps with creating the while loop conditions
+  while(row < matrix.length && col>=0){//just making sure still within bounds
+    console.log(row, col)
+    if(matrix[row][col] === target){ //aka start at number element 15, upper right corner
       return true;
-    } else if (midpointValue < target){
-      //-/+1 since we've already checked the midpoint value itself. so now go one over
-      left = midpointIndex+1
-    } else if(midpointValue > target){
-      right = midpointIndex-1
+    } else if(matrix[row][col] > target){
+      col--;
+    } else {
+      row++;
     }
   }
   return false;
-
 }
+
+//time = O(n+m)
+
+
+console.log(searchMatrix([
+  [1,   4,  7, 11, 15],   //comparing with each col from right to left of first row lets you determine if you can completely ignore that row
+  [2,   5,  8, 12, 19],
+  [3,   6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+], 90))
+
+
+//3RD ATTEMPT WITH BINARY SEARCH
+
+// function searchMatrix(matrix, target) {
+//   if (!matrix.length) return false;
+//   let rows=matrix.length;
+//   let cols=matrix[0].length;
+  
+//   let left = 0;
+//   //right is area of array but remember to -1 to factor in 0
+//   let right = rows*cols-1;
+
+//   //treat the matrix as a single sorted array and go inwards until left passes right, want to still check the element where left=right
+//   while(left <=right) {
+//     //find current midpoint
+//     //is not just right/2 because have to account for where left is and where the midpt is btwn l and r compared to 0
+//     //so half of the current box plus it's left posiiton from 0
+//     let midpointIndex = left + (right-left)/2; //DIVIDE 2 ON THE OUTSIDE!!
+//     //take that index and divide by how many cols it'll take. the whole number is row, the remainder is the col position (1/3 = 0 whole number and remainder is 1)
+//     let row = Math.floor(midpointIndex/cols)
+//     let midpointValue = matrix[row][midpointIndex%cols];
+//     if (midpointValue === target){
+//       return true;
+//     } else if (midpointValue < target){
+//       //-/+1 since we've already checked the midpoint value itself. so now go one over
+//       left = midpointIndex+1
+//     } else if(midpointValue > target){
+//       right = midpointIndex-1
+//     }
+//   }
+//   return false;
+
+// }
 //O(logm + logn)
 //space(1)
 //
@@ -151,21 +164,12 @@ function searchMatrix(matrix, target) {
       
 
 
-console.log(searchMatrix([
-  [1,   4,  7, 11, 15],
-  [2,   5,  8, 12, 19],
-  [3,   6,  9, 16, 22],
-  [10, 13, 14, 17, 24],
-  [18, 21, 23, 26, 30]
-], 30))
 
 
 
 
-
-
-
-/*function searchMatrix(matrix, target) {
+/*
+function searchMatrix(matrix, target) {
   if (!matrix) return false;
   if (!matrix.length) return false;
   
@@ -196,3 +200,10 @@ function binarySearch(arr, target) {
   
   return binarySearch(arr.slice(iMid + 1), target);
 } */
+// console.log(searchMatrix([
+//   [1,   4,  7, 11, 15],
+//   [2,   5,  8, 12, 19],
+//   [3,   6,  9, 16, 22],
+//   [10, 13, 14, 17, 24],
+//   [18, 21, 23, 26, 30]
+// ], 31))

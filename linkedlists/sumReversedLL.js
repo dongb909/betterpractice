@@ -7,7 +7,7 @@ You may assume the two numbers do not contain any leading zero, except the numbe
 Example:
 
 Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
-Output: 7 -> 0 -> 8
+Output: 7 -> 0 -> 8 //i mean really this is IN ORDER
 Explanation: 342 + 465 = 807. */
 
 //no need to check for edge cases, already specified
@@ -92,3 +92,5 @@ const addTwoNumbers = (l1, l2) => {
   }
   return dummyNode.next;
 }; */
+
+

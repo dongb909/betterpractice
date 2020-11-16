@@ -52,9 +52,6 @@ MyStack.prototype.pop = function() {
     let temp = this.q2
     this.q2 = this.q1
     this.q1 = temp
-    console.log("QQQ111", this.q1)
-    console.log("QQQ2", this.q2)
-    console.log("last", last)
     return last
 };
 

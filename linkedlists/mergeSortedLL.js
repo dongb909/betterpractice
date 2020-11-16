@@ -1,4 +1,5 @@
-/*Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+/*Merge two sorted linked lists and return it as a new list. T
+he new list should be made by splicing together the nodes of the first two lists.
 
 Example:
 
@@ -289,5 +290,3 @@ let mergeTwoLists= (l1, l2)=> {
 // let mergeTwoLists= (hi,bye)=> {if(!i||!j) return j || i}
 console.log(mergeTwoLists(l1, l2))
 
-
-4088857850 coumadin clinic anticoag clinic. from kristi pham called me yesterday to enroll mom into the program.
