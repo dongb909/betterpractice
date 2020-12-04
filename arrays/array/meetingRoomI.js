@@ -55,7 +55,7 @@ var canAttendMeetings2 = function (intervals) {
   intervals.sort((a, b) => a[0] - b[0]);
   for (let i = 1; i < intervals.length - 1; i++) {
     //doing same thing as prev function but comparing backwards not forward bc this time making sure is within bounds
-    if (intervals[i][0] < intervals[i - 1][1]) return false;
+    if (intervals[i][0] < intervals[i - 1][1]) return false; //making sure next meeting's start time is not BEFORE current end time
   }
   return true;
 };

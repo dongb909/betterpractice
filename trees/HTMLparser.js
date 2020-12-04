@@ -138,23 +138,22 @@ const parseHTML = (htmlStr) => {
       tag += htmlStr[nextIdx++];
     }
     let root = new Node(tag);
-    findTags(htmlStr, nextIdx + 1, root, false);
+    findTags(htmlStr, nextIdx + 1, root);
     // console.log(root.children)
-    console.log(
-      root.children.forEach((element) => {
-        console.log(element);
-      })
+    // console.log(
+    //   root.children.forEach((element) => {
+    //     console.log(element);
+    //   })
     );
     // return root;
   }
 };
 
-function findTags(htmlStr, idx, prevTag, prevIsClosing) {
+function findTags(htmlStr, idx, prevTag) {
   let newNode;
   let nextIdx;
   while (idx < htmlStr.length) {
     let tag = "";
-    let attr
     while (htmlStr[idx] !== "<") {
       idx++;
       // console.log('yo')

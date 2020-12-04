@@ -156,7 +156,7 @@ class LRUCache {
   constructor(capacity) {
     this.capacity = capacity;
     this.head = new Node(); // makes it easier to make each head and tail as its own empty node to not have to worry about conditions where it's the first node being added or last node being removed
-    this.tail = new Node();
+    this.tail = new Node()
     this.cache = new Map();
     this.head.next = this.tail;
     this.tail.prev = this.head;

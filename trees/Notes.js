@@ -24,6 +24,7 @@ map.set("e", "f");
 //********************************************************/
 //**************        IN VS OF         *****************/
 //********************************************************/
+
 for (let [i, j, k] of nested) {
   //==> a b c      d e f
   // console.log(i,j,k)
@@ -48,7 +49,7 @@ for (let char in ["a", "b", "c", "d"]) {
   //THESE WILL WORK FINE IF PLACED IN A MATH EQUATION BUT NOT BY THEMSELVES
 }
 
-for (const key in obj) {
+for (const key of obj) {
   //NOT [key, val] key will work ==> a,c,e but val will be undefined
   //ONLY 'OF' WILL WORK AND ONLY WITH KEYS, 'IN' DOES NOT WORK AND WON'T WORK FOR VAL
   //because obj is NOT iterable
@@ -78,7 +79,7 @@ for (const [key, val] of map) {
   // console.log(key, val) //==> a b c d e f
 }
 
-if (key in map) return true;
+if ("key" in map) return true; //here key would be a string
 
 //******************************************************* */
 //********       Creating sets           ********** */
