@@ -13,7 +13,7 @@ Output:
   []
 ]
 */
-function subsets(nums) {
+function subsets(nums) {    //did NOT add the part about no duplications. the next function has it added tho
   const powerset = [];
   generatePowerset([], 0);
   function generatePowerset(path, index) {
@@ -25,17 +25,20 @@ function subsets(nums) {
   return powerset;
 }
 
-var subsets = function (nums) {
+var subsets = function (nums) { //added in no duplications
   let result = [];
+  let avoidDups = new Set()
   dfs([], 0);
 
   function dfs(current, index) {
+    if (avoidDups.has(current.toString())) return
     result.push(current);
+    avoidDups.add(current.toString())
     for (let i = index; i < nums.length; i++) {
       dfs(current.concat(nums[i]), i + 1); // using concat
     }
   }
-
+  console.log(avoidDups)
   return result;
 };
 

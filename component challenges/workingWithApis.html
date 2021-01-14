@@ -18,7 +18,6 @@
       /*
       //FETCH- DOES NOT TAKE PARAMS!!!!!!! JUST PUT IT IN THE URL STRING!!!
       function sendHttpRequest(method, url, data) {
-        console.log(data)
         return fetch(url, { //DON'T FORGET TO RETURN!!!!
           method: method,
           body: JSON.stringify(data), //if no data then will return UNDEFINED which will work but NULL or {} will NOT work for GET methods
@@ -71,7 +70,13 @@
       }
       // removeData()
       */
-
+      ///////////////////////////
+      ///////////////////////////
+      //////////////////////////      ///////////////////////////
+      ///////////////////////////
+      //////////////////////////      ///////////////////////////
+      ///////////////////////////
+      //////////////////////////
       ///////////////////////////
       ///////////////////////////
       //////////////////////////
@@ -152,7 +157,13 @@
       }
       removeData()
       */
-
+      ///////////////////////////
+      ///////////////////////////
+           ///////////////////////////
+      ///////////////////////////
+      ////////////////////////// //////////////////////////      ///////////////////////////
+      ///////////////////////////
+      //////////////////////////
       ///////////////////////////
       ///////////////////////////
       //////////////////////////
@@ -162,7 +173,7 @@
       function getData() {
         axios //no need to return anything in this function bc will be doing so in the res .then
           .get("https://jsonplaceholder.typicode.com/posts")
-          .then((res) => console.log(res.data))
+          .then((res) => console.log(res.data))//Axios parses the data for you already so you don't need that extra step of res.json()
           .catch((err) => console.error(err.message));
       }
       // getData()
@@ -180,7 +191,7 @@
       // postData();
 
       function updateData() {
-        // axios.put("https://jsonplaceholder.typicode.com/posts/1",{
+        // axios.put("https://jsonplaceholder.typicode.com/posts/1",{ //note the id already in the url
         //     title: "Hiii",
         //     userId: 3,
         //     body:"jkflsdjfksl" ,

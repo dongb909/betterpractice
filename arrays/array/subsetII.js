@@ -35,7 +35,7 @@ var subsetsWithDup = function(nums) {
             return;
         }
         for(let i=start; i<nums.length; i++) {       
-            if (i !== start && nums[i-1] === nums[i]) continue;
+            if (i !== start && nums[i-1] === nums[i]) continue; /// THIS IS WHERE IT'S DIFFERENT THAN SUBSET 1, AS WE OUT THROUGH THE OUTTER LOOP, WANT TO SKIP NUMBERS WE'VE USED PREVIOUSLY, THIS IS WHY .SORT WAS NEEDED
             arr.push(nums[i]);
             fn(length, i+1, arr);
             arr.pop();            
@@ -46,3 +46,4 @@ var subsetsWithDup = function(nums) {
     }
     return res;
 };
+console.log(subsetsWithDup([1,2,2]))

@@ -10,30 +10,61 @@ Output:
   [3,2,1]
 ]*/
 var permute = function(nums) {
-    let permutations =[]
-    let helper = function(options, permutation) {
-        if (permutation.length === nums.length) {
-            permutations.push(permutation);
+    let allCombos =[]
+    let helper = function(options, permutation) c{
+        if (permutation.length === nums.length) { //base case
+            allCombos.push(permutation);
             return;
         }
-        options.forEach((option, index) => {
+        options.forEach((option, index) => {  //as the starting scope, EACH OPTION WILL get to be placed at index 0 in new arr
             //how to get remaining options
+            let remainingOptions = options.slice(0,index).concat(options.slice(index+1))
+                                    //#1 idx0   [].concat([2,3])
+                                    //#2 idx1   [1].concat([3])
+                                    //#3 idx2   [1,2].concat([])    //even if index > length, it'll know to return []
+                                    //thus remaining option skips current index bc current index is being added to result already
             //how to get current permuation
+            let currentPermutation = permutation.concat(option)  //first round = [1]    [2]     [3]
+                //concat creates a NEW arr so it won't affect the original permutation for the next iteration sibling
             //given curr index, slice curr option up to our index and slice remaining
                 //^ concat these
             //permutation.concat(new el)
-            let remainingOptions = options.slice(0,index).concat(options.slice(index+1))
-            let currentPermutation = permutation.concat(option)
-            helper(remainingOptions, currentPermutation )
+            helper(remainingOptions, currentPermutation) //first round = [1]    [2]     [3]
+            //then TRUST recursion to take care of the rest
             //think about what you need to pass into next recursion BEFORE thinking about other implementations to find what you need to do for the arguments HIGH LEVEL IMPLEMENTATION
         })
     }
     helper(nums, [])
     //immediately invoked function expressions IIFE
-    return permutations
+    return allCombos
 }
 
-//note: trees = O(branchFactor^depth) bc options are fixed for branch factor
+// BUT THIS IS REALLY LONG!  might run out of heap if you have long inputs
+//use the HEAP algorithm (NOT datastructor) and do SWAPS  https://www.youtube.com/watch?v=GuTPwotSdYw&list=PLjOkk6IoTYIFmFvW7k8r0MpyQEKVoCYL4&index=2
+ //height aka depth = length of string/arr
+ //branches will decrease by logn bc you have less and less options as you go down
+ //thus branch factor = logn
+
+//OPTIMIZED SWAPPING ALGO
+var permutateArr = function (nums) {//or arr
+    let allCombos = [nums] 
+    let helperPermute = function (arr, leftIdx, rightIdx){
+        if (leftIdx === rightIdx){
+
+        }
+    }
+    let swap = function (idx1, idx2, arr){
+        [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]]
+    }
+    helperPermute(nums, 0, 0)
+
+}
+
+
+
+
+
+//note: trees = O(branchFactor^depth) bc options are fixed for branch factor aka branch factors are the number of options
 //space: trees = //dont' count input, nor output, 
     //for DFS = O(n) stack space worst case is when have a linkedlist like tree
          // DFS = O(depth = log n) balanced because go down to root then up on one side to the other
