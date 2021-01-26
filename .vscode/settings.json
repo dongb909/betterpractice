@@ -1,0 +1,9 @@
+{
+  "editor.wordWrap": "on",
+  "bracketPairColorizer.forceUniqueOpeningColor": true,
+  "eslint.alwaysShowStatus": true,
+  "eslint.debug": true,
+  "eslint.format.enable": true,
+  "html.format.indentInnerHtml": true,
+  "editor.tabSize": 2
+}
