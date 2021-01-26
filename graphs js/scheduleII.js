@@ -35,7 +35,6 @@ Example 3:
 
 Input: numCourses = 1, prerequisites = []
 Output: [0]
- 
 
 Constraints:
 
@@ -52,20 +51,50 @@ All the pairs [ai, bi] are distinct. */
  * @return {number[]}
  */
 var findOrder = function(numCourses, prerequisites) {
-    
+  //MUST create adjList first or else don't know who's who's neighbors
+  const adj = new Array(numCourses).fill(null).map(()=> new Array())
+  for(let [course, precourse] of prerequisites){
+    //directed 
+    adj[precourse].push(course)
+  }
+  const order = new Array(numCourses).fill(null) 
+  const visited = new Array(numCourses).fill(false) 
+  let currIdxToAdd = numCourses - 1
+  for(let precourse = 0; precourse < adj.length; precourse++){
+    if(!visited[precourse]){ //if haven't processed this course yet
+      currIdxToAdd = dfs(currIdxToAdd, precourse, order, adj)
+    }
+  }
+  return ordering
 };
+function dfs (currIdxToAdd, precourse)
+
+
+console.log(findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
 
 
 
 
 
 
-/*
-METHOD 4: DFS https://www.youtube.com/watch?v=HcRo3BFV8-M&list=PLjOkk6IoTYIFmFvW7k8r0MpyQEKVoCYL4&index=2
-NOTE HOW IN THE VIDEO, he does NOT visit 2 from 0 since 2 has already been processed. the order is the REVERSE of what you print out
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
  /*
+
+
 METHOD 3) Topological ordering = an ordering where for each directed edge from node A to node B, node A appears before node B in the ordering. ordering are NOT unique
 -Topological sort https://www.youtube.com/watch?v=eL-KzMXSXXI, are only considered topological if it's ACYCLIC. Thus, every tree has a topological ordering. Note that the order won't always print out the same depending where your entry point is
 -best way to do this is by cherry picking off the leaf nodes first, in whatever order in the tree but make sure to add FROM end of arr aka add TO beginning as you go so that final node aka root node is idx 0
