@@ -73,18 +73,84 @@ Number of Nodes will not exceed 100.
 There is no repeated edges and no self-loops in the graph.
 The Graph is connected and all nodes can be visited starting from the given node. */
 
-/**
- * // Definition for a Node.
- * function Node(val, neighbors) {
- *    this.val = val === undefined ? 0 : val;
- *    this.neighbors = neighbors === undefined ? [] : neighbors;
- * };
- */
-
+ function Node(val, neighbors) {
+    this.val = val === undefined ? 0 : val;
+    this.neighbors = neighbors === undefined ? [] : neighbors;
+ };
+ 
 /**
  * @param {Node} node
  * @return {Node}
  */
+//  Node the node you'll be given will always be position 1
 var cloneGraph = function(node) {
-    
+  // if(!node) return []NOT HERE
+  let clonesMap = {} //can subsitute itself for being a 'visited' tracker
+  //IS JUST A WAY TO HAVE CONSTANT ACCESS TO OUR NEW NODES. NOTTTTT MAKING A NEW ADJ LIST AT ALL!!!!!
+  return traverse(node, clonesMap)
 };
+
+function traverse(node, clonesMap){
+  if(!node) return node
+  // let newNode = new Node(node.val, [...node.neighbors])//NOT can't just spread it because that's not a DEEP CLONE
+  //only clone if haven't visited
+  if(!clonesMap[node.val]){
+    //add to clonesMap FOR CONSTANT ACCESS TO SAID NODE
+    clonesMap[node.val] = new Node(node.val)
+    //add neighbors to NEW NODE, NOT pushing anything!
+    //mapping over OLD NODE outputs a whole NEW ARRAY! unlike forEach
+    clonesMap[node.val].neighbors = node.neighbors.map((neighborNode)=>{
+      return traverse(neighborNode, clonesMap) //REMEMBER TO RETURN !!! HERE
+    }) 
+  }
+  return clonesMap[node.val]
+}
+
+/*****************DFS SAME as above but just using MAP instead of obj literal ******************
+ * https://leetcode.com/problems/clone-graph/discuss/616376/Intuitive-JavaScript-Solution-with-DFS
+var cloneGraph = function(node) {
+  if (node === null) {
+    return null;
+  }
+  const map = new Map();
+  const clone = root => {
+    if (!map.has(root.val)) {
+      map.set(root.val, new Node(root.val));
+      map.get(root.val).neighbors = root.neighbors.map(clone);
+    }
+    return map.get(root.val);
+  }
+  return clone(node);
+};
+*/
+
+
+/******************BFS *********************
+ * https://leetcode.com/problems/clone-graph/discuss/1018002/JavaScript-beats-99.30-BFS
+ 
+var cloneGraph = function(node) {
+  let newNode = null
+  if (!node) return newNode
+
+  const newGraph = {}
+  const queue = []
+  queue.push(node)
+  newGraph[node.val] = new Node(node.val, [])
+
+  while (queue.length) {
+    const currentNode = queue.shift()
+
+    for (let neighbor of currentNode.neighbors) {
+      if (!newGraph[neighbor.val]) {
+        queue.push(neighbor)
+        newGraph[neighbor.val] = new Node(neighbor.val, [])
+      }
+      newGraph[currentNode.val].neighbors.push(newGraph[neighbor.val])
+    }
+  }
+  
+  return newGraph[node.val]
+}; */ 
+
+
+// just run to check the answer here: https://leetcode.com/problems/clone-graph/discuss/42459/JavaScript-Solution
