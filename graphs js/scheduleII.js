@@ -60,7 +60,7 @@ var findOrder = function(numCourses, prerequisites) {
 
 
 
-
+/*
 METHOD 4: DFS https://www.youtube.com/watch?v=HcRo3BFV8-M&list=PLjOkk6IoTYIFmFvW7k8r0MpyQEKVoCYL4&index=2
 NOTE HOW IN THE VIDEO, he does NOT visit 2 from 0 since 2 has already been processed. the order is the REVERSE of what you print out
  */
