@@ -8,20 +8,11 @@ both versions are the same but this one is more complicated.
 
 RETURN THE ORDER YOU'D HAVE TO TAKE TO TAKE ALL THE COURSES. AKA YOU KNOW IT'S POSSIBLE
 
-you have to create your own adj list btw, where list[1] is the key bc is the prereq, list[0] is the value aka the class you can take now after taken pre*/
-
-/*There are a total of n courses you have to take labelled from 0 to n - 1.
-
-Some courses may have prerequisites, for example, if prerequisites[i] = [ai, bi] this means you must take the course bi before the course ai.
-
 Given the total number of courses numCourses and a list of the prerequisite pairs, return the ordering of courses you should take to finish all courses. AKA DIRECTED GRAPH. PRINT ORDERING
 
 If there are many valid answers, return any of them. If it is impossible to finish all courses, return an empty array.
 
- 
-
 Example 1:
-
 Input: numCourses = 2, prerequisites = [[1,0]]
 Output: [0,1]
 Explanation: There are a total of 2 courses to take. To take course 1 you should have finished course 0. So the correct course order is [0,1].
@@ -50,80 +41,98 @@ All the pairs [ai, bi] are distinct. */
  * @param {number[][]} prerequisites
  * @return {number[]}
  */
-var findOrder = function(numCourses, prerequisites) {
-  //MUST create adjList first or else don't know who's who's neighbors
-  const adj = new Array(numCourses).fill(null).map(()=> new Array())
-  for(let [course, precourse] of prerequisites){
-    //directed 
-    adj[precourse].push(course)
+
+//  TOPOLOGICAL
+var findOrder = function (numCourses, prerequisites) {
+  if (prerequisites.length === 0 || !numCourses) return [];
+  const adj = new Array(numCourses).fill(null).map(() => new Array());
+  const indegree = new Array(numCourses).fill(0); //ALWAYS if looking for topological sort
+  const q = []; //ALWAYS if looking for topological sort
+  const order = []; //ALWAYS if looking for topological sort
+  //MUST create adjList and indegree first or else don't know who's who's neighbors
+  // const visited NO DON'T NEED THIS BC Q WILL ONLY HAVE NODES THAT ARE NOW INDEGREE 0 SO WE'LL NEVER REVISIT ANYTHING. Also, won't add in any loops
+  prerequisites.forEach(([post, pre]) => {
+    adj[pre].push(post);
+    indegree[post]++;
+  });
+  for (let i in indegree) {
+    if (indegree[i] === 0) q.push(Number(i));
   }
-  const order = new Array(numCourses).fill(null) 
-  const visited = new Array(numCourses).fill(false) 
-  let currIdxToAdd = numCourses - 1
-  for(let precourse = 0; precourse < adj.length; precourse++){
-    if(!visited[precourse]){ //if haven't processed this course yet
-      currIdxToAdd = dfs(currIdxToAdd, precourse, order, adj)
+  while (q.length) {
+    let curr = q.shift();
+    order.push(curr);
+    for (let nei of adj[curr]) {
+      if (--indegree[nei] === 0) q.push(nei);
     }
   }
-  return ordering
+  return order;
 };
-function dfs (currIdxToAdd, precourse)
 
+// console.log(
+//   findOrder(4, [
+//     [1, 0],
+//     [2, 0],
+//     [3, 1],
+//     [3, 2],
+//   ])
+// );
+// console.log(findOrder(2, [[1, 0]]));
+// console.log(findOrder(1, []));
+// console.log(
+//   findOrder(4, [
+//     [1, 0],
+//     [2, 0],
+//     [1, 2],
+//     [3, 2],
+//     [0, 3],
+//   ]),
+//   "cyclic"
+// );
 
-console.log(findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /*
-
-
-METHOD 3) Topological ordering = an ordering where for each directed edge from node A to node B, node A appears before node B in the ordering. ordering are NOT unique
--Topological sort https://www.youtube.com/watch?v=eL-KzMXSXXI, are only considered topological if it's ACYCLIC. Thus, every tree has a topological ordering. Note that the order won't always print out the same depending where your entry point is
--best way to do this is by cherry picking off the leaf nodes first, in whatever order in the tree but make sure to add FROM end of arr aka add TO beginning as you go so that final node aka root node is idx 0
-1)pick any unvisited node. graph is an adj list so can get length from there. set all to false
-  create another arr for ordering, all filled as 0 ORRRR just an empty array, pretending its a STACK! last in, first out. aka arr that you add to back and pop from back
-2) do DFS on only unvisited nodes
-3)on the recursive cb, add the current node to the order arr in from the end first
-4) only when popping do you add to the order
-
-*/
-function topsort(graph, n){ //graph is a list of edges
-  let v = new Array(n).fill(false) //visited = v
-  let ordering = new Array(n).fill(0) //aka result
-  let i = n-1//adding to order frmo the end to front
-  for (let currIdx = 0; currIdx<n; currIdx++){
-    if (!v[currIdx]){
-      i = dfs(currIdx, v, visitedNodes, graph) 
-    }
+var findOrderDFS = function (numCourses, prerequisites) {
+  const adj = new Array(numCourses).fill(null).map(() => new Array());
+  prerequisites.forEach(([post, pre]) => {
+    adj[pre].push(post);
+  });
+  const status = new Array(numCourses).fill(0); //1=processing 2 = done // if not numbered nodes that starts with 0 then should use 2 sets instead
+  const order = [];
+  //iterate through adj list and perform dfs on any node we haven't processed yet
+  for (let course = 0; course < numCourses; course++) {
+    // if(status[course]===0) dfs(adj, status, order, course) NO! check the status WITHIN the recursive function so it also checks with each call
+    dfs(adj, status, order, course);
   }
-  return ordering
-}
-function def(i, currIdx, v, ordering, graph){
-  v[currIdx] = true 
-  let edges = graph.getEdgesOutFromNode(currIdx)
-  for(let edge of edges){
-    if (!v[edge.to]){
-      i = dfs(i, edge.to, v, ordering, graph)
-    }
+  return order.reverse();
+};
+//not returnnig anything bc only care baout the order
+function dfs(adj, status, order, course) {
+  //if reach another class and that class has already been processed, return to stop recursion here
+  //if reach another class but we're also currently processing that class, that means we have a loop
+  if (status[course] === 2 || status[course] === 1) return;
+  for (let nextCourse of adj[course]) {
+    //and recurse on reach neighbor
+    dfs(adj, status, order, nextCourse);
   }
-  ordering[i] = currIdx//?????
-  return i -1 //new insertion position which is next idx down
+  order.push(course);
+  status[course] = 2;
 }
+
+console.log(
+  findOrderDFS(4, [
+    [1, 0],
+    [2, 0],
+    [3, 1],
+    [3, 2],
+  ])
+);
+console.log(findOrder(2, [[1, 0]]));
+console.log(findOrder(1, []));
+console.log(
+  findOrder(4, [
+    [1, 0],
+    [2, 0],
+    [1, 2],
+    [3, 2],
+    [0, 3],
+  ]),
+  "cyclic"
+);

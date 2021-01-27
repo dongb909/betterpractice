@@ -64,7 +64,7 @@ var canFinishTopo = function (numCourses, prerequisites) {
     order.push(pre);
     // console.log(order)
   }
-
+  console.log(order);
   return numCourses === order.length;
 };
 //
@@ -72,7 +72,34 @@ var canFinishTopo = function (numCourses, prerequisites) {
 // console.assert(canFinishTopo(2,[[0,1]]) === true, "Should equal true with 2 courses")
 // console.assert(canFinishTopo(3, [[1,0],[2,1]]) === true, "Should equal true with 3 courses")//0=>1=>2
 //
-// console.assert(canFinishTopo(2,[[1,0],[0,1]]) === false, "Should equal false with 2 courses cyclic")
+// console.assert(canFinishTopo(2,[[1,0],[0,1]]) === false, "Should equal false with 2 courses cyclic") //there's no indegree 0 to begin with
+console.assert(
+  canFinishTopo(3, [
+    [1, 0],
+    [0, 1],
+    [0, 2],
+  ]) === false,
+  "Should equal false with 3 courses cyclic"
+); //while loop ends early bc 0 will still have indegree of 1 from the 2 thus not added to q
+console.assert(
+  canFinishTopo(4, [
+    [1, 0],
+    [2, 0],
+    [1, 2],
+    [3, 2],
+  ]) === true,
+  "Should equal false with 4 courses cyclic"
+); //while loop ends early bc 0 will still have indegree of 1 from the 2 thus not added to q
+console.assert(
+  canFinishTopo(4, [
+    [1, 0],
+    [2, 0],
+    [1, 2],
+    [3, 2],
+    [0, 3],
+  ]) === false,
+  "Should equal false with 4 courses cyclic"
+); //while loop ends early bc 0 will still have indegree of 1 from the 2 thus not added to q
 
 //soln: https://leetcode.com/problems/course-schedule/discuss/146325/JavaScript-DFS
 //this isn't the best soln tho, less efficient
@@ -80,7 +107,7 @@ var canFinishDFS = function (numCourses, prerequisites) {
   //0 = unvisited, 1 = processing, 2 = done with
   const status = new Array(numCourses).fill(0);
   // const adj = new Array(numCourses).map(() => new Array(1)); //can't just .map it. need to fill with null first then fill with new array
-  const adj = new Array(numCourses).fill(null).map(() => new Array())
+  const adj = new Array(numCourses).fill(null).map(() => new Array());
   //build adj list
   for (let [course, precourse] of prerequisites) {
     adj[precourse].push(course);
@@ -116,10 +143,25 @@ console.assert(
   canFinishDFS(2, [[1, 0]]) === true,
   "Should equal true with 2 courses"
 );
-console.assert(canFinishDFS(2,[[0,1]]) === true, "Should equal true with 2 courses")
-console.assert(canFinishDFS(3, [[1,0],[2,1]]) === true, "Should equal true with 3 courses")//0=>1=>2
+console.assert(
+  canFinishDFS(2, [[0, 1]]) === true,
+  "Should equal true with 2 courses"
+);
+console.assert(
+  canFinishDFS(3, [
+    [1, 0],
+    [2, 1],
+  ]) === true,
+  "Should equal true with 3 courses"
+); //0=>1=>2
 
-console.assert(canFinishDFS(2,[[1,0],[0,1]]) === false, "Should equal false with 2 courses cyclic")
+console.assert(
+  canFinishDFS(2, [
+    [1, 0],
+    [0, 1],
+  ]) === false,
+  "Should equal false with 2 courses cyclic"
+);
 
 /*Use color detection O(V+E)
 given a list of edges for a DIRECTED graph, return true if there's a cycle. Can start at any node. ex: program dependencies or completing class series. 
