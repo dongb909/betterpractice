@@ -44,7 +44,13 @@ All the pairs [ai, bi] are distinct. */
 
 //  TOPOLOGICAL
 var findOrder = function (numCourses, prerequisites) {
-  if (prerequisites.length === 0 || !numCourses) return [];
+  if (prerequisites.length === 0 || !numCourses) {
+    let courses = []
+    while(numCourses >0){
+      courses.push(--numCourses)
+    }
+    return courses
+  }
   const adj = new Array(numCourses).fill(null).map(() => new Array());
   const indegree = new Array(numCourses).fill(0); //ALWAYS if looking for topological sort
   const q = []; //ALWAYS if looking for topological sort
@@ -65,6 +71,8 @@ var findOrder = function (numCourses, prerequisites) {
       if (--indegree[nei] === 0) q.push(nei);
     }
   }
+
+  if(order.length !== numCourses) return []
   return order;
 };
 
@@ -90,6 +98,13 @@ var findOrder = function (numCourses, prerequisites) {
 // );
 
 var findOrderDFS = function (numCourses, prerequisites) {
+  if (prerequisites.length === 0 || !numCourses) {
+    let courses = []
+    while(numCourses >0){
+      courses.push(--numCourses)
+    }
+    return courses
+  }
   const adj = new Array(numCourses).fill(null).map(() => new Array());
   prerequisites.forEach(([post, pre]) => {
     adj[pre].push(post);
@@ -101,6 +116,7 @@ var findOrderDFS = function (numCourses, prerequisites) {
     // if(status[course]===0) dfs(adj, status, order, course) NO! check the status WITHIN the recursive function so it also checks with each call
     dfs(adj, status, order, course);
   }
+  if(order.length !== numCourses) return []
   return order.reverse();
 };
 //not returnnig anything bc only care baout the order

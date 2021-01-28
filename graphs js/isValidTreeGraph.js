@@ -18,7 +18,7 @@ edge cases: when edges >= vertices, if correct number of edges but one edge form
 const validTreeGraph = (n, edges) => {
   //if there's no tree at all
   if (!n || !edges.length) return false;
-  //if more or equaledges than nodes //if less edges than we need
+  //if more or equaledges than nodes //if less edges than we need// USE MATH AS BASE CASE
   if (edges.length >= n || edges.length < n - 1) return false;
   //create adj list
   const adj = new Array(n).fill(null).map(() => new Array());

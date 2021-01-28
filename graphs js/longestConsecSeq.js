@@ -23,5 +23,5 @@ Constraints:
 Follow up: Could you implement the O(n) solution?
  */
 var longestConsecutive = function(nums) {
-    
+  
 };
