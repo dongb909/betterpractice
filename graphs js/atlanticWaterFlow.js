@@ -33,8 +33,10 @@ var pacificAtlantic = function (matrix) {
   if (!matrix.length || !matrix[0].length) return [];
   const rows = matrix.length;
   const cols = matrix[0].length;
-  const pacific = new Array(rows).fill(null).map(()=>new Array(cols).fill(0));
-  const atlantic = new Array(rows).fill(null).map(()=>new Array(cols).fill(0));
+  const pacific = new Array(rows).fill(null).map(() => new Array(cols).fill(0));
+  const atlantic = new Array(rows)
+    .fill(null)
+    .map(() => new Array(cols).fill(0));
   //iterate through top of pacific, and bottom of atlandtic
   for (let col = 0; col < cols; col++) {
     dfs(matrix, 0, col, Number.MIN_VALUE, pacific); //want to check across starting with top row 0
@@ -82,3 +84,13 @@ console.log(
     [5, 1, 1, 2, 4],
   ])
 );
+//[[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]]
+
+console.log(
+  pacificAtlantic([
+    [3, 3, 3],
+    [3, 1, 3],
+    [0, 2, 4],
+  ])
+);
+//[[0,0],[0,1],[0,2],[1,0],[1,2],[2,0],[2,1],[2,2]] //missing [2,0], [2,1]
