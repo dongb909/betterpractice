@@ -15,7 +15,7 @@
 //Space complexity: O(1)
 
 function validCurrency(strCurr) {
-  if(!strCurr) return false;
+  if (!strCurr) return false;
   const numSet = new Set("0123456789".split(""));
   const [symb, symbIdx] = currencySymb(strCurr);
   if (!symb) return false;
@@ -26,7 +26,7 @@ function validCurrency(strCurr) {
   if (!amt || !numSet.has(amt[0])) return false;
   if (symb === "¥") return isYEN(amt, numSet, amt.length);
   if (symb === "€") return isEUR(amt, numSet, amt.length);
-  if (symb === "$") return isUSD(amt, numSet, amt.length);
+  if (symb === "$") return isUSD(amt, numSet);
   return false;
 }
 
@@ -66,7 +66,7 @@ function isUSD(amt, numSet) {
     len = int.length;
   if (deci && (deci.length < 2 || deci.length > 2)) return false;
   if (int[0] === "0" && !deci) return false;
-  for (let i = int.length - 1; i >= 0; i--) {
+  for (let i = len - 1; i >= 0; i--) {
     char = int[i];
     //if there are commas
     if (char === ",") {
@@ -103,6 +103,8 @@ const testUSDVals = [
   "$1,00409.",
   "-$.24",
   "$0.",
+  "-$42.90",
+  "($42.90)"
 ];
 const usdAns = [
   false,
@@ -123,6 +125,8 @@ const usdAns = [
   false,
   false,
   false,
+  true,
+  true
 ];
 const testEURVals = [
   "-€",
@@ -142,6 +146,8 @@ const testEURVals = [
   "€1,000.000",
   "€100409.",
   "€.89",
+  "-€42.90",
+  "(€42.90)"
 ];
 const eurAns = [
   false,
@@ -161,6 +167,8 @@ const eurAns = [
   false,
   false,
   false,
+  true,
+  true
 ];
 const testYENVals = [
   "-¥",
@@ -176,6 +184,9 @@ const testYENVals = [
   "¥1,000",
   "¥1000.0",
   "¥100409.",
+  "-¥42789",
+  "(¥42789)"
+
 ];
 const yenAns = [
   false,
@@ -191,6 +202,8 @@ const yenAns = [
   false,
   false,
   false,
+  true,
+  true
 ];
 const allTests = [
   [misc, miscAns],
