@@ -156,6 +156,24 @@ function getAlphaCharsOnly(s) {
 }
 //let compactString = startingString.replace(/[^0-9a-z]/gi, '').toLowerCase();
 //var newStr = str.replace(regexp|substr, newSubstr|function) aka (str taking out, str putting in)
+'fskl2.je.rfe'.replace("/\\./g","")
+"fskl2.je.rfe"
+'fskl2.je.rfe'.replace("/./","")
+"fskl2.je.rfe"
+'fskl2.je.rfe'.replace(/./,"")
+"skl2.je.rfe"
+'fskl2.je.rfe'.replace(/\./,"")
+"fskl2je.rfe"
+'fskl2.je.rfe'.replace(/\./," ")
+"fskl2 je.rfe"
+'fskl2.je.rfe'.replace(/\./g," ")
+"fskl2 je rfe"
+'fskl2.je.rfe'.replace(/\./g,"") //NO QUOTES 
+"fskl2jerfe"
+'fskl2.je.rfe'.replace(/[.]/g,"")  //takes it out
+"fskl2jerfe"
+'fskl2.je.rfe'.replace(/[^.]/g,"")   //only keeps it
+".."
 
 /*
 const regex = /dog/gi    where /   /gi is a reg expression

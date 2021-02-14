@@ -48,7 +48,6 @@ let isPalindrome = (s) => {
 //PRACTICE
 let isPalindrome2 = (s) => {
   let alpha = s.replace(/[^a-z]/gi, "").toLowerCase();
-  console.log(alpha);
   const length = alpha.length; //[a,b,c,d,e,f,g] length = 7
   for (let i = 0; i < Math.floor(length / 2) - 1; i++) {
     //7/2 = 3.5 = 3 floored - 1 = up to index 2

@@ -57,9 +57,9 @@ var minMeetingRooms = function (meetings) {
   });
   for (let meeting of meetings) {
     minHeapStart.add(meeting[0]);
-    minHeapEnd.add(meeting[0]);
+    minHeapEnd.add(meeting[1]);
   }
-  while (minHeapStart.size() > 0) {
+  while (minHeapStart.size() > 0) {//OR better to just sort meetings by start time and then iterate through meetings to save space
     if (minHeapStart.peek() < minHeapEnd.peek()) {
       //bc if the prev meeting hasn't end yet, and another meeting is starting then a new room is needed
       rooms++;
